@@ -82,7 +82,7 @@ async def predict_image(request: Request, file: UploadFile | None = File(default
     saved_path.write_bytes(content)
     relative_image_path = f"static/uploads/{safe_token_name}"
 
-    # 6. Jalankan inferensi melalui TrueLensScanEngine
+    # Ini menjalankan inferensi melalui TrueLensScanEngine
     scan_engine: TrueLensScanEngine = request.app.state.scan_engine
     analysis = scan_engine.analyze_image(saved_path)
 
