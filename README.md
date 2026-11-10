@@ -8,7 +8,6 @@ Mengintegrasikan **FastAPI**, **Jinja2**, **CSS3/JavaScript**, **PostgreSQL (SQL
 - **Beranda & Dokumentasi Detail (`GET /`)**: Menyajikan tujuan aplikasi, konteks deepfake, rincian dataset CIFAKE, dan detail arsitektur EfficientNet-B0.
 - **Pindai & Inferensi Real-Time (`GET /scan`, `POST /predict`)**: Validasi ekstensi, batas ukuran 10 MB, dan pemeriksaan *magic bytes* gambar, dilengkapi meter keyakinan dan skala probabilitas 4 rentang.
 - **Operasi Database CRUD (`POST /history/save`, `GET /history`, `POST /history/{id}/delete`)**: Menyimpan hasil pemindaian ke PostgreSQL (`scan_history`), memfilter riwayat berdasarkan status/tanggal, serta menghapus record sekaligus file gambar fisik di server.
-- **Halaman Tim / Contact Us (`GET /contact`)**: Menampilkan pembagian peran teknis keempat anggota kelompok beserta spesifikasi fakta proyek.
 
 ## 2. Cara Menjalankan di Lokal (VS Code)
 
