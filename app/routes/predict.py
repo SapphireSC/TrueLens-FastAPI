@@ -76,7 +76,7 @@ async def predict_image(request: Request, file: UploadFile | None = File(default
             status_code=400,
         )
 
-    # 5. Simpan file gambar dengan nama token UUID yang aman
+    # Ini untuk Simpan file gambar pakai token UUID 
     safe_token_name = f"scan_{uuid.uuid4().hex[:16]}{detected_ext}"
     saved_path = UPLOAD_DIR / safe_token_name
     saved_path.write_bytes(content)
