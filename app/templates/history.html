@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon, status_badge %}
+
+{% block title %}Riwayat Pemindaian — TrueLens AI{% endblock %}
+
+{% block content %}
+<h1>Riwayat pemindaian</h1>
+<p>Daftar hasil verifikasi gambar yang telah disimpan ke dalam basis data.</p>
+
+{% if flash_message %}
+<div class="alert alert-success" role="status" aria-live="polite">
+  {{ icon('badge-check', 20) }}
+  <div><strong>Berhasil:</strong> {{ flash_message }}</div>
+</div>
+{% endif %}
+
+{% if filter_error %}
+<div class="alert alert-danger" role="alert">
+  {{ icon('triangle-alert', 20) }}
+  <div>{{ filter_error }}</div>
+</div>
+{% endif %}
+
+<form action="{{ url_for('history') }}" method="get" class="filter-bar" aria-label="Filter riwayat pemindaian">
+  <div class="filter-field">
+    <label for="filter-status" class="form-label">Status</label>
+    <select id="filter-status" name="status" class="form-control">
+      <option value="all" {% if current_status == 'all' %}selected{% endif %}>Semua status</option>
+      <option value="Real" {% if current_status == 'Real' %}selected{% endif %}>Real</option>
+      <option value="AI-Generated" {% if current_status == 'AI-Generated' %}selected{% endif %}>AI-Generated</option>
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="filter-date" class="form-label">Tanggal</label>
+    <input type="date" id="filter-date" name="date" value="{{ current_date }}" class="form-control">
+  </div>
+
+  <div style="display:flex; gap:var(--space-2);">
+    <button type="submit" class="btn btn-primary">Terapkan</button>
+    <a href="{{ url_for('history') }}" class="btn btn-secondary">Reset</a>
+  </div>
+</form>
+
+{% if records|length > 0 %}
+<div class="history-table-wrap">
+  <table class="history-table">
+    <caption>Daftar pemindaian tersimpan ({{ records|length }} entri ditampilkan)</caption>
+    <thead>
+      <tr>
+        <th scope="col">Berkas</th>
+        <th scope="col">Status</th>
+        <th scope="col">Keyakinan</th>
+        <th scope="col">Waktu</th>
+        <th scope="col">Tindakan</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in records %}
+      <tr>
+        <td data-label="Berkas">
+          <div class="file-cell">
+            {% if item.image_path %}
+              <img src="/{{ item.image_path }}" alt="" class="history-thumb" loading="lazy">
+            {% else %}
+              <div class="history-thumb" aria-hidden="true">{{ icon('file', 22) }}</div>
+            {% endif %}
+            <div>
+              <div style="font-weight:600; color:var(--color-text-strong); word-break:break-word;">
+                {{ item.filename }}
+                {% if item.is_sample %}
+                  <span class="badge badge-sample" style="margin-left:4px;">Contoh</span>
+                {% endif %}
+              </div>
+              <div class="text-muted" style="font-size:0.8125rem;">
+                {{ item.resolution }} px &middot; {{ item.file_size_display }}
+                {% if item.notes %} &middot; {{ item.notes }}{% endif %}
+              </div>
+            </div>
+          </div>
+        </td>
+        <td data-label="Status">
+          <div>
+            {{ status_badge(item.predicted_label) }}
+            <div class="text-muted" style="font-size:0.75rem; margin-top:4px;">{{ item.risk_tier }}</div>
+          </div>
+        </td>
+        <td data-label="Keyakinan">
+          <div class="mono" style="font-weight:700; color:var(--color-text-strong);">{{ item.confidence_display }}%</div>
+          <div class="mono text-muted" style="font-size:0.75rem;">p = {{ item.raw_prob_display }}</div>
+        </td>
+        <td data-label="Waktu">
+          <span class="mono">{{ item.created_display }}</span>
+        </td>
+        <td data-label="Tindakan">
+          <a href="{{ url_for('confirm_delete', record_id=item.id) }}" class="btn btn-secondary" style="padding:6px 12px; min-height:38px;" aria-label="Hapus {{ item.filename }}">
+            {{ icon('trash', 16) }} Hapus
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+  <div class="panel" style="text-align:center; padding:var(--space-10) var(--space-6);">
+    <div style="color:var(--color-text-muted); margin-bottom:var(--space-3); display:flex; justify-content:center;">
+      {{ icon('file', 36) }}
+    </div>
+    {% if total_all_count == 0 %}
+      <h2 style="font-size:1.25rem;">Belum ada pemindaian tersimpan.</h2>
+      <p class="text-muted" style="margin:0 auto var(--space-5);">
+        Hasil hanya masuk riwayat setelah Anda menekan Simpan pada halaman hasil pemindaian.
+      </p>
+      <a href="{{ url_for('scan') }}" class="btn btn-primary">Pindai gambar</a>
+    {% else %}
+      <h2 style="font-size:1.25rem;">Tidak ada hasil untuk filter ini.</h2>
+      <p class="text-muted" style="margin:0 auto var(--space-5);">
+        Coba ubah pilihan status atau tanggal, atau tampilkan kembali seluruh data riwayat.
+      </p>
+      <a href="{{ url_for('history') }}" class="btn btn-secondary">Reset filter</a>
+    {% endif %}
+  </div>
+{% endif %}
+{% endblock %}

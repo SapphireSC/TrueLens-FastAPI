@@ -1,0 +1,50 @@
+:root {
+  /* Light Forensic-Clinical Color Tokens (UI_DESIGN_TrueLensAI.md §3.1) */
+  --color-bg: #F0F9FF;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F8FAFC;
+  --color-text: #0C4A6E;
+  --color-text-strong: #0F172A;
+  --color-text-muted: #475569;
+  --color-border: #E2E8F0;
+  --color-border-strong: #64748B;
+  --color-primary: #0369A1;
+  --color-primary-hover: #075985;
+  --color-primary-soft: #E0F2FE;
+  --color-accent: #0EA5E9;
+  --color-real: #047857;
+  --color-real-soft: #ECFDF5;
+  --color-teal: #0F766E;
+  --color-teal-soft: #F0FDFA;
+  --color-ai: #B91C1C;
+  --color-ai-soft: #FEF2F2;
+  --color-warning: #92400E;
+  --color-warning-soft: #FFFBEB;
+  --color-focus: #0369A1;
+  --color-disabled: #E2E8F0;
+  --color-disabled-text: #64748B;
+
+  /* Typography */
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radii & Shadows */
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-alert: 10px;
+  --radius-badge: 999px;
+  --shadow-focus-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 28px rgba(15, 23, 42, 0.06);
+  --container-max: 1200px;
+}

@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+
+# Local fallback DB & uploaded temporary user images
+truelens_local.db
+app/static/uploads/*.jpg
+app/static/uploads/*.jpeg
+app/static/uploads/*.png
+!app/static/uploads/.gitkeep
+
+# Dataset & Large raw checkpoints (kecuali model final jika ingin disertakan via Git LFS)
+dataset/
+.DS_Store
+.vscode/

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon, status_badge %}
+
+{% block title %}Hapus Entri Riwayat — TrueLens AI{% endblock %}
+
+{% block content %}
+<div class="panel-elevated" style="max-width:640px; margin:0 auto;">
+  <h1 style="font-size:1.5rem;">Hapus entri riwayat?</h1>
+
+  <div class="alert alert-danger">
+    {{ icon('triangle-alert', 20) }}
+    <div>
+      Entri database dan file gambar di server akan dihapus. Tindakan ini tidak dapat dibatalkan.
+    </div>
+  </div>
+
+  <div class="spec-list" style="margin-bottom:var(--space-6);">
+    <div class="spec-row">
+      <span class="spec-term">Nama berkas</span>
+      <span class="spec-val mono">
+        {{ record.filename }}
+        {% if record.is_sample %}<span class="badge badge-sample">Contoh</span>{% endif %}
+      </span>
+    </div>
+    <div class="spec-row">
+      <span class="spec-term">Status hasil AI</span>
+      <span class="spec-val">{{ status_badge(record.predicted_label) }}</span>
+    </div>
+    <div class="spec-row">
+      <span class="spec-term">Keyakinan &amp; p</span>
+      <span class="spec-val mono">{{ record.confidence_display }}% (p = {{ record.raw_prob_display }})</span>
+    </div>
+    <div class="spec-row">
+      <span class="spec-term">Waktu simpan</span>
+      <span class="spec-val mono">{{ record.created_display }}</span>
+    </div>
+  </div>
+
+  <form action="{{ url_for('delete_history', record_id=record.id) }}" method="post" style="display:flex; flex-wrap:wrap; gap:var(--space-3);">
+    <button type="submit" class="btn btn-danger">{{ icon('trash', 18) }} Hapus entri</button>
+    <a href="{{ url_for('history') }}" class="btn btn-secondary">Batal</a>
+  </form>
+</div>
+{% endblock %}

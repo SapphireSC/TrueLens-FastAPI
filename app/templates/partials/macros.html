@@ -1,0 +1,76 @@
+{% macro icon(name, size=20) -%}
+<svg width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {% if name == 'viewfinder' %}
+    <path d="M4 8V6a2 2 0 0 1 2-2h2"/><path d="M4 16v2a2 2 0 0 0 2 2h2"/><path d="M16 4h2a2 2 0 0 1 2 2v2"/><path d="M16 20h2a2 2 0 0 0 2-2v-2"/><circle cx="12" cy="12" r="3"/>
+  {% elif name == 'badge-check' %}
+    <path d="M12 2 15.09 5.26 19.5 4.5 20.24 8.91 23.5 12 20.24 15.09 19.5 19.5 15.09 18.74 12 22 8.91 18.74 4.5 19.5 3.76 15.09 .5 12 3.76 8.91 4.5 4.5 8.91 5.26 12 2z"/><path d="m9 12 2 2 4-4"/>
+  {% elif name == 'triangle-alert' %}
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+  {% elif name == 'upload' %}
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>
+  {% elif name == 'info' %}
+    <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+  {% elif name == 'trash' %}
+    <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+  {% elif name == 'file' %}
+    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/>
+  {% elif name == 'arrow-left' %}
+    <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+  {% elif name == 'x' %}
+    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+  {% endif %}
+</svg>
+{%- endmacro %}
+
+{% macro status_badge(label) -%}
+  {% if label == 'Real' %}
+    <span class="badge badge-real">{{ icon('badge-check', 16) }} Real</span>
+  {% else %}
+    <span class="badge badge-ai">{{ icon('triangle-alert', 16) }} AI-Generated</span>
+  {% endif %}
+{%- endmacro %}
+
+{% macro confidence_meter(confidence_num, confidence_display) -%}
+  <div class="meter-block">
+    <div class="meter-header">
+      <span class="form-label" style="margin-bottom:0;">Keyakinan model</span>
+      <span class="mono" style="font-weight:700; color:var(--color-text-strong);">{{ confidence_display }}%</span>
+    </div>
+    <div class="meter-track" role="progressbar" aria-label="Keyakinan model" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ confidence_num }}">
+      <div class="meter-fill" style="width: {{ confidence_num }}%;"></div>
+    </div>
+  </div>
+{%- endmacro %}
+
+{% macro probability_scale(marker_percent, active_code, raw_display) -%}
+  <div class="prob-scale" role="img" aria-label="Probabilitas AI p = {{ raw_display }} pada rentang {{ active_code }}">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+      <span class="form-label" style="margin-bottom:0;">Probabilitas AI (p)</span>
+      <span class="mono" style="font-weight:700;">p = {{ raw_display }}</span>
+    </div>
+    <p class="text-muted" style="margin-bottom:8px;">Nilai sigmoid 0–1. Nilai mendekati 1 berarti model condong ke AI-Generated.</p>
+    <div class="prob-bar-wrapper">
+      <div class="prob-segments">
+        <div class="seg-authentic" title="< 0,30 Citra asli"></div>
+        <div class="seg-likely-real" title="0,30–0,50 Cenderung asli"></div>
+        <div class="seg-likely-ai" title="0,50–0,75 Cenderung AI"></div>
+        <div class="seg-synthetic" title=">= 0,75 Sintetis AI"></div>
+      </div>
+      <div class="prob-marker" style="left: {{ marker_percent }}%;" title="Posisi p = {{ raw_display }}"></div>
+    </div>
+    <div class="prob-legend">
+      <div class="prob-legend-item {% if active_code == 'authentic' %}is-active{% endif %}">
+        <span>Citra asli</span><span class="mono">&lt; 0,30</span>
+      </div>
+      <div class="prob-legend-item {% if active_code == 'likely_real' %}is-active{% endif %}">
+        <span>Cenderung asli</span><span class="mono">0,30–0,50</span>
+      </div>
+      <div class="prob-legend-item {% if active_code == 'likely_ai' %}is-active{% endif %}">
+        <span>Cenderung AI</span><span class="mono">0,50–0,75</span>
+      </div>
+      <div class="prob-legend-item {% if active_code == 'synthetic' %}is-active{% endif %}">
+        <span>Sintetis AI</span><span class="mono">&ge; 0,75</span>
+      </div>
+    </div>
+  </div>
+{%- endmacro %}

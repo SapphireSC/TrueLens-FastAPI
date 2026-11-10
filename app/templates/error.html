@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon %}
+
+{% block title %}{{ error_title }} ({{ status_code }}) — TrueLens AI{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width:580px; margin:var(--space-8) auto; text-align:center;">
+  <div class="mono" style="font-size:1.5rem; font-weight:700; color:var(--color-ai); margin-bottom:var(--space-2);">
+    HTTP {{ status_code }}
+  </div>
+  <h1 style="font-size:1.5rem;">{{ error_title }}</h1>
+  <p class="text-muted" style="margin:0 auto var(--space-6);">{{ error_message }}</p>
+  <div style="display:flex; justify-content:center; gap:var(--space-3);">
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Kembali ke Beranda</a>
+    <a href="{{ url_for('scan') }}" class="btn btn-secondary">Pindai Gambar</a>
+  </div>
+</div>
+{% endblock %}

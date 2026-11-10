@@ -1,0 +1,19 @@
+{
+  "evaluated": false,
+  "model_name": "EfficientNet-B0 (Transfer Learning CNN)",
+  "dataset": "CIFAKE: Real and AI-Generated Synthetic Images (120.000 Citra)",
+  "test_samples": 20000,
+  "threshold": 0.50,
+  "accuracy": null,
+  "precision": null,
+  "recall": null,
+  "f1_score": null,
+  "roc_auc": null,
+  "confusion_matrix": {
+    "true_negative_real": null,
+    "false_positive_ai": null,
+    "false_negative_real": null,
+    "true_positive_ai": null
+  },
+  "note": "Jalankan ai/evaluate_model.py setelah proses training selesai untuk mengisi metrik evaluasi dari data testing nyata."
+}
