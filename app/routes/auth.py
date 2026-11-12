@@ -34,6 +34,15 @@ async def login_page(request: Request, db: Session = Depends(get_db)):
     )
 
 
+@router.get("/register", response_class=HTMLResponse, name="register")
+async def register_page(request: Request, db: Session = Depends(get_db)):
+    return request.app.state.templates.TemplateResponse(
+        request,
+        "register.html",
+        {"active_page": "register", "error": None, "current_user": get_current_user(request, db)},
+    )
+
+
 @router.post("/login", response_class=HTMLResponse, name="login_post")
 async def login_post(
     request: Request,
@@ -65,8 +74,8 @@ async def registers_post(
     if existing:
         return request.app.state.templates.TemplateResponse(
             request,
-            "login.html",
-            {"active_page": "login", "register_error": "Username atau email sudah terdaftar.", "current_user": get_current_user(request, db)},
+            "register.html",
+            {"active_page": "register", "error": "Username atau email sudah terdaftar.", "current_user": get_current_user(request, db)},
             status_code=400,
         )
     user = User(

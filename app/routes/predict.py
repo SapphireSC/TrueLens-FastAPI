@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 from fastapi import APIRouter, Request, UploadFile, File, Depends
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from app.config import UPLOAD_DIR, MAX_UPLOAD_SIZE_BYTES, ALLOWED_EXTENSIONS
 from app.database import get_db
@@ -14,13 +14,16 @@ router = APIRouter()
 
 @router.get("/scan", response_class=HTMLResponse, name="scan")
 async def scan_page(request: Request, db: Session = Depends(get_db)):
+    current_user = get_current_user(request, db)
+    if not current_user:
+        return RedirectResponse(url="/login", status_code=303)
     return request.app.state.templates.TemplateResponse(
         request,
         "scan.html",
         {
             "active_page": "scan",
             "error_message": None,
-            "current_user": get_current_user(request, db),
+            "current_user": current_user,
         },
     )
 

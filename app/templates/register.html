@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Daftar — TrueLens AI{% endblock %}
+
+{% block content %}
+<h1>Daftar Akun Baru</h1>
+<p>Buat akun untuk menyimpan riwayat pemindaian gambar Anda.</p>
+
+{% if error %}
+<div class="alert alert-danger" role="alert">
+  {{ icon('triangle-alert', 20) }}
+  <div>{{ error }}</div>
+</div>
+{% endif %}
+
+<form action="{{ url_for('registers_post') }}" method="post" class="panel">
+  <div class="form-group">
+    <label for="username-input" class="form-label">Username</label>
+    <input type="text" id="username-input" name="username" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="email-input" class="form-label">Email</label>
+    <input type="email" id="email-input" name="email" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="password-input" class="form-label">Password</label>
+    <input type="password" id="password-input" name="password" class="form-control" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Daftar</button>
+</form>
+
+<p class="text-muted" style="margin-top:var(--space-4); text-align:center;">
+  Sudah punya akun? <a href="{{ url_for('login') }}">Masuk di sini</a>
+</p>
+{% endblock %}

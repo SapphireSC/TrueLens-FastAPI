@@ -13,60 +13,19 @@
 </div>
 {% endif %}
 
-{% if register_error %}
-<div class="alert alert-danger" role="alert">
-  {{ icon('triangle-alert', 20) }}
-  <div>{{ register_error }}</div>
-</div>
-{% endif %}
-
-<div class="auth-toggle" id="auth-toggle">
-  <div class="auth-form" id="login-form">
-    <form action="{{ url_for('login_post') }}" method="post" class="panel">
-      <div class="form-group">
-        <label for="username-input" class="form-label">Username</label>
-        <input type="text" id="username-input" name="username" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="password-input" class="form-label">Password</label>
-        <input type="password" id="password-input" name="password" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Masuk</button>
-    </form>
-    <p class="text-muted" style="margin-top:var(--space-3); text-align:center;">
-      Belum punya akun?
-      <button type="button" class="btn btn-secondary" onclick="toggleAuth('register')">Daftar</button>
-    </p>
+<form action="{{ url_for('login_post') }}" method="post" class="panel">
+  <div class="form-group">
+    <label for="username-input" class="form-label">Username</label>
+    <input type="text" id="username-input" name="username" class="form-control" required>
   </div>
-
-  <div class="auth-form hidden" id="register-form">
-    <form action="{{ url_for('registers_post') }}" method="post" class="panel">
-      <div class="form-group">
-        <label for="reg-username-input" class="form-label">Username</label>
-        <input type="text" id="reg-username-input" name="username" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="reg-email-input" class="form-label">Email</label>
-        <input type="email" id="reg-email-input" name="email" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="reg-password-input" class="form-label">Password</label>
-        <input type="password" id="reg-password-input" name="password" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Daftar</button>
-    </form>
-    <p class="text-muted" style="margin-top:var(--space-3); text-align:center;">
-      Sudah punya akun?
-      <button type="button" class="btn btn-secondary" onclick="toggleAuth('login')">Kembali ke Masuk</button>
-    </p>
+  <div class="form-group">
+    <label for="password-input" class="form-label">Password</label>
+    <input type="password" id="password-input" name="password" class="form-control" required>
   </div>
-</div>
+  <button type="submit" class="btn btn-primary">Masuk</button>
+</form>
 
-<script>
-function toggleAuth(form) {
-  document.getElementById('login-form').classList.add('hidden');
-  document.getElementById('register-form').classList.add('hidden');
-  document.getElementById(form + '-form').classList.remove('hidden');
-}
-</script>
+<p class="text-muted" style="margin-top:var(--space-4); text-align:center;">
+  Belum punya akun? <a href="{{ url_for('register') }}">Daftar di sini</a>
+</p>
 {% endblock %}
