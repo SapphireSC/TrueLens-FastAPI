@@ -1,7 +1,7 @@
 from datetime import datetime
 from fastapi import APIRouter, Request, Form, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
-from passlib.context import CryptContext
+import bcrypt
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import User
@@ -9,7 +9,13 @@ from app.config import SECRET_KEY
 
 router = APIRouter()
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
 
 
 def get_current_user(request: Request, db: Session = Depends(get_db)):
@@ -17,14 +23,6 @@ def get_current_user(request: Request, db: Session = Depends(get_db)):
     if not user_id:
         return None
     return db.query(User).filter(User.id == user_id).first()
-
-
-def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
-
-
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
 
 
 @router.get("/register", response_class=HTMLResponse, name="register")
@@ -49,7 +47,7 @@ async def register_post(
         return request.app.state.templates.TemplateResponse(
             request,
             "register.html",
-            {"active_page": "register", "error": "Username atau email sudah terdaftar."},
+            {"active_page": "register", "error": "Username atau email sudah terdaftar.", "current_user": get_current_user(request, db)},
             status_code=400,
         )
     user = User(
@@ -86,7 +84,7 @@ async def login_post(
         return request.app.state.templates.TemplateResponse(
             request,
             "login.html",
-            {"active_page": "login", "error": "Username atau password salah."},
+            {"active_page": "login", "error": "Username atau password salah.", "current_user": get_current_user(request, db)},
             status_code=400,
         )
     request.session["user_id"] = user.id

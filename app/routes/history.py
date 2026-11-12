@@ -21,8 +21,14 @@ async def view_history(
     msg: str = "",
     db: Session = Depends(get_db),
 ):
+    current_user = get_current_user(request, db)
     stmt = select(ScanHistory).order_by(ScanHistory.created_at.desc(), ScanHistory.id.desc())
     filter_error = None
+
+    if current_user:
+        stmt = stmt.where(ScanHistory.user_id == current_user.id)
+    else:
+        stmt = stmt.where(ScanHistory.is_sample == True)
 
     if status in ("Real", "AI-Generated"):
         stmt = stmt.where(ScanHistory.predicted_label == status)
@@ -85,6 +91,7 @@ async def view_history(
 
 @router.post("/history/save", name="history_save")
 async def save_scan_to_history(
+    request: Request,
     filename: str = Form(...),
     image_path: str = Form(""),
     file_size_kb: float = Form(0.0),
@@ -97,6 +104,7 @@ async def save_scan_to_history(
     db: Session = Depends(get_db),
 ):
     """Operasi CREATE (Soal Nomor 4 UAS): Menyimpan data input & hasil AI ke database."""
+    current_user = get_current_user(request, db)
     clean_label = "AI-Generated" if predicted_label == "AI-Generated" else "Real"
     new_entry = ScanHistory(
         filename=Path(filename).name[:255],
@@ -109,6 +117,7 @@ async def save_scan_to_history(
         raw_prob=round(float(raw_prob), 4),
         notes=notes.strip()[:500] if notes else None,
         is_sample=False,
+        user_id=current_user.id if current_user else None,
         created_at=datetime.now(),
     )
     db.add(new_entry)
