@@ -22,3 +22,7 @@ app/static/uploads/*.png
 dataset/
 .DS_Store
 .vscode/
+
+# AI
+docs/
+AGENTS.md
