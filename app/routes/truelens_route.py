@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from sqlmodel import Session
 
 from config import get_session, UPLOAD_DIR
-from schemas.truelens_schema import TrueLensData
+from schemas.truelens_schema import TrueLensData, UserRegister
 from services.truelens_service import (
     get_metadata,
     get_history,
@@ -16,6 +16,8 @@ from services.truelens_service import (
     delete_prediction,
     verify_image_magic_bytes,
     format_id_number,
+    register_user,
+    authenticate_user,
 )
 from models.truelens_model import Prediction_history
 
@@ -27,6 +29,134 @@ MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 
 
+def get_current_user(request: Request) -> dict | None:
+    return request.session.get("user")
+
+
+# =====================================================================
+# RUTE AUTENTIKASI (COCOK DENGAN TEMPLATE LOGIN.HTML, REGISTER.HTML, BASE.HTML)
+# =====================================================================
+@router.get("/login", name="login")
+def login_page(request: Request, msg: str = ""):
+    current_user = get_current_user(request)
+    if current_user:
+        return RedirectResponse(url="/", status_code=303)
+    success_msg = None
+    if msg == "registered":
+        success_msg = "Registrasi berhasil! Silakan masuk dengan akun Anda."
+    elif msg == "logged_out":
+        success_msg = "Anda telah berhasil keluar."
+    elif msg == "login_required":
+        success_msg = "Silakan masuk terlebih dahulu untuk mengakses fitur tersebut."
+    return templates.TemplateResponse(
+        request,
+        "login.html",
+        context={
+            "active_page": "login",
+            "current_user": None,
+            "error": None,
+            "success_message": success_msg,
+        },
+    )
+
+
+@router.post("/login", name="login_post")
+def login_submit(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+    session: Session = Depends(get_session),
+):
+    user = authenticate_user(session, username, password)
+    if not user:
+        return templates.TemplateResponse(
+            request,
+            "login.html",
+            context={
+                "active_page": "login",
+                "current_user": None,
+                "error": "Username atau password tidak sesuai.",
+                "success_message": None,
+                "username_val": username,
+            },
+            status_code=400,
+        )
+
+    request.session["user"] = {
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+    }
+    return RedirectResponse(url="/scan", status_code=303)
+
+
+@router.get("/register", name="register")
+def register_page(request: Request):
+    current_user = get_current_user(request)
+    if current_user:
+        return RedirectResponse(url="/", status_code=303)
+    return templates.TemplateResponse(
+        request,
+        "register.html",
+        context={
+            "active_page": "register",
+            "current_user": None,
+            "error": None,
+        },
+    )
+
+
+@router.post("/register", name="registers_post")
+def register_submit(
+    request: Request,
+    username: str = Form(...),
+    email: str = Form(...),
+    password: str = Form(...),
+    session: Session = Depends(get_session),
+):
+    if len(password) < 4:
+        return templates.TemplateResponse(
+            request,
+            "register.html",
+            context={
+                "active_page": "register",
+                "current_user": None,
+                "error": "Password minimal terdiri dari 4 karakter.",
+                "username_val": username,
+                "email_val": email,
+            },
+            status_code=400,
+        )
+
+    try:
+        data = UserRegister(username=username, email=email, password=password)
+        register_user(session, data)
+        return RedirectResponse(url="/login?msg=registered", status_code=303)
+    except ValueError as err:
+        return templates.TemplateResponse(
+            request,
+            "register.html",
+            context={
+                "active_page": "register",
+                "current_user": None,
+                "error": str(err),
+                "username_val": username,
+                "email_val": email,
+            },
+            status_code=400,
+        )
+
+
+@router.post("/logout", name="logout")
+@router.get("/logout")
+def logout_user(request: Request):
+    request.session.clear()
+    return RedirectResponse(url="/login?msg=logged_out", status_code=303)
+
+
+# =====================================================================
+# RUTE UTAMA, PEMINDAIAN, & RIWAYAT CRUD
+# =====================================================================
 @router.get("/", name="home")
 def home(request: Request):
     metadata = get_metadata()
@@ -35,6 +165,7 @@ def home(request: Request):
         "home.html",
         context={
             "active_page": "home",
+            "current_user": get_current_user(request),
             "metadata": metadata,
             "metrics": metadata.get("evaluation", {}),
         },
@@ -44,11 +175,15 @@ def home(request: Request):
 @router.get("/scan", name="scan")
 @router.get("/predictions/create", name="predictions_create")
 def new_predictions(request: Request):
+    current_user = get_current_user(request)
+    if not current_user:
+        return RedirectResponse(url="/login?msg=login_required", status_code=303)
     return templates.TemplateResponse(
         request,
         name="scan.html",
         context={
             "active_page": "scan",
+            "current_user": current_user,
             "error_message": None,
         },
     )
@@ -60,11 +195,15 @@ async def create_prediction(
     request: Request,
     file: UploadFile | None = File(default=None),
 ):
+    current_user = get_current_user(request)
+    if not current_user:
+        return RedirectResponse(url="/login?msg=login_required", status_code=303)
+
     if file is None or not file.filename:
         return templates.TemplateResponse(
             request,
             name="scan.html",
-            context={"active_page": "scan", "error_message": "Pilih satu file gambar."},
+            context={"active_page": "scan", "current_user": current_user, "error_message": "Pilih satu file gambar."},
             status_code=400,
         )
 
@@ -74,7 +213,7 @@ async def create_prediction(
         return templates.TemplateResponse(
             request,
             name="scan.html",
-            context={"active_page": "scan", "error_message": "Format harus JPG, JPEG, atau PNG."},
+            context={"active_page": "scan", "current_user": current_user, "error_message": "Format harus JPG, JPEG, atau PNG."},
             status_code=400,
         )
 
@@ -83,7 +222,7 @@ async def create_prediction(
         return templates.TemplateResponse(
             request,
             name="scan.html",
-            context={"active_page": "scan", "error_message": "Ukuran file melebihi 10 MB."},
+            context={"active_page": "scan", "current_user": current_user, "error_message": "Ukuran file melebihi 10 MB."},
             status_code=400,
         )
 
@@ -92,7 +231,7 @@ async def create_prediction(
         return templates.TemplateResponse(
             request,
             name="scan.html",
-            context={"active_page": "scan", "error_message": "Isi file tidak cocok dengan format gambar yang didukung."},
+            context={"active_page": "scan", "current_user": current_user, "error_message": "Isi file tidak cocok dengan format gambar yang didukung."},
             status_code=400,
         )
 
@@ -109,6 +248,7 @@ async def create_prediction(
         name="result.html",
         context={
             "active_page": "scan",
+            "current_user": current_user,
             "filename": original_filename,
             "image_path": relative_image_path,
             "scan_timestamp": scan_timestamp,
@@ -120,6 +260,7 @@ async def create_prediction(
 
 @router.post("/history/save", name="history_save")
 def history_save(
+    request: Request,
     filename: str = Form(...),
     image_path: str = Form(""),
     file_size_kb: float = Form(0.0),
@@ -131,6 +272,9 @@ def history_save(
     notes: str = Form(""),
     session: Session = Depends(get_session),
 ):
+    if not get_current_user(request):
+        return RedirectResponse(url="/login?msg=login_required", status_code=303)
+
     data = TrueLensData(
         filename=filename,
         image_path=image_path,
@@ -155,6 +299,10 @@ def predictions(
     msg: str = "",
     session: Session = Depends(get_session),
 ):
+    current_user = get_current_user(request)
+    if not current_user:
+        return RedirectResponse(url="/login?msg=login_required", status_code=303)
+
     raw_records = get_history(session, status=status)
     formatted_items = []
     for item in raw_records:
@@ -190,6 +338,7 @@ def predictions(
         "history.html",
         context={
             "active_page": "history",
+            "current_user": current_user,
             "records": formatted_items,
             "total_all_count": len(raw_records),
             "current_status": status,
@@ -201,13 +350,18 @@ def predictions(
 
 
 @router.get("/predictions/delete/{id}", name="prediction_delete_get")
-def prediction_delete_get(id: int, session: Session = Depends(get_session)):
+def prediction_delete_get(request: Request, id: int, session: Session = Depends(get_session)):
+    if not get_current_user(request):
+        return RedirectResponse(url="/login?msg=login_required", status_code=303)
     delete_prediction(session, id)
     return RedirectResponse(url="/history?msg=deleted", status_code=303)
 
 
 @router.get("/history/{record_id}/delete", name="confirm_delete")
 def confirm_delete_page(request: Request, record_id: int, session: Session = Depends(get_session)):
+    current_user = get_current_user(request)
+    if not current_user:
+        return RedirectResponse(url="/login?msg=login_required", status_code=303)
     record = session.get(Prediction_history, record_id)
     if not record:
         return RedirectResponse(url="/history", status_code=303)
@@ -216,6 +370,7 @@ def confirm_delete_page(request: Request, record_id: int, session: Session = Dep
         "confirm_delete.html",
         context={
             "active_page": "history",
+            "current_user": current_user,
             "record": {
                 "id": record.id,
                 "filename": record.filename,
@@ -232,7 +387,9 @@ def confirm_delete_page(request: Request, record_id: int, session: Session = Dep
 
 
 @router.post("/history/{record_id}/delete", name="delete_history")
-def prediction_delete_post(record_id: int, session: Session = Depends(get_session)):
+def prediction_delete_post(request: Request, record_id: int, session: Session = Depends(get_session)):
+    if not get_current_user(request):
+        return RedirectResponse(url="/login?msg=login_required", status_code=303)
     delete_prediction(session, record_id)
     return RedirectResponse(url="/history?msg=deleted", status_code=303)
 
@@ -247,7 +404,7 @@ def contact_page(request: Request):
             "tasks": [
                 "Mengunduh dan mempartisi 120.000 citra dataset CIFAKE (Train, Validation, Test).",
                 "Menyusun pipeline prapemrosesan (224x224x3) dan melatih model EfficientNet-B0.",
-                "Mengekspor bobot model terlatih dan json metrik evaluasi (Accuracy, Precision, Recall, F1).",
+                "Mengekspor paket inferensi PyTorch (ai_package) beserta metrik evaluasi.",
             ],
         },
         {
@@ -256,7 +413,7 @@ def contact_page(request: Request):
             "focus": "Arsitektur FastAPI, SQLModel, & Layanan Prediksi",
             "tasks": [
                 "Membangun struktur app/ (config.py, main.py, models, schemas, services, routes).",
-                "Mengintegrasikan layanan inferensi gambar dengan model EfficientNet-B0.",
+                "Mengintegrasikan sistem autentikasi Session (Login, Register, Logout) & Predictor AI.",
                 "Menyediakan operasi Create, Read, dan Delete ke PostgreSQL menggunakan SQLModel.",
             ],
         },
@@ -265,7 +422,7 @@ def contact_page(request: Request):
             "role": "Anggota 3 · Frontend Developer",
             "focus": "Antarmuka Jinja2, CSS Responsif, & Interaksi JavaScript",
             "tasks": [
-                "Merancang halaman Beranda, Pindai, Hasil, Riwayat, dan Kontak berbasis Jinja2.",
+                "Merancang halaman Beranda, Pindai, Hasil, Riwayat, Kontak, Login, dan Register berbasis Jinja2.",
                 "Membangun komponen dropzone interaktif dengan pratinjau gambar langsung.",
                 "Memvisualisasikan meter keyakinan dan skala probabilitas 4 rentang.",
             ],
@@ -275,8 +432,8 @@ def contact_page(request: Request):
             "role": "Anggota 4 · Database & QA Lead",
             "focus": "Administrasi PostgreSQL & Pengujian Fungsional",
             "tasks": [
-                "Merancang tabel scan_history di PostgreSQL (db/query_truelens.txt).",
-                "Menguji seluruh alur unggah gambar, simpan riwayat, filter, dan hapus data.",
+                "Merancang tabel users dan scan_history di PostgreSQL (db/query_truelens.txt).",
+                "Menguji seluruh alur autentikasi, unggah gambar, simpan riwayat, filter, dan hapus data.",
                 "Menyusun laporan PDF proyek dan dokumentasi pengujian.",
             ],
         },
@@ -284,5 +441,9 @@ def contact_page(request: Request):
     return templates.TemplateResponse(
         request,
         "contact.html",
-        context={"active_page": "contact", "team_roles": team_roles},
+        context={
+            "active_page": "contact",
+            "current_user": get_current_user(request),
+            "team_roles": team_roles,
+        },
     )

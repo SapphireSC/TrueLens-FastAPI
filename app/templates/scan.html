@@ -1,33 +1,24 @@
-{% extends "base.html" %}
-{% from "partials/macros.html" import icon %}
-
-{% block title %}Pindai Gambar — TrueLens AI{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% from "partials/macros.html" import icon %} {% block
+title %}Pindai Gambar — TrueLens AI{% endblock %} {% block content %}
 <h1>Pindai gambar</h1>
-<p>Unggah satu berkas gambar berformat JPG, JPEG, atau PNG untuk dianalisis oleh mesin deteksi TrueLens AI.</p>
+<p>
+  Unggah satu berkas gambar berformat JPG, JPEG, atau PNG untuk dianalisis oleh
+  mesin deteksi TrueLens AI.
+</p>
 
 <div class="scan-layout">
   <section class="panel-elevated" aria-labelledby="upload-card-heading">
-    <h2 id="upload-card-heading" style="font-size:1.25rem; margin-bottom:var(--space-3);">Formulir Unggah Citra</h2>
-
-    {% if error_message %}
-    <div class="alert alert-danger" role="alert" tabindex="-1" data-autofocus="true">
-      {{ icon('triangle-alert', 20) }}
-      <div>
-        <strong>Gagal memproses berkas:</strong> {{ error_message }} Silakan pilih berkas gambar yang sesuai.
-      </div>
-    </div>
-    {% endif %}
-
-    <div id="client-error-box" class="alert alert-danger" role="alert" hidden>
-      {{ icon('triangle-alert', 20) }}
-      <div id="client-error-text"></div>
-    </div>
-
-    <form id="scan-form" action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" novalidate>
+    <h2 id="upload-card-heading" style="font-size: 1.125rem">
+      Unggah berkas gambar
+    </h2>
+    <form
+      id="scan-form"
+      action="{{ url_for('predict') }}"
+      method="post"
+      enctype="multipart/form-data"
+      novalidate
+    >
       <div class="form-group">
-        <label for="image-file-input" class="form-label">Berkas gambar yang akan dipindai</label>
         <div id="upload-dropzone" class="dropzone">
           <input
             type="file"
@@ -37,56 +28,73 @@
             class="dropzone-input"
             aria-describedby="dropzone-helper"
             required
-          >
+          />
           <div class="dropzone-icon">{{ icon('upload', 32) }}</div>
-          <div style="font-weight:600; color:var(--color-text-strong); margin-bottom:4px;">
+          <div
+            style="
+              font-weight: 600;
+              color: var(--color-text-strong);
+              margin-bottom: 4px;
+            "
+          >
             Klik untuk memilih gambar atau seret berkas ke area ini
           </div>
           <div id="dropzone-helper" class="text-muted">
             JPG, JPEG, atau PNG &middot; maksimal 10 MB
           </div>
         </div>
-
-        <div id="file-preview-container" class="file-preview-bar" hidden>
-          <div class="file-preview-info">
-            <img id="file-preview-thumb" src="" alt="" class="file-preview-thumb">
-            <div style="min-width:0;">
-              <div id="file-preview-name" style="font-weight:600; color:var(--color-text-strong); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></div>
-              <div id="file-preview-size" class="mono text-muted"></div>
-            </div>
-          </div>
-          <button type="button" id="clear-file-btn" class="btn-icon" aria-label="Hapus berkas yang dipilih">
-            {{ icon('x', 18) }}
-          </button>
-        </div>
-
-        <noscript>
-          <p class="text-muted" style="margin-top:8px;">
-            Pratinjau gambar langsung memerlukan JavaScript, namun proses unggah dan analisis tetap berfungsi normal.
-          </p>
-        </noscript>
       </div>
 
-      <button type="submit" id="scan-submit-btn" class="btn btn-primary" style="width:100%;">
+      <button
+        type="submit"
+        id="scan-submit-btn"
+        class="btn btn-primary"
+        style="width: 100%"
+      >
         Pindai gambar
       </button>
     </form>
   </section>
 
   <aside class="panel" aria-labelledby="guide-heading">
-    <h2 id="guide-heading" style="font-size:1.125rem;">Panduan pemindaian</h2>
-    <div class="spec-list" style="margin-top:var(--space-3);">
-      <div style="padding-bottom:var(--space-3); border-bottom:1px solid var(--color-border);">
-        <strong style="display:block; color:var(--color-text-strong);">Format &amp; Ukuran</strong>
-        <span class="text-muted">Mendukung citra RGB berformat .jpg, .jpeg, atau .png dengan batas ukuran 10 MB per pemindaian.</span>
+    <h2 id="guide-heading" style="font-size: 1.125rem">Panduan pemindaian</h2>
+    <div class="spec-list" style="margin-top: var(--space-3)">
+      <div
+        style="
+          padding-bottom: var(--space-3);
+          border-bottom: 1px solid var(--color-border);
+        "
+      >
+        <strong style="display: block; color: var(--color-text-strong)"
+          >Format &amp; Ukuran</strong
+        >
+        <span class="text-muted"
+          >Mendukung citra RGB berformat .jpg, .jpeg, atau .png dengan batas
+          ukuran 10 MB per pemindaian.</span
+        >
       </div>
-      <div style="padding-bottom:var(--space-3); border-bottom:1px solid var(--color-border);">
-        <strong style="display:block; color:var(--color-text-strong);">Keluaran Analisis</strong>
-        <span class="text-muted">Menampilkan label keputusan (Real / AI-Generated), persentase keyakinan model, dan posisi probabilitas Sigmoid.</span>
+      <div
+        style="
+          padding-bottom: var(--space-3);
+          border-bottom: 1px solid var(--color-border);
+        "
+      >
+        <strong style="display: block; color: var(--color-text-strong)"
+          >Keluaran Analisis</strong
+        >
+        <span class="text-muted"
+          >Menampilkan label keputusan (Real / AI-Generated), persentase
+          keyakinan model, dan posisi probabilitas Sigmoid.</span
+        >
       </div>
       <div>
-        <strong style="display:block; color:var(--color-text-strong);">Penyimpanan Riwayat</strong>
-        <span class="text-muted">Hasil pemindaian tidak otomatis masuk ke riwayat publik sebelum Anda menekan tombol <strong>Simpan ke riwayat</strong>.</span>
+        <strong style="display: block; color: var(--color-text-strong)"
+          >Penyimpanan Riwayat</strong
+        >
+        <span class="text-muted"
+          >Hasil pemindaian tidak otomatis masuk ke riwayat publik sebelum Anda
+          menekan tombol <strong>Simpan ke riwayat</strong>.</span
+        >
       </div>
     </div>
   </aside>

@@ -1,19 +1,20 @@
+import os
 import sys
 import json
 import hashlib
+import hmac
 from pathlib import Path
 from PIL import Image
 from sqlmodel import Session, select
 
-from models.truelens_model import Prediction_history
-from schemas.truelens_schema import TrueLensData
+from models.truelens_model import Prediction_history, User
+from schemas.truelens_schema import TrueLensData, UserRegister
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = BASE_DIR.parent
 MODEL_DIR = BASE_DIR / "model_ai"
 UPLOAD_DIR = BASE_DIR / "static" / "uploads"
 
-# Tambahkan PROJECT_ROOT ke sys.path agar bisa mengimpor `ai_package.truelens_inference`
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -26,9 +27,66 @@ if AI_PACKAGE_DIR.exists():
         predictor = Predictor.from_package(AI_PACKAGE_DIR, device="cpu")
         print(f"[TrueLens Service] Berhasil memuat PyTorch Predictor asli dari: {AI_PACKAGE_DIR}")
     except Exception as e:
-        print(f"[TrueLens Service] Info pemuatan ai_package ({e}). Menggunakan fallback deterministik jika PyTorch belum diinstal.")
+        print(f"[TrueLens Service] Info pemuatan ai_package ({e}). Menggunakan fallback deterministik.")
 
 
+# =====================================================================
+# FUNGSI AUTENTIKASI USER (REGISTER & LOGIN)
+# =====================================================================
+def hash_password(password: str, salt: str | None = None) -> str:
+    if salt is None:
+        salt = hashlib.sha256(os.urandom(16)).hexdigest()[:16]
+    dk = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt.encode("utf-8"), 100_000)
+    return f"{salt}${dk.hex()}"
+
+
+def verify_password(password: str, stored_hash: str) -> bool:
+    if "$" not in stored_hash:
+        return False
+    salt, _ = stored_hash.split("$", 1)
+    expected = hash_password(password, salt=salt)
+    return hmac.compare_digest(expected, stored_hash)
+
+
+def get_user_by_username(session: Session, username: str) -> User | None:
+    clean_uname = username.strip().lower()
+    statement = select(User).where(User.username == clean_uname)
+    return session.exec(statement).first()
+
+
+def register_user(session: Session, data: UserRegister) -> User:
+    clean_uname = data.username.strip().lower()
+    clean_email = data.email.strip().lower()
+
+    if get_user_by_username(session, clean_uname):
+        raise ValueError("Username sudah digunakan. Silakan pilih username lain.")
+
+    salt = hashlib.sha256(os.urandom(16)).hexdigest()[:16]
+    pw_hash = hash_password(data.password, salt=salt)
+
+    new_user = User(
+        username=clean_uname,
+        email=clean_email,
+        password_hash=pw_hash,
+    )
+    session.add(new_user)
+    session.commit()
+    session.refresh(new_user)
+    return new_user
+
+
+def authenticate_user(session: Session, username: str, password: str) -> User | None:
+    user = get_user_by_username(session, username)
+    if not user:
+        return None
+    if not verify_password(password, user.password_hash):
+        return None
+    return user
+
+
+# =====================================================================
+# FUNGSI INFERENSI GAMBAR & CRUD RIWAYAT
+# =====================================================================
 def format_id_number(value: float, decimals: int = 2) -> str:
     return f"{value:.{decimals}f}".replace(".", ",")
 
@@ -47,9 +105,6 @@ def get_metadata() -> dict:
 
 
 def map_probability_to_result(raw_prob: float, threshold: float = 0.55) -> dict:
-    """
-    Memetakan fake_score Sigmoid [0.0, 1.0] sesuai kontrak ai_package (threshold = 0.55).
-    """
     raw_prob = max(0.0001, min(0.9999, float(raw_prob)))
 
     if raw_prob >= threshold:
@@ -97,7 +152,6 @@ def analyze_uploaded_image(file_path: Path) -> dict:
         width, height = img.size
 
     if predictor is not None:
-        # Gunakan Predictor PyTorch asli milik teman dari folder ai_package
         pred_out = predictor.predict_bytes(file_bytes)
         raw_prob = float(pred_out["fake_score"])
         threshold = float(pred_out.get("decision_threshold", 0.55))

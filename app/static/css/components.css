@@ -429,3 +429,23 @@ textarea.form-control {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+
+/* Navbar Form & Logout Button */
+.nav-form {
+  display: inline-flex;
+  margin: 0;
+}
+
+.nav-logout-button {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+.nav-logout-button:hover {
+  color: var(--color-ai);
+  background-color: var(--color-ai-soft);
+}

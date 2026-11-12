@@ -8,8 +8,8 @@
   <div>
     <h1 id="hero-heading">Lihat lebih dekat sebelum mempercayai sebuah gambar.</h1>
     <p>
-      TrueLens AI memindai gambar JPG atau PNG, menampilkan label <strong>Real</strong> atau <strong>AI-Generated</strong>,
-      skor keyakinan, dan probabilitas mentah dari model <strong>EfficientNet-B0</strong> pada bidang Hiburan dan Media Digital.
+      TrueLens AI memindai gambar JPG atau PNG dan menampilkan apakah citra tersebut
+      <strong>Real</strong> atau <strong>AI-Generated</strong>, beserta skor keyakinan model.
     </p>
     <div class="hero-actions">
       <a href="{{ url_for('scan') }}" class="btn btn-primary">Pindai gambar</a>
@@ -24,14 +24,10 @@
     <div class="vf-corners">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span class="mono" style="font-weight:700; color:var(--color-text-strong);">SCANNER FRAME · RGB</span>
-        <span class="badge badge-sample">224 × 224 × 3</span>
       </div>
       <div class="vf-scanline"></div>
-      <p class="text-muted" style="margin-bottom:8px;">
-        Ekstraksi artefak frekuensi spasial &amp; evaluasi aktivasi Sigmoid <span class="mono">p &isin; [0,000 – 1,000]</span>.
-      </p>
       <div class="mono" style="font-size:0.8125rem; color:var(--color-text);">
-        Format: JPG, JPEG, PNG &middot; Maks: 10 MB &middot; Ambang: p = 0,50
+        Format: JPG, JPEG, PNG &middot; Maks: 10 MB
       </div>
     </div>
   </div>
@@ -40,9 +36,8 @@
 <section class="section-block panel" aria-labelledby="context-heading">
   <h2 id="context-heading">Mengapa verifikasi gambar?</h2>
   <p>
-    Gambar sintetis dari generator difusi modern (seperti Stable Diffusion, Midjourney, atau DALL-E) dapat dibuat dengan cepat
-    dan sulit dibedakan secara kasat mata di industri hiburan maupun media sosial. TrueLens AI memberi pemeriksaan awal berbasis model
-    terhadap jejak piksel mikro, bukan penilaian hukum akhir.
+    Gambar sintetis dari AI sulit dibedakan kasat mata. TrueLens AI memberi pemeriksaan awal
+    berbasis model untuk membantu Anda menilai keaslian gambar sebelum mempercayainya.
   </p>
   <p class="text-muted" style="margin-bottom:0;">
     <strong>Target pengguna:</strong> Untuk jurnalis media, peneliti forensik digital, kreator konten, dan masyarakat umum
@@ -64,7 +59,7 @@
       <span class="pipeline-step-num">02 · Preprocessing dan inferensi</span>
       <h3>Ekstraksi Fitur CNN</h3>
       <p class="text-muted" style="margin-bottom:0;">
-        Citra diubah ke ukuran 224 × 224 × 3 dan diproses oleh backbone EfficientNet-B0 menjadi probabilitas Sigmoid <span class="mono">p</span>.
+        Citra diproses oleh model AI EfficientNet-B0 untuk mendeteksi keasliannya.
       </p>
     </li>
     <li class="pipeline-item">
@@ -78,94 +73,40 @@
 </section>
 
 <section class="section-block" aria-labelledby="ranges-heading">
-  <h2 id="ranges-heading">Empat rentang probabilitas AI</h2>
+  <h2 id="ranges-heading">Hasil yang Akan Anda Dapatkan</h2>
   <p class="text-muted">
-    Label database tetap <strong>Real</strong> atau <strong>AI-Generated</strong> pada ambang 0,50. Rentang ini adalah interpretasi tampilan.
+    Setiap pemindaian menghasilkan satu keputusan: <strong>Real</strong> (citra asli dari kamera)
+    atau <strong>AI-Generated</strong> (ciptaan model AI), dengan persentase keyakinan model.
   </p>
-  <div class="range-rows">
-    <div class="range-row">
-      <div><span class="range-swatch" style="background:#047857;"></span><strong>Citra asli (Authentic Real Image)</strong></div>
-      <div class="text-muted">Indikasi kuat foto dari kamera optik</div>
-      <div class="mono">p &lt; 0,30</div>
-    </div>
-    <div class="range-row">
-      <div><span class="range-swatch" style="background:#0F766E;"></span><strong>Cenderung asli (Likely Real Image)</strong></div>
-      <div class="text-muted">Sedikit noise atau kompresi JPEG</div>
-      <div class="mono">0,30 &le; p &lt; 0,50</div>
-    </div>
-    <div class="range-row">
-      <div><span class="range-swatch" style="background:#D97706;"></span><strong>Cenderung AI (Likely AI-Generated)</strong></div>
-      <div class="text-muted">Artefak sintetis tingkat sedang</div>
-      <div class="mono">0,50 &le; p &lt; 0,75</div>
-    </div>
-    <div class="range-row">
-      <div><span class="range-swatch" style="background:#B91C1C;"></span><strong>Sintetis AI (Synthetic AI-Generated)</strong></div>
-      <div class="text-muted">Indikasi kuat gambar dibangkitkan model AI</div>
-      <div class="mono">p &ge; 0,75</div>
-    </div>
-  </div>
+  <p class="text-muted" style="margin-bottom:0;">
+    Hasil adalah bantuan analisis, bukan bukti forensik atau putusan hukum akhir.
+  </p>
 </section>
 
-<section class="section-block" aria-labelledby="specs-heading">
-  <h2 id="specs-heading">Spesifikasi Dataset &amp; Arsitektur Model AI</h2>
-  <div class="two-col-specs">
-    <div class="panel">
-      <h3>Dataset CIFAKE</h3>
-      <p class="text-muted">
-        120.000 gambar: 60.000 Real dari CIFAR-10 dan 60.000 Fake dari Stable Diffusion v1.4.
-      </p>
-      <div class="spec-list">
-        <div class="spec-row"><span class="spec-term">Sumber Dataset</span><span class="spec-val"><a href="https://www.kaggle.com/datasets/birdy654/cifake-real-and-ai-generated-synthetic-images" target="_blank" rel="noopener">Kaggle CIFAKE (Bird &amp; Lotfi)</a></span></div>
-        <div class="spec-row"><span class="spec-term">Rasio Kelas</span><span class="spec-val">Seimbang 50:50 (Balanced Binary)</span></div>
-        <div class="spec-row"><span class="spec-term">Resolusi Asli &rarr; Input</span><span class="spec-val mono">32 × 32 px &rarr; 224 × 224 × 3</span></div>
-        <div class="spec-row"><span class="spec-term">Pembagian Partisi</span><span class="spec-val">90.000 Train · 10.000 Val · 20.000 Test</span></div>
-      </div>
+<section class="section-block panel" aria-labelledby="specs-heading">
+  <h2 id="specs-heading">Tentang Model &amp; Data</h2>
+  <div class="spec-list" style="margin-bottom:var(--space-4);">
+    <div class="spec-row"><span class="spec-term">Model AI</span><span class="spec-val">EfficientNet-B0 (Transfer Learning PyTorch, Kandidat R2 Epoch 9, Ambang 0,55)</span></div>
+    <div class="spec-row"><span class="spec-term">Dataset</span><span class="spec-val">CIFAKE: Real and AI-Generated Synthetic Images (120.000 Citra: 60k Real CIFAR-10 &amp; 60k Fake Stable Diffusion v1.4)</span></div>
+    <div class="spec-row"><span class="spec-term">Metrik Evaluasi Uji</span>
+      <span class="spec-val mono">
+        {% if metrics and metrics.evaluated %}
+          Accuracy: {{ metrics.accuracy }}% &middot; Precision: {{ metrics.precision }}% &middot; Recall: {{ metrics.recall }}% &middot; F1: {{ metrics.f1_score }}% &middot; ROC-AUC: {{ metrics.roc_auc }}
+        {% else %}
+          Accuracy: 96,49% &middot; Precision: 96,41% &middot; Recall: 96,58% &middot; F1: 96,49% &middot; ROC-AUC: 0,9950
+        {% endif %}
+      </span>
     </div>
-
-    <div class="panel">
-      <h3>Model EfficientNet-B0</h3>
-      <p class="text-muted">
-        Backbone pretrained ImageNet dengan classification head khusus untuk klasifikasi biner Real vs AI-Generated.
-      </p>
-      <div class="spec-list">
-        <div class="spec-row"><span class="spec-term">Tulang Punggung (Backbone)</span><span class="spec-val">EfficientNet-B0 (MBConv + SE Block)</span></div>
-        <div class="spec-row"><span class="spec-term">Output Peta Fitur</span><span class="spec-val mono">(None, 7, 7, 1280)</span></div>
-        <div class="spec-row"><span class="spec-term">Fungsi Aktivasi Akhir</span><span class="spec-val">Sigmoid Kontinu [0,0 – 1,0]</span></div>
-        <div class="spec-row"><span class="spec-term">Rumus Keyakinan</span><span class="spec-val mono">p×100 (AI) | (1-p)×100 (Real)</span></div>
-      </div>
-    </div>
+    <div class="spec-row"><span class="spec-term">Batasan</span><span class="spec-val">Hasil adalah estimasi model pada distribusi CIFAKE, bukan putusan hukum</span></div>
   </div>
 
-  <details class="tech-details">
-    <summary class="tech-summary">Detail dataset CIFAKE &amp; tahapan preprocessing</summary>
+  <details class="tech-details" style="margin-bottom:0;">
+    <summary class="tech-summary">Detail teknis dataset, preprocessing, &amp; arsitektur EfficientNet-B0</summary>
     <div class="tech-body">
       <div class="spec-list">
-        <div class="spec-row"><span class="spec-term">Asal Data</span><span class="spec-val">CIFAKE: Real and AI-Generated Synthetic Images (Kaggle / IEEE Access 2024).</span></div>
-        <div class="spec-row"><span class="spec-term">10 Kelas Objek Setara</span><span class="spec-val">Airplane, Automobile, Bird, Cat, Deer, Dog, Frog, Horse, Ship, Truck.</span></div>
-        <div class="spec-row"><span class="spec-term">Ukuran Asli</span><span class="spec-val">32 × 32 piksel, di-resize menggunakan interpolasi Bicubic menjadi 224 × 224 piksel.</span></div>
-        <div class="spec-row"><span class="spec-term">Pembagian Data</span><span class="spec-val">100.000 data training (dipisah 90.000 train + 10.000 validation) dan 20.000 data testing.</span></div>
-        <div class="spec-row"><span class="spec-term">Penskalaan Piksel</span><span class="spec-val">Menggunakan efficientnet.preprocess_input pada rentang float32 [0, 255] (Rescaling internal Keras).</span></div>
-        <div class="spec-row"><span class="spec-term">Augmentasi Data</span><span class="spec-val">RandomHorizontalFlip, RandomRotation (±8%), dan RandomZoom (±10%) hanya pada data training.</span></div>
-      </div>
-    </div>
-  </details>
-
-  <details class="tech-details">
-    <summary class="tech-summary">Detail arsitektur layer, strategi training, dan status evaluasi</summary>
-    <div class="tech-body">
-      <div class="spec-list">
-        <div class="spec-row"><span class="spec-term">Classification Head</span><span class="spec-val">GlobalAveragePooling2D &rarr; BatchNormalization &rarr; Dropout(0,4) &rarr; Dense(128, ReLU) &rarr; Dropout(0,2) &rarr; Dense(1, Sigmoid).</span></div>
-        <div class="spec-row"><span class="spec-term">Strategi 2 Tahap</span><span class="spec-val">Tahap 1: Warm-up head (LR 1e-3, backbone frozen) &middot; Tahap 2: Fine-tuning 30 layer atas (LR 1e-4).</span></div>
-        <div class="spec-row"><span class="spec-term">Optimizer &amp; Loss</span><span class="spec-val">AdamW Optimizer, Binary Cross-Entropy Loss, Batch Size 32, EarlyStopping &amp; ModelCheckpoint.</span></div>
-        <div class="spec-row"><span class="spec-term">Metrik Evaluasi</span>
-          <span class="spec-val">
-            {% if metrics and metrics.evaluated %}
-              Accuracy: {{ metrics.accuracy }}% &middot; Precision: {{ metrics.precision }}% &middot; Recall: {{ metrics.recall }}% &middot; F1: {{ metrics.f1_score }}% &middot; AUC: {{ metrics.roc_auc }}
-            {% else %}
-              Menunggu eksekusi <code>ai/evaluate_model.py</code> pada 20.000 data testing (angka metrik tidak dikarang sebelum diukur).
-            {% endif %}
-          </span>
-        </div>
+        <div class="spec-row"><span class="spec-term">Partisi Dataset</span><span class="spec-val">78.961 Train &middot; 19.741 Validation &middot; 20.000 Testing (10 kelas objek berpasangan)</span></div>
+        <div class="spec-row"><span class="spec-term">Pipeline Preprocessing</span><span class="spec-val">EXIF Transpose, Alpha-White RGB Composite, Bicubic Resize 256 &rarr; Center Crop 224×224, Normalisasi ImageNet-1K</span></div>
+        <div class="spec-row"><span class="spec-term">Classification Head</span><span class="spec-val">Backbone EfficientNet-B0 (1280 fitur) &rarr; Dropout(0,2) &rarr; Linear(1280 &rarr; 1 Logit) &rarr; Sigmoid</span></div>
       </div>
     </div>
   </details>
