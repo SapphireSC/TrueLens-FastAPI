@@ -117,6 +117,7 @@ a:hover {
 .site-header {
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
+  align-items: center;
 }
 
 .header-inner {
@@ -183,6 +184,12 @@ a:hover {
   cursor: pointer;
   font-family: inherit;
   border-bottom: solid transparent;
+}
+
+.nav-form {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
 }
 
 main {
