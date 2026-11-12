@@ -71,22 +71,8 @@
             aria-current="{{ 'page' if active_page == 'contact' else 'false' }}"
             >Kontak</a
           >
-          <form
-            action="{{ url_for('logout') }}"
-            method="post"
-            style="display: inline"
-          >
-            <button
-              type="submit"
-              class="nav-link"
-              style="
-                padding: 0;
-                background: none;
-                border: none;
-                color: inherit;
-                cursor: pointer;
-              "
-            >
+          <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit" class="nav-link nav-logout-button">
               Keluar
             </button>
           </form>
