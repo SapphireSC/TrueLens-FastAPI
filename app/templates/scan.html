@@ -1,5 +1,9 @@
-{% extends "base.html" %} {% from "partials/macros.html" import icon %} {% block
-title %}Pindai Gambar — TrueLens AI{% endblock %} {% block content %}
+{% extends "base.html" %} 
+{% from "partials/macros.html" import icon %} 
+
+{% block title %}Pindai Gambar — TrueLens AI{% endblock %} 
+
+{% block content %}
 <h1>Pindai gambar</h1>
 <p>
   Unggah satu berkas gambar berformat JPG, JPEG, atau PNG untuk dianalisis oleh
@@ -19,7 +23,7 @@ title %}Pindai Gambar — TrueLens AI{% endblock %} {% block content %}
       novalidate
     >
       <div class="form-group">
-        <div id="upload-dropzone" class="dropzone">
+        <div id="upload-dropzone" class="dropzone" style="position: relative; cursor: pointer;">
           <input
             type="file"
             id="image-file-input"
@@ -28,19 +32,27 @@ title %}Pindai Gambar — TrueLens AI{% endblock %} {% block content %}
             class="dropzone-input"
             aria-describedby="dropzone-helper"
             required
+            style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2;"
           />
-          <div class="dropzone-icon">{{ icon('upload', 32) }}</div>
-          <div
-            style="
-              font-weight: 600;
-              color: var(--color-text-strong);
-              margin-bottom: 4px;
-            "
-          >
-            Klik untuk memilih gambar atau seret berkas ke area ini
+          
+          <!-- Tampilan Default (Sebelum Upload) -->
+          <div id="dropzone-default">
+            <div class="dropzone-icon">{{ icon('upload', 32) }}</div>
+            <div style="font-weight: 600; color: var(--color-text-strong); margin-bottom: 4px;">
+              Klik untuk memilih gambar atau seret berkas ke area ini
+            </div>
+            <div id="dropzone-helper" class="text-muted">
+              JPG, JPEG, atau PNG &middot; maksimal 10 MB
+            </div>
           </div>
-          <div id="dropzone-helper" class="text-muted">
-            JPG, JPEG, atau PNG &middot; maksimal 10 MB
+
+          <!-- Tampilan Preview (Setelah Upload) -->
+          <div id="dropzone-preview" style="display: none; text-align: center; position: relative; z-index: 1;">
+            <img id="preview-image" src="" alt="Pratinjau Gambar" style="max-width: 100%; max-height: 200px; border-radius: 8px; margin-bottom: 12px; object-fit: contain;" />
+            <div id="preview-filename" style="font-weight: 600; color: var(--color-text-strong); word-break: break-all;"></div>
+            <div class="text-muted" style="font-size: 0.875rem; margin-top: 4px;">
+              Klik atau seret untuk mengganti gambar
+            </div>
           </div>
         </div>
       </div>
@@ -59,44 +71,53 @@ title %}Pindai Gambar — TrueLens AI{% endblock %} {% block content %}
   <aside class="panel" aria-labelledby="guide-heading">
     <h2 id="guide-heading" style="font-size: 1.125rem">Panduan pemindaian</h2>
     <div class="spec-list" style="margin-top: var(--space-3)">
-      <div
-        style="
-          padding-bottom: var(--space-3);
-          border-bottom: 1px solid var(--color-border);
-        "
-      >
-        <strong style="display: block; color: var(--color-text-strong)"
-          >Format &amp; Ukuran</strong
-        >
-        <span class="text-muted"
-          >Mendukung citra RGB berformat .jpg, .jpeg, atau .png dengan batas
-          ukuran 10 MB per pemindaian.</span
-        >
+      <div style="padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border);">
+        <strong style="display: block; color: var(--color-text-strong)">Format &amp; Ukuran</strong>
+        <span class="text-muted">Mendukung citra RGB berformat .jpg, .jpeg, atau .png dengan batas ukuran 10 MB per pemindaian.</span>
       </div>
-      <div
-        style="
-          padding-bottom: var(--space-3);
-          border-bottom: 1px solid var(--color-border);
-        "
-      >
-        <strong style="display: block; color: var(--color-text-strong)"
-          >Keluaran Analisis</strong
-        >
-        <span class="text-muted"
-          >Menampilkan label keputusan (Real / AI-Generated), persentase
-          keyakinan model, dan posisi probabilitas Sigmoid.</span
-        >
+      <div style="padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border);">
+        <strong style="display: block; color: var(--color-text-strong)">Keluaran Analisis</strong>
+        <span class="text-muted">Menampilkan label keputusan (Real / AI-Generated), persentase keyakinan model, dan posisi probabilitas Sigmoid.</span>
       </div>
       <div>
-        <strong style="display: block; color: var(--color-text-strong)"
-          >Penyimpanan Riwayat</strong
-        >
-        <span class="text-muted"
-          >Hasil pemindaian tidak otomatis masuk ke riwayat publik sebelum Anda
-          menekan tombol <strong>Simpan ke riwayat</strong>.</span
-        >
+        <strong style="display: block; color: var(--color-text-strong)">Penyimpanan Riwayat</strong>
+        <span class="text-muted">Hasil pemindaian tidak otomatis masuk ke riwayat publik sebelum Anda menekan tombol <strong>Simpan ke riwayat</strong>.</span>
       </div>
     </div>
   </aside>
 </div>
+
+<!-- Script untuk menangani pratinjau gambar -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const fileInput = document.getElementById("image-file-input");
+    const dropzoneDefault = document.getElementById("dropzone-default");
+    const dropzonePreview = document.getElementById("dropzone-preview");
+    const previewImage = document.getElementById("preview-image");
+    const previewFilename = document.getElementById("preview-filename");
+
+    fileInput.addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      
+      if (file) {
+        // Tampilkan nama berkas
+        previewFilename.textContent = file.name;
+        
+        // Baca berkas untuk pratinjau gambar
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          dropzoneDefault.style.display = "none";
+          dropzonePreview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // Kembalikan ke tampilan default jika dibatalkan
+        dropzoneDefault.style.display = "block";
+        dropzonePreview.style.display = "none";
+        previewImage.src = "";
+      }
+    });
+  });
+</script>
 {% endblock %}
