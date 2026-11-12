@@ -1,0 +1,35 @@
+{
+    "model_name": "TrueLens AI — EfficientNet-B0 (R2 Epoch 9)",
+    "algorithm": "Transfer Learning CNN (PyTorch EfficientNet-B0, 1 Logit)",
+    "dataset": "CIFAKE: Real and AI-Generated Synthetic Images",
+    "total_data": 120000,
+    "training_data": 78961,
+    "validation_data": 19741,
+    "testing_data": 20000,
+    "threshold": 0.55,
+    "features": [
+        "EXIF Transpose & RGB Alpha-White Composite",
+        "Bicubic Resize 256 -> Center Crop 224x224",
+        "ImageNet-1K Normalization (Mean & Std)"
+    ],
+    "classes": [
+        "REAL (0)",
+        "FAKE / AI-Generated (1)"
+    ],
+    "kernel": "MBConv + Linear(1280 -> 1) + Sigmoid (Threshold 0.55)",
+    "evaluation": {
+        "evaluated": true,
+        "accuracy": 96.49,
+        "precision": 96.41,
+        "recall": 96.58,
+        "f1_score": 96.49,
+        "roc_auc": 0.9950,
+        "average_precision": 0.9951,
+        "confusion_matrix": {
+            "true_negative_real": 9640,
+            "false_positive_ai": 360,
+            "false_negative_real": 342,
+            "true_positive_ai": 9658
+        }
+    }
+}

@@ -1,19 +1,25 @@
 import os
 from pathlib import Path
+from sqlmodel import Session, SQLModel, create_engine
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-APP_DIR = Path(__file__).resolve().parent
-UPLOAD_DIR = APP_DIR / "static" / "uploads"
-MODEL_PATH = BASE_DIR / "ai" / "saved_model" / "truelens_efficientnet.keras"
-METRICS_JSON_PATH = BASE_DIR / "ai" / "saved_model" / "evaluation_metrics.json"
+APP_NAME = "TrueLens AI"
+APP_DESCRIPTION = "Sistem Klasifikasi Gambar Asli vs Buatan AI dengan Database PostgreSQL"
+APP_VERSION = "1.0.0"
 
+BASE_DIR = Path(__file__).resolve().parent
+UPLOAD_DIR = BASE_DIR / "static" / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
-# Default ke PostgreSQL jika diset di .env, fallback ke SQLite lokal agar langsung siap jalan di VS Code
+# Konfigurasi Database PostgreSQL sesuai yang diajarkan di kelas
+# (Ubah password 'postgres' di bawah ini jika password PostgreSQL lokal Anda berbeda, atau set melalui environment variable)
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    f"sqlite:///{BASE_DIR / 'truelens_local.db'}"
+    "postgresql://postgres:SuperNova00@localhost:5432/truelens_db"
 )
 
-MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024  # 10 MB
-ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png"}
+engine = create_engine(DATABASE_URL, echo=True)
+
+
+def get_session():
+    with Session(engine) as session:
+        yield session

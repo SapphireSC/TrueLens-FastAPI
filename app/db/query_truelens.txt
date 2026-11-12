@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS scan_history (
+    id SERIAL PRIMARY KEY,
+    filename VARCHAR(255) NOT NULL,
+    image_path VARCHAR(255) NOT NULL DEFAULT '',
+    file_size_kb DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+    resolution VARCHAR(50) NOT NULL DEFAULT 'Unknown',
+    predicted_label VARCHAR(50) NOT NULL,
+    risk_tier VARCHAR(80) NOT NULL,
+    confidence_score DOUBLE PRECISION NOT NULL,
+    raw_prob DOUBLE PRECISION NOT NULL,
+    notes TEXT DEFAULT NULL,
+    is_sample BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO scan_history (
+    filename, image_path, file_size_kb, resolution,
+    predicted_label, risk_tier, confidence_score, raw_prob,
+    notes, is_sample, created_at
+) VALUES
+('sample_stage_concert_photo.jpg', '', 412.5, '1920x1080', 'Real', 'Citra asli (Authentic Real Image)', 88.70, 0.1130, 'Contoh data awal: dokumentasi panggung konser DSLR', TRUE, '2026-11-09 19:15:00'),
+('sample_synth_cyberpunk_poster.png', '', 684.2, '1024x1024', 'AI-Generated', 'Sintetis AI (Synthetic AI-Generated)', 91.20, 0.9120, 'Contoh data awal: poster sintetis generator difusi', TRUE, '2026-11-09 20:05:00');
