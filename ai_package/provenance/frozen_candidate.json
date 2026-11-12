@@ -1,0 +1,105 @@
+{
+  "candidate": {
+    "best_epoch": 9,
+    "experiment": "R2",
+    "run_id": "R2_20261110_222229_271972"
+  },
+  "comparison_operator": ">=",
+  "dependency_versions": {
+    "Pillow": "13.0.0",
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "psutil": "7.2.2",
+    "pytest": "9.2.0",
+    "scikit-learn": "1.9.1",
+    "torch": "2.10.0+cu128",
+    "torchvision": "0.25.0+cu128",
+    "tqdm": "4.70.1"
+  },
+  "frozen_at": "2026-11-11T10:52:18+07:00",
+  "positive_class": "FAKE",
+  "positive_label": 1,
+  "references": {
+    "architecture": {
+      "path": "experiments/finetune_r2/R2_20261110_222229_271972/model_config.json",
+      "sha256": "9909836b99829df6bf7f1559c64b4601644444e3f0441cb57644db8f75b1cc0c"
+    },
+    "checkpoint": {
+      "path": "experiments/finetune_r2/R2_20261110_222229_271972/best_model.pt",
+      "sha256": "c865f002bd1520fc115d005a71b901640dc14f89009b431c94d1941999d97913"
+    },
+    "dataset_fingerprint": {
+      "path": "manifests/20261110_040708_326207/dataset_fingerprint.json",
+      "sha256": "14cbca1eb30b2cda7ef320c8ade0b419d279d6572dffd0eb5184223c024a6f64"
+    },
+    "decision": {
+      "path": "experiments/selection_stage7/SEL7_20261111_105213_213153/decision_config.json",
+      "sha256": "901914b4fcb917944ded49c1db327b6aaba9e7d08fca3dc141f255d5413765f5"
+    },
+    "frozen_architecture": {
+      "path": "experiments/selection_stage7/SEL7_20261111_105213_213153/model_config.json",
+      "sha256": "9909836b99829df6bf7f1559c64b4601644444e3f0441cb57644db8f75b1cc0c"
+    },
+    "frozen_label_map": {
+      "path": "experiments/selection_stage7/SEL7_20261111_105213_213153/label_map.json",
+      "sha256": "887a7c764d3b84064a1c42b62e15ce2ec54904eaa0395173eb62a58528698552"
+    },
+    "frozen_preprocessing": {
+      "path": "experiments/selection_stage7/SEL7_20261111_105213_213153/preprocessing.json",
+      "sha256": "29cbc93bad060d3607c4ee8e18bb6d7938dd73f38989c354ec43245495adddc7"
+    },
+    "input_verification": {
+      "path": "experiments/selection_stage7/SEL7_20261111_105213_213153/input_verification.json",
+      "sha256": "65a5aa8d2cb849a9869d0e247e88b24cf6e5df6009d4d624b7b2093165431d74"
+    },
+    "label_map": {
+      "path": "experiments/finetune_r2/R2_20261110_222229_271972/label_map.json",
+      "sha256": "887a7c764d3b84064a1c42b62e15ce2ec54904eaa0395173eb62a58528698552"
+    },
+    "preprocessing": {
+      "path": "experiments/finetune_r2/R2_20261110_222229_271972/preprocessing.json",
+      "sha256": "29cbc93bad060d3607c4ee8e18bb6d7938dd73f38989c354ec43245495adddc7"
+    },
+    "selection_result": {
+      "path": "experiments/selection_stage7/SEL7_20261111_105213_213153/selection_result.json",
+      "sha256": "aef168669dc77005b1c5dc3406cad82b5c59347657c63fa24f2b7021d6268c86"
+    },
+    "source_validation_predictions": {
+      "path": "experiments/finetune_r2/R2_20261110_222229_271972/validation_predictions.csv",
+      "sha256": "529b7c83281e1442a7436e8d240a2713f7a9902a89dad2ea1203b904f21ab6eb"
+    },
+    "test_manifest": {
+      "path": "manifests/20261110_040708_326207/test.csv",
+      "sha256": "5b614b3172f36c96e53dca13a35b6ce263e08e60cfca440ae39e47a04a38810c"
+    },
+    "test_unique_manifest": {
+      "path": "manifests/20261110_040708_326207/test_unique.csv",
+      "sha256": "d379ef843ab770f25da5cc58a553c1ca9ec1f2c3ae3ef3d1b00ce87be180e2f2"
+    },
+    "threshold_protocol": {
+      "path": "experiments/selection_stage7/SEL7_20261111_105213_213153/threshold_protocol.json",
+      "sha256": "5abe46a8042ebc396602a8e10e5e462959cb1edf8f34a1f9551f725468a93a86"
+    },
+    "threshold_search": {
+      "path": "experiments/selection_stage7/SEL7_20261111_105213_213153/threshold_search.csv",
+      "sha256": "6363d53874319596f90fe68a91b3dafbf68daf70cccc75d75b0ee6d97ffb5d58"
+    },
+    "train_manifest": {
+      "path": "manifests/20261110_040708_326207/train.csv",
+      "sha256": "de18601319e85be911a50ac5fbb96991894146882fd58a3504c02ff574d40f37"
+    },
+    "validation_manifest": {
+      "path": "manifests/20261110_040708_326207/validation.csv",
+      "sha256": "c55bbf14617172024d621e43a29d45350ca140be292a1f9c90807d76cc4327ff"
+    }
+  },
+  "schema_version": 1,
+  "selected_for_test": true,
+  "selection_run_id": "SEL7_20261111_105213_213153",
+  "selection_validation_samples": 19741,
+  "stage": 7,
+  "test_evaluated": false,
+  "test_execution_authorized_in_stage7": false,
+  "threshold": 0.55
+}

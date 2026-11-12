@@ -1,0 +1,40 @@
+{
+  "FAKE_called_REAL": 340,
+  "REAL_called_FAKE": 360,
+  "accuracy": 0.964933373409478,
+  "average_precision_FAKE": 0.9951067136098394,
+  "average_precision_definition": "Non-interpolated weighted precision over recall increments; not trapezoidal PR AUC",
+  "confusion_matrix": [
+    [
+      9640,
+      360
+    ],
+    [
+      340,
+      9622
+    ]
+  ],
+  "confusion_matrix_order": [
+    "REAL",
+    "FAKE"
+  ],
+  "correct": 19262,
+  "incorrect": 700,
+  "macro_f1": 0.9649333448972438,
+  "per_class": {
+    "FAKE": {
+      "f1-score": 0.9649017248295226,
+      "precision": 0.9639350831496694,
+      "recall": 0.9658703071672355,
+      "support": 9962
+    },
+    "REAL": {
+      "f1-score": 0.964964964964965,
+      "precision": 0.9659318637274549,
+      "recall": 0.964,
+      "support": 10000
+    }
+  },
+  "roc_auc_FAKE": 0.9950322726360169,
+  "samples": 19962
+}

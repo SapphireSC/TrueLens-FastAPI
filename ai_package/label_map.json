@@ -1,0 +1,10 @@
+{
+  "index_to_name": {
+    "0": "REAL",
+    "1": "FAKE"
+  },
+  "name_to_index": {
+    "FAKE": 1,
+    "REAL": 0
+  }
+}

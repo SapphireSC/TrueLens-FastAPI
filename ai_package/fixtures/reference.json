@@ -1,0 +1,290 @@
+{
+  "atol": 1e-06,
+  "decision_threshold": 0.55,
+  "model_version": "truelens-r2-epoch9-v1.0.0",
+  "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1",
+  "rtol": 1e-05,
+  "samples": [
+    {
+      "file_sha256": "0893e53656c096086ff7d015b0b6eddeb74240da624785ce45289371453316b4",
+      "input_path": "fixtures/17ec7fe69710c18594c1832811f8d5f3ce6806b648dc251e0ff605e2053f5fc6.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.0224305372685194,
+        "logit": -3.774646043777466,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "17ec7fe69710c18594c1832811f8d5f3ce6806b648dc251e0ff605e2053f5fc6",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "0528ea0da93a4791aaf3f839e04afb027c1ac9eccecef4679d6d18d7bc158215",
+      "input_path": "fixtures/183b2451e20cc96163cf63af71e4810842eb0b930b87c4bb7fb67e7fde22ccb8.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.5203880667686462,
+        "logit": 0.08159744739532471,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "183b2451e20cc96163cf63af71e4810842eb0b930b87c4bb7fb67e7fde22ccb8",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "8631c99d68cfdce9a3912eb78875ae2671efa553dd803f0ce47ee3f0af629c20",
+      "input_path": "fixtures/1946f7f9a94ea6e1b76afe21229468b233688f47fdf0a4d8d5ccfdfe36f5f853.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.8420864343643188,
+        "logit": 1.6738345623016357,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "1946f7f9a94ea6e1b76afe21229468b233688f47fdf0a4d8d5ccfdfe36f5f853",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "5d7257723db29ca946cbcacef5054ea05122c33882e6e7d0cc4f4025d016c034",
+      "input_path": "fixtures/27d0e854a818c0dbe2042c66ce6bdbf5eeb3fd2b515f8bb59922611e49e313a8.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.7398839592933655,
+        "logit": 1.045365333557129,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "27d0e854a818c0dbe2042c66ce6bdbf5eeb3fd2b515f8bb59922611e49e313a8",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "d133d864b25948828658468b5960cbf79e3221fd84a82bcc6d742726d9ea1be1",
+      "input_path": "fixtures/3bca284cf3994818f00095ba054bbaed68ad7a53c9be83dfe8d1f3e23c345ffc.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.043580181896686554,
+        "logit": -3.088594436645508,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "3bca284cf3994818f00095ba054bbaed68ad7a53c9be83dfe8d1f3e23c345ffc",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "daaa492c550e6ba631b747bc376bd5eb2ad0e4c1120d6f91f8cf530e9ce60155",
+      "input_path": "fixtures/53a9c60112ea8117fcfea0315f82392256251ec5fe371107f5d327db67a2bdde.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.9629414677619934,
+        "logit": 3.2574939727783203,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "53a9c60112ea8117fcfea0315f82392256251ec5fe371107f5d327db67a2bdde",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "97a4118ae5c8d1dabd3106db7f43a735e6050f7c92a3df817c3cbdff524fda1b",
+      "input_path": "fixtures/67dd14c9ce70596325697626e9a0a9331ec09e82f8e485240a1452b6c45fe202.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.743618369102478,
+        "logit": 1.0648610591888428,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "67dd14c9ce70596325697626e9a0a9331ec09e82f8e485240a1452b6c45fe202",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "bfc6e66c5896accc5c2e4e54c9ced45c80d3089cbf9b940047f464e1e0341beb",
+      "input_path": "fixtures/704e040061da2ec39a6e036df4cfe6d6785a7b6efff2ad6cdf73e16b69eb355f.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 1.3428247029878548e-06,
+        "logit": -13.520733833312988,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "704e040061da2ec39a6e036df4cfe6d6785a7b6efff2ad6cdf73e16b69eb355f",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "c1f0a60ee2f00f35c590d71a6fd0b9edd698974c156842c4cdf0b080eaf5cbe0",
+      "input_path": "fixtures/7117f8d344179c09d943775efd84ecb34a33ef73b7f11e5c867e3c3f7d15d172.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 2.2826887288829312e-05,
+        "logit": -10.687548637390137,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "7117f8d344179c09d943775efd84ecb34a33ef73b7f11e5c867e3c3f7d15d172",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "781c1f612d5ab42bfa3bd4b42fdbd1330e43ff07734645c68dd324461fa83b58",
+      "input_path": "fixtures/72dea86c74ef9a6cdc53b23159350c24c4b5464277e02cf65e5b21164fdd4a9e.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.9996339082717896,
+        "logit": 7.912182807922363,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "72dea86c74ef9a6cdc53b23159350c24c4b5464277e02cf65e5b21164fdd4a9e",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "dd7d5242d31452a595fec9b63d8192a881a9bd90997ef4cb4540f933327d3a7c",
+      "input_path": "fixtures/7f274b52ce02e67b0ccac96e1afecabb608ff23cf3fba4db915e517057c6a008.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.9999947547912598,
+        "logit": 12.161178588867188,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "7f274b52ce02e67b0ccac96e1afecabb608ff23cf3fba4db915e517057c6a008",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "2e70ea7a9c1ae70d8b9533cd67cfb4d45f85dfeff8f571760e9886da4a44cd73",
+      "input_path": "fixtures/9262f26ac9a8d017d63f15e37d4dc1fd07c1d8e6f9eb4519727a99b157360032.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.9978310465812683,
+        "logit": 6.131314754486084,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "9262f26ac9a8d017d63f15e37d4dc1fd07c1d8e6f9eb4519727a99b157360032",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "20bf380b108eb46e46221a06593098f8a80c73040962e35a4996f9e381a8256c",
+      "input_path": "fixtures/a9f513791b01a7f10a61abf9456cf0e18ab632a4ca82bc41cddcc94550039754.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 8.818342757876962e-05,
+        "logit": -9.336003303527832,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "a9f513791b01a7f10a61abf9456cf0e18ab632a4ca82bc41cddcc94550039754",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "86a46003f5e06de62cf91b5b2ab7b5892952560355b6ed8e6fe52936d1023925",
+      "input_path": "fixtures/ade6ef636a4e4aafd74d644cfc6d5a61d50711ec9ea5490e5957f46a1e9b0b38.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.995762050151825,
+        "logit": 5.459420204162598,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "ade6ef636a4e4aafd74d644cfc6d5a61d50711ec9ea5490e5957f46a1e9b0b38",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "71d3ce1cef16ca153400d8c83c7131db460d9bee9da0d058e6829ca62f7e5fe4",
+      "input_path": "fixtures/b36c5ea300d4ebc0677a7f21d79a5c839e19832dfa25b5d154a0fbad55bd62ce.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 1.3112819033267442e-05,
+        "logit": -11.241907119750977,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "b36c5ea300d4ebc0677a7f21d79a5c839e19832dfa25b5d154a0fbad55bd62ce",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "e18ba6b2c4cd1a27fb5aed2a12d06fe8e253d1462b80ef5318ae181ad69674c4",
+      "input_path": "fixtures/c142023721303c772b2948cbf31b2d5459a83235ad71665fe7cc3cc59edd440d.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.0011482971021905541,
+        "logit": -6.768326282501221,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "c142023721303c772b2948cbf31b2d5459a83235ad71665fe7cc3cc59edd440d",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "96c45e253ace20f2bd9bff75d26bfdf5396f736a1ca944f5a8a96014a55eba80",
+      "input_path": "fixtures/d2fa90fae05b6544e472c215261446b42b5c66c21379917f9f5c9cf52405900d.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.5541106462478638,
+        "logit": 0.2172936499118805,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "d2fa90fae05b6544e472c215261446b42b5c66c21379917f9f5c9cf52405900d",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "3aee78621b43b278f5f66b1980dd8bffffa686a00879b144b69431366a81a2ed",
+      "input_path": "fixtures/d3090877f92e6014e2cc57aadc2f2d2d3445167de08ffd3c1ffc774e8beb6116.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 2.8727106837322935e-05,
+        "logit": -10.457640647888184,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "REAL",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "d3090877f92e6014e2cc57aadc2f2d2d3445167de08ffd3c1ffc774e8beb6116",
+      "true_label": 0
+    },
+    {
+      "file_sha256": "03525136d4ebb228d38e99e0569fa43d73fe323a54d2ba954dea7992709452f6",
+      "input_path": "fixtures/da86dcbd44b4a1ff37ac7e184f33890c9be5966588a07c014862ec27b18a04b2.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.9999074935913086,
+        "logit": 9.288138389587402,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "da86dcbd44b4a1ff37ac7e184f33890c9be5966588a07c014862ec27b18a04b2",
+      "true_label": 1
+    },
+    {
+      "file_sha256": "e435f76fc9abea18f4438ba10355464f8dfc188d2e8c6e08356b353e72b89b71",
+      "input_path": "fixtures/ec3e87902ece38abd022d46bdbca5229ba78fe29c636b717db62b54c21cfe0e5.jpg",
+      "result": {
+        "decision_threshold": 0.55,
+        "fake_score": 0.978624165058136,
+        "logit": 3.823887586593628,
+        "model_version": "truelens-r2-epoch9-v1.0.0",
+        "predicted_label": "FAKE",
+        "preprocessing_version": "exif-rgb-white-v1+imagenet1k-v1"
+      },
+      "sample_id": "ec3e87902ece38abd022d46bdbca5229ba78fe29c636b717db62b54c21cfe0e5",
+      "true_label": 1
+    }
+  ],
+  "source": "real Predictor.from_frozen_candidate CPU, fixed validation fixtures; no mock"
+}

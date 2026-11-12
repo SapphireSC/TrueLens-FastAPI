@@ -1,0 +1,9 @@
+{
+  "formats": ["JPEG", "PNG"],
+  "static_only": true,
+  "max_file_bytes": 10485760,
+  "max_pixels": 20000000,
+  "max_dimension": 8192,
+  "dimension_policy": "explicit package admission limits; configurable on predictor startup; no change to evaluated pixel preprocessing",
+  "pillow_max_image_pixels_at_build": 89478485
+}

@@ -1,0 +1,21 @@
+{
+  "completed_at": "2026-11-11T23:41:53+07:00",
+  "frozen_candidate": "experiments/selection_stage7/SEL7_20261111_105213_213153/frozen_candidate.json",
+  "frozen_candidate_original_unchanged": true,
+  "frozen_candidate_sha256": "1a68a10121cc751b6b3793031f3aaf392b5ac3bd601c90d87d7c709103a9d518",
+  "model_parameter_and_buffer_hash_after": "a04451296013788c6090ec23a17016afdf08764ba851c70ad83c372d22186d79",
+  "model_parameter_and_buffer_hash_before": "a04451296013788c6090ec23a17016afdf08764ba851c70ad83c372d22186d79",
+  "model_sha256": "c865f002bd1520fc115d005a71b901640dc14f89009b431c94d1941999d97913",
+  "model_unchanged": true,
+  "neural_load_check": "passed",
+  "prior_files_verified": 196,
+  "ready_for_stage_9": true,
+  "run_id": "TEST8_20261111_233913_703812",
+  "stage": 8,
+  "status": "passed",
+  "test_evaluated": true,
+  "test_samples": 20000,
+  "test_unique_is_subset": true,
+  "test_unique_samples": 19962,
+  "threshold": 0.55
+}
