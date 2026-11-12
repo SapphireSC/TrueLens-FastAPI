@@ -430,4 +430,8 @@ textarea.form-control {
   to { transform: rotate(360deg); }
 }
 
+.btn[aria-busy="true"] {
+  color: transparent !important;
+}
+
 .hidden { display: none; }

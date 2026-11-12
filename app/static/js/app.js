@@ -119,4 +119,11 @@ document.addEventListener("DOMContentLoaded", function () {
     submitBtn.setAttribute("aria-busy", "true");
     submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span> Menganalisis…';
   });
+
+  // Reset tombol loading jika halaman dimuat ulang (misal tombol kembali browser setelah error)
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.removeAttribute("aria-busy");
+    submitBtn.innerHTML = 'Pindai gambar';
+  }
 });
