@@ -23,3 +23,17 @@ class ScanHistory(Base):
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     is_sample: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now, index=True)
+    user_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True, index=True)
+
+
+class User(Base):
+    """
+    Model ORM SQLAlchemy 2.0 untuk tabel `users` (akun sistem).
+    """
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
+    username: Mapped[str] = mapped_column(String(100), nullable=False, unique=True, index=True)
+    email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
+    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
