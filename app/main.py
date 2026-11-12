@@ -9,7 +9,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.config import APP_DIR, MODEL_PATH, SECRET_KEY
 from app.database import Base, engine, SessionLocal
-from app.models import ScanHistory
+from app.models import ScanHistory, User
 from app.services.scan_engine import TrueLensScanEngine
 from app.routes import home, predict, history, auth
 
