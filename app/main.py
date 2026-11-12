@@ -5,12 +5,13 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.middleware.sessions import SessionMiddleware
 
-from app.config import APP_DIR, MODEL_PATH
+from app.config import APP_DIR, MODEL_PATH, SECRET_KEY
 from app.database import Base, engine, SessionLocal
 from app.models import ScanHistory
 from app.services.scan_engine import TrueLensScanEngine
-from app.routes import home, predict, history
+from app.routes import home, predict, history, auth
 
 
 def seed_initial_sample_records():
@@ -95,6 +96,8 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
 app.mount("/static", StaticFiles(directory=str(APP_DIR / "static")), name="static")
 templates = Jinja2Templates(directory=str(APP_DIR / "templates"))
 app.state.templates = templates
@@ -102,6 +105,7 @@ app.state.templates = templates
 app.include_router(home.router)
 app.include_router(predict.router)
 app.include_router(history.router)
+app.include_router(auth.router)
 
 
 @app.exception_handler(StarletteHTTPException)
