@@ -17,3 +17,4 @@ DATABASE_URL = os.getenv(
 
 MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024  # 10 MB
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png"}
+SECRET_KEY = os.getenv("SECRET_KEY", os.urandom(32).hex())
