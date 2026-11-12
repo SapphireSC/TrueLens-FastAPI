@@ -28,11 +28,11 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 @router.get("/register", response_class=HTMLResponse, name="register")
-async def register_page(request: Request):
+async def register_page(request: Request, db: Session = Depends(get_db)):
     return request.app.state.templates.TemplateResponse(
         request,
         "register.html",
-        {"active_page": "register", "error": None},
+        {"active_page": "register", "error": None, "current_user": get_current_user(request, db)},
     )
 
 
@@ -66,11 +66,11 @@ async def register_post(
 
 
 @router.get("/login", response_class=HTMLResponse, name="login")
-async def login_page(request: Request):
+async def login_page(request: Request, db: Session = Depends(get_db)):
     return request.app.state.templates.TemplateResponse(
         request,
         "login.html",
-        {"active_page": "login", "error": None},
+        {"active_page": "login", "error": None, "current_user": get_current_user(request, db)},
     )
 
 

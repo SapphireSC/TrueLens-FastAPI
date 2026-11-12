@@ -1,28 +1,32 @@
 import uuid
 from datetime import datetime
 from pathlib import Path
-from fastapi import APIRouter, Request, UploadFile, File
+from fastapi import APIRouter, Request, UploadFile, File, Depends
 from fastapi.responses import HTMLResponse
+from sqlalchemy.orm import Session
 from app.config import UPLOAD_DIR, MAX_UPLOAD_SIZE_BYTES, ALLOWED_EXTENSIONS
+from app.database import get_db
 from app.services.scan_engine import verify_image_magic_bytes, TrueLensScanEngine
+from app.routes.auth import get_current_user
 
 router = APIRouter()
 
 
 @router.get("/scan", response_class=HTMLResponse, name="scan")
-async def scan_page(request: Request):
+async def scan_page(request: Request, db: Session = Depends(get_db)):
     return request.app.state.templates.TemplateResponse(
         request,
         "scan.html",
         {
             "active_page": "scan",
             "error_message": None,
+            "current_user": get_current_user(request, db),
         },
     )
 
 
 @router.post("/predict", response_class=HTMLResponse, name="predict")
-async def predict_image(request: Request, file: UploadFile | None = File(default=None)):
+async def predict_image(request: Request, file: UploadFile | None = File(default=None), db: Session = Depends(get_db)):
     # 1. Validasi keberadaan file
     if file is None or not file.filename:
         return request.app.state.templates.TemplateResponse(
@@ -31,6 +35,7 @@ async def predict_image(request: Request, file: UploadFile | None = File(default
             {
                 "active_page": "scan",
                 "error_message": "Pilih satu file gambar.",
+                "current_user": get_current_user(request, db),
             },
             status_code=400,
         )
@@ -46,6 +51,7 @@ async def predict_image(request: Request, file: UploadFile | None = File(default
             {
                 "active_page": "scan",
                 "error_message": "Format harus JPG, JPEG, atau PNG.",
+                "current_user": get_current_user(request, db),
             },
             status_code=400,
         )
@@ -59,6 +65,7 @@ async def predict_image(request: Request, file: UploadFile | None = File(default
             {
                 "active_page": "scan",
                 "error_message": "Ukuran file melebihi 10 MB.",
+                "current_user": get_current_user(request, db),
             },
             status_code=400,
         )
@@ -72,6 +79,7 @@ async def predict_image(request: Request, file: UploadFile | None = File(default
             {
                 "active_page": "scan",
                 "error_message": "Isi file tidak cocok dengan format gambar yang didukung.",
+                "current_user": get_current_user(request, db),
             },
             status_code=400,
         )
@@ -98,12 +106,13 @@ async def predict_image(request: Request, file: UploadFile | None = File(default
             "scan_timestamp": scan_timestamp,
             "analysis": analysis,
             "is_preview_demo": False,
+            "current_user": get_current_user(request, db),
         },
     )
 
 
 @router.get("/preview/result", response_class=HTMLResponse, name="preview_result")
-async def preview_result_page(request: Request, p: float = 0.912):
+async def preview_result_page(request: Request, p: float = 0.912, db: Session = Depends(get_db)):
     """Endpoint pratinjau hasil untuk kebutuhan pengujian UI & screenshot."""
     analysis = TrueLensScanEngine.map_probability_to_result(p)
     analysis.update(
@@ -125,5 +134,6 @@ async def preview_result_page(request: Request, p: float = 0.912):
             "scan_timestamp": datetime.now().strftime("%d %b %Y, %H:%M WIB"),
             "analysis": analysis,
             "is_preview_demo": True,
+            "current_user": get_current_user(request, db),
         },
     )

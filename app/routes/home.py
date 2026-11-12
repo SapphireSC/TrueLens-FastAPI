@@ -1,7 +1,10 @@
 import json
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Depends
 from fastapi.responses import HTMLResponse
+from sqlalchemy.orm import Session
 from app.config import METRICS_JSON_PATH
+from app.database import get_db
+from app.routes.auth import get_current_user
 
 router = APIRouter()
 
@@ -17,7 +20,7 @@ def load_evaluation_metrics() -> dict:
 
 
 @router.get("/", response_class=HTMLResponse, name="home")
-async def home_page(request: Request):
+async def home_page(request: Request, db: Session = Depends(get_db)):
     metrics = load_evaluation_metrics()
     scan_engine = getattr(request.app.state, "scan_engine", None)
     is_live_model = bool(scan_engine and scan_engine.is_live_model)
@@ -29,12 +32,13 @@ async def home_page(request: Request):
             "active_page": "home",
             "metrics": metrics,
             "is_live_model": is_live_model,
+            "current_user": get_current_user(request, db),
         },
     )
 
 
 @router.get("/contact", response_class=HTMLResponse, name="contact")
-async def contact_page(request: Request):
+async def contact_page(request: Request, db: Session = Depends(get_db)):
     team_roles = [
         {
             "code": "A1",
@@ -88,5 +92,6 @@ async def contact_page(request: Request):
         {
             "active_page": "contact",
             "team_roles": team_roles,
+            "current_user": get_current_user(request, db),
         },
     )

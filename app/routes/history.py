@@ -8,6 +8,7 @@ from app.config import APP_DIR, UPLOAD_DIR
 from app.database import get_db
 from app.models import ScanHistory
 from app.services.scan_engine import format_id_number
+from app.routes.auth import get_current_user
 
 router = APIRouter()
 
@@ -77,6 +78,7 @@ async def view_history(
             "current_date": date,
             "filter_error": filter_error,
             "flash_message": flash_message,
+            "current_user": get_current_user(request, db),
         },
     )
 
@@ -140,6 +142,7 @@ async def confirm_delete_page(
                 "is_sample": record.is_sample,
                 "created_display": record.created_at.strftime("%d %b %Y · %H:%M"),
             },
+            "current_user": get_current_user(request, db),
         },
     )
 
