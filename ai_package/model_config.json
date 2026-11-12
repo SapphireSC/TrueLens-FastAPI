@@ -1,0 +1,8 @@
+{
+  "architecture": "efficientnet_b0",
+  "dropout": 0.2,
+  "experiment": "R2",
+  "in_features": 1280,
+  "output_logits": 1,
+  "weights_initialization": "R1 best epoch4"
+}
