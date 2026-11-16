@@ -34,52 +34,61 @@
     <!-- FLOATING PILL NAVBAR GRADASI BIRU -->
     <header class="wh-header-wrap" id="site-header">
       <div class="container">
-        <div class="wh-pill-navbar">
-          <a href="{{ url_for('home') }}" class="wh-brand">
+        <!-- Tambahkan d-flex justify-content-between agar Logo di kiri, Menu+Tombol di kanan -->
+        <div class="wh-pill-navbar d-flex justify-content-between align-items-center">
+          
+          <!-- BAGIAN KIRI: Logo -->
+          <a href="{{ url_for('home') }}" class="wh-brand text-decoration-none">
             <span class="wh-brand-icon">{{ icon('viewfinder', 22) }}</span>
             <span class="wh-brand-text">TrueLens<span class="wh-brand-accent">AI</span></span>
           </a>
 
-          <nav class="wh-nav-links" aria-label="Navigasi Utama">
-            <a
-              href="{{ url_for('home') }}"
-              class="wh-nav-link {{ 'is-active' if active_page == 'home' else '' }}"
-              >Beranda</a
-            >
-            {% if current_user is defined and current_user %}
-            <a
-              href="{{ url_for('scan') }}"
-              class="wh-nav-link {{ 'is-active' if active_page == 'scan' else '' }}"
-              >Pindai</a
-            >
-            <a
-              href="{{ url_for('history') }}"
-              class="wh-nav-link {{ 'is-active' if active_page == 'history' else '' }}"
-              >Riwayat</a
-            >
-            <a
-              href="{{ url_for('contact') }}"
-              class="wh-nav-link {{ 'is-active' if active_page == 'contact' else '' }}"
-              >Kontak</a
-            >
-            {% endif %}
-          </nav>
+          <!-- BAGIAN KANAN: Navigasi & Tombol digabung dalam satu bungkus (wrapper) -->
+          <div class="d-flex align-items-center gap-4">
+            
+            <nav class="wh-nav-links d-flex gap-3" aria-label="Navigasi Utama">
+              <a
+                href="{{ url_for('home') }}"
+                class="wh-nav-link text-decoration-none {{ 'is-active' if active_page == 'home' else '' }}"
+                >Beranda</a
+              >
+              {% if current_user is defined and current_user %}
+              <a
+                href="{{ url_for('scan') }}"
+                class="wh-nav-link text-decoration-none {{ 'is-active' if active_page == 'scan' else '' }}"
+                >Pindai</a
+              >
+              <a
+                href="{{ url_for('history') }}"
+                class="wh-nav-link text-decoration-none {{ 'is-active' if active_page == 'history' else '' }}"
+                >Riwayat</a
+              >
+              <a
+                href="{{ url_for('contact') }}"
+                class="wh-nav-link text-decoration-none {{ 'is-active' if active_page == 'contact' else '' }}"
+                >Kontak</a
+              >
+              {% endif %}
+            </nav>
 
-          <div class="wh-nav-actions">
-            {% if current_user is defined and current_user %}
-            <span class="wh-user-chip d-none d-md-inline-flex">
-              {{ current_user['username'] }}
-            </span>
-            <form action="{{ url_for('logout') }}" method="post" class="d-inline m-0">
-              <button type="submit" class="btn wh-btn-outline-pill">
-                Keluar
-              </button>
-            </form>
-            {% else %}
-            <a href="{{ url_for('login') }}" class="wh-login-link">Masuk</a>
-            <a href="{{ url_for('register') }}" class="btn wh-btn-signup-pill">Daftar</a>
-            {% endif %}
-          </div>
+            <div class="wh-nav-actions d-flex align-items-center gap-2">
+              {% if current_user is defined and current_user %}
+              <span class="wh-user-chip d-none d-md-inline-flex">
+                {{ current_user['username'] }}
+              </span>
+              <form action="{{ url_for('logout') }}" method="post" class="d-inline m-0">
+                <button type="submit" class="btn wh-btn-outline-pill">
+                  Keluar
+                </button>
+              </form>
+              {% else %}
+              <a href="{{ url_for('login') }}" class="wh-login-link text-decoration-none">Masuk</a>
+              <a href="{{ url_for('register') }}" class="btn wh-btn-signup-pill">Daftar</a>
+              {% endif %}
+            </div>
+
+          </div> <!-- Akhir bungkus bagian kanan -->
+
         </div>
       </div>
     </header>
@@ -89,9 +98,9 @@
     </main>
 
     <!-- FOOTER MINIMALIS HANYA LOGO TRUELENS AI -->
-    <footer class="wh-minimal-footer">
+    <footer class="wh-minimal-footer mt-5 pb-4">
       <div class="container d-flex justify-content-center align-items-center">
-        <a href="{{ url_for('home') }}" class="wh-footer-logo-only">
+        <a href="{{ url_for('home') }}" class="wh-footer-logo-only text-decoration-none">
           <span class="wh-brand-icon">{{ icon('viewfinder', 22) }}</span>
           <span>TrueLens<span class="wh-brand-gradient-text">AI</span></span>
         </a>

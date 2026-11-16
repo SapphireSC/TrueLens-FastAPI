@@ -13,8 +13,8 @@
     Mendeteksi gambar dari Midjourney, Stable Diffusion, DALL-E, Flux, dan generator AI lainnya dengan mudah.
   </p>
 
-  <div class="wh-detector-workspace mt-4 text-start">
-    <div class="wh-upload-card">
+  <div class="wh-detector-workspace mt-4 d-flex justify-content-center">
+    <div class="wh-upload-card col-12 col-md-10 col-lg-8">
       <div class="wh-dashed-box" data-href="{{ url_for('scan') }}" role="button" tabindex="0">
         <div class="wh-upload-icon-wrap">
           {{ icon('upload', 36) }}
@@ -27,16 +27,6 @@
         <p class="wh-drop-meta">JPG, JPEG, atau PNG (maksimal 10 MB, pemeriksaan instan)</p>
       </div>
     </div>
-
-    <div class="wh-report-placeholder-card">
-      <div class="wh-placeholder-inner">
-        <div class="wh-placeholder-icon">{{ icon('viewfinder', 42) }}</div>
-        <p class="mb-2 fw-semibold text-secondary">Laporan deteksi Anda akan muncul di sini</p>
-        <span class="badge rounded-pill text-bg-light border px-3 py-2 text-secondary">
-          Skor 0–100 &middot; Real vs AI-Generated
-        </span>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -45,7 +35,6 @@
     <h2 id="pipeline-heading" class="wh-section-title">Alur Pemrosesan &amp; Deteksi</h2>
     <p class="text-muted mx-auto">Tiga langkah praktis untuk memeriksa keaslian gambar digital Anda.</p>
   </div>
-
   <div class="row g-4">
     <div class="col-md-4">
       <div class="wh-step-card h-100">
@@ -58,7 +47,6 @@
         </p>
       </div>
     </div>
-
     <div class="col-md-4">
       <div class="wh-step-card h-100">
         <div class="d-flex align-items-center gap-3 mb-3">
@@ -70,7 +58,6 @@
         </p>
       </div>
     </div>
-
     <div class="col-md-4">
       <div class="wh-step-card h-100">
         <div class="d-flex align-items-center gap-3 mb-3">
@@ -85,13 +72,11 @@
   </div>
 </section>
 
-<!-- HASIL YANG AKAN ANDA DAPATKAN (DALAM KOTAK KARTU INTERAKTIF) -->
 <section class="wh-section reveal-on-scroll" aria-labelledby="outcome-heading">
   <div class="text-center mb-5">
     <h2 id="outcome-heading" class="wh-section-title">Hasil yang Akan Anda Dapatkan</h2>
     <p class="text-muted mx-auto">Ringkasan laporan yang mudah dibaca dan langsung ke intinya.</p>
   </div>
-
   <div class="row g-4">
     <div class="col-md-4">
       <div class="wh-step-card h-100">
@@ -104,11 +89,10 @@
         </p>
       </div>
     </div>
-
     <div class="col-md-4">
       <div class="wh-step-card h-100">
         <div class="d-flex align-items-center gap-3 mb-3">
-          <span class="wh-step-circle">{{ icon('sparkles', 20) }}</span>
+          <span class="wh-step-circle">%</span>
           <h3 class="m-0 fs-5 fw-bold">Persentase Keyakinan</h3>
         </div>
         <p class="text-muted mb-0">
@@ -116,7 +100,6 @@
         </p>
       </div>
     </div>
-
     <div class="col-md-4">
       <div class="wh-step-card h-100">
         <div class="d-flex align-items-center gap-3 mb-3">
@@ -131,6 +114,7 @@
   </div>
 </section>
 
+<!-- BAGIAN YANG DIUBAH: Angka dan Judul disejajarkan ke samping (flex-row & align-items-center) -->
 <section class="wh-section reveal-on-scroll" aria-labelledby="reliable-heading">
   <div class="text-center mb-5">
     <div class="wh-gradient-brand-heading">TrueLens AI</div>
@@ -141,51 +125,47 @@
       TrueLens AI memastikan pemeriksaan gambar berlangsung cepat dan akurat, memberikan rasa yakin pada setiap hasil analisis. Dirancang untuk mahasiswa, kreator konten, jurnalis, dan siapa saja yang ingin memastikan keaslian visual tanpa ragu.
     </p>
   </div>
-
   <div class="row g-4">
     <div class="col-md-6">
       <article class="wh-watermark-card h-100">
-        <div class="wh-wm-header">
-          <span class="wh-wm-number" aria-hidden="true">1</span>
-          <h3>Pemindaian Instan &amp; Presisi Tinggi</h3>
+        <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1;" aria-hidden="true">1</span>
+          <h3 class="m-0">Pemindaian Instan &amp; Presisi Tinggi</h3>
         </div>
-        <p>
+        <p class="m-0">
           TrueLens AI mengidentifikasi ciri visual buatan mesin dalam hitungan detik. Dengan memeriksa struktur piksel dan pola pencahayaan secara otomatis, Anda dapat menghemat banyak waktu dibandingkan menebak-nebak secara manual dengan mata telanjang.
         </p>
       </article>
     </div>
-
     <div class="col-md-6">
       <article class="wh-watermark-card h-100">
-        <div class="wh-wm-header">
-          <span class="wh-wm-number" aria-hidden="true">2</span>
-          <h3>Hilangkan Keraguan Saat Menilai Foto</h3>
+        <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1;" aria-hidden="true">2</span>
+          <h3 class="m-0">Hilangkan Keraguan Saat Menilai Foto</h3>
         </div>
-        <p>
+        <p class="m-0">
           Gambar yang beredar di internet tidak lagi membuat Anda bingung. Sistem menyajikan skor persentase keyakinan dan indikator skala yang transparan, membantu Anda mengambil keputusan tepat sebelum menggunakan atau membagikan ulang sebuah gambar.
         </p>
       </article>
     </div>
-
     <div class="col-md-6">
       <article class="wh-watermark-card h-100">
-        <div class="wh-wm-header">
-          <span class="wh-wm-number" aria-hidden="true">3</span>
-          <h3>Jaga Kredibilitas Konten &amp; Karya</h3>
+        <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1;" aria-hidden="true">3</span>
+          <h3 class="m-0">Jaga Kredibilitas Konten &amp; Karya</h3>
         </div>
-        <p>
+        <p class="m-0">
           Baik saat menyusun artikel media, tugas akademik, maupun materi publikasi kreatif, TrueLens AI membantu memastikan setiap aset visual yang Anda pakai telah terverifikasi. Langkah ini menekan risiko penyebaran ilustrasi palsu secara tidak sengaja.
         </p>
       </article>
     </div>
-
     <div class="col-md-6">
       <article class="wh-watermark-card h-100">
-        <div class="wh-wm-header">
-          <span class="wh-wm-number" aria-hidden="true">4</span>
-          <h3>Praktis untuk Kebutuhan Sehari-hari</h3>
+        <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1;" aria-hidden="true">4</span>
+          <h3 class="m-0">Praktis untuk Kebutuhan Sehari-hari</h3>
         </div>
-        <p>
+        <p class="m-0">
           Antarmuka TrueLens AI dirancang ringan dan langsung menyatu dengan alur kerja Anda di perangkat apa pun. Anda dapat memindai gambar kapan saja, mencatat temuan penting, dan menelusuri kembali daftar riwayat verifikasi dengan sangat mudah.
         </p>
       </article>

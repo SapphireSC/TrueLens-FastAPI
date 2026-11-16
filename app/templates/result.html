@@ -6,9 +6,6 @@
 {% block content %}
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4 reveal-on-scroll">
   <div>
-    <a href="{{ url_for('scan') }}" class="text-decoration-none fw-semibold d-inline-flex align-items-center gap-2 mb-1">
-      {{ icon('arrow-left', 16) }} Pindai gambar lain
-    </a>
     <h1 class="m-0" style="font-size:2rem;">Hasil Pemindaian Gambar</h1>
   </div>
   <div class="mono text-muted">{{ scan_timestamp }}</div>
@@ -31,12 +28,6 @@
         <div class="fw-bold text-dark text-break">{{ filename }}</div>
         <div class="mono text-muted small">{{ analysis.file_size_display }} &middot; {{ analysis.resolution }} px</div>
       </div>
-    </div>
-
-    <div class="mt-3">
-      <a href="{{ url_for('scan') }}" class="fw-bold text-decoration-none d-inline-flex align-items-center gap-1">
-        &larr; Coba gambar lainnya
-      </a>
     </div>
   </section>
 
