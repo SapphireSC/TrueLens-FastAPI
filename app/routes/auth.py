@@ -25,21 +25,37 @@ def get_current_user(request: Request, db: Session = Depends(get_db)):
     return db.query(User).filter(User.id == user_id).first()
 
 
+@router.get("/account", response_class=HTMLResponse, name="account")
+async def account_page(request: Request, db: Session = Depends(get_db)):
+    current_user = get_current_user(request, db)
+    if not current_user:
+        return RedirectResponse(url="/login", status_code=303)
+    return request.app.state.templates.TemplateResponse(
+        request,
+        "account.html",
+        {"active_page": "account", "current_user": current_user},
+    )
+
+
 @router.get("/login", response_class=HTMLResponse, name="login")
 async def login_page(request: Request, db: Session = Depends(get_db)):
+    if get_current_user(request, db):
+        return RedirectResponse(url="/", status_code=303)
     return request.app.state.templates.TemplateResponse(
         request,
         "login.html",
-        {"active_page": "login", "error": None, "current_user": get_current_user(request, db)},
+        {"active_page": "login", "error": None, "current_user": None},
     )
 
 
 @router.get("/register", response_class=HTMLResponse, name="register")
 async def register_page(request: Request, db: Session = Depends(get_db)):
+    if get_current_user(request, db):
+        return RedirectResponse(url="/", status_code=303)
     return request.app.state.templates.TemplateResponse(
         request,
         "register.html",
-        {"active_page": "register", "error": None, "current_user": get_current_user(request, db)},
+        {"active_page": "register", "error": None, "current_user": None},
     )
 
 
@@ -55,7 +71,7 @@ async def login_post(
         return request.app.state.templates.TemplateResponse(
             request,
             "login.html",
-            {"active_page": "login", "error": "Username atau password salah.", "current_user": get_current_user(request, db)},
+            {"active_page": "login", "error": "Username atau password salah.", "current_user": None},
             status_code=400,
         )
     request.session["user_id"] = user.id
@@ -75,7 +91,7 @@ async def registers_post(
         return request.app.state.templates.TemplateResponse(
             request,
             "register.html",
-            {"active_page": "register", "error": "Username atau email sudah terdaftar.", "current_user": get_current_user(request, db)},
+            {"active_page": "register", "error": "Username atau email sudah terdaftar.", "current_user": None},
             status_code=400,
         )
     user = User(

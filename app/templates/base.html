@@ -71,15 +71,17 @@
             aria-current="{{ 'page' if active_page == 'contact' else 'false' }}"
             >Kontak</a
           >
-          <form action="{{ url_for('logout') }}" method="post" class="nav-form">
-            <button type="submit" class="nav-link nav-logout-button">
-              Keluar
-            </button>
-          </form>
+          <a
+            href="{{ url_for('account') }}"
+            class="nav-link"
+            aria-current="{{ 'page' if active_page == 'account' else 'false' }}"
+            >Akun</a
+          >
           {% else %}
           <a
             href="{{ url_for('login') }}"
             class="nav-link"
+            data-auth-open="login"
             aria-current="{{ 'page' if active_page == 'login' or active_page == 'register' else 'false' }}"
             >Masuk</a
           >
@@ -100,6 +102,10 @@
         </div>
       </div>
     </footer>
+
+    {% if not current_user %}
+    {% include "partials/auth_dialogs.html" %}
+    {% endif %}
 
     <script src="{{ url_for('static', path='js/app.js') }}"></script>
   </body>
