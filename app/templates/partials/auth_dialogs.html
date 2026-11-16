@@ -1,0 +1,172 @@
+{# Modal autentikasi (Masuk & Daftar).
+   Ditampilkan di atas halaman yang sedang dibuka, dengan latar diredupkan.
+   Status "terbuka" ditentukan server lewat active_page, sehingga /login dan /register
+   tetap tampil sebagai modal tanpa JavaScript. #}
+{% from "partials/macros.html" import icon %}
+
+<div
+  class="modal-overlay{% if active_page == 'login' %} is-open{% endif %}"
+  id="auth-modal-login"
+  data-auth-modal="login"
+>
+  <div
+    class="modal-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="auth-modal-login-title"
+  >
+    <button
+      type="button"
+      class="modal-close"
+      data-auth-close
+      aria-label="Tutup"
+    >
+      {{ icon('x', 18) }}
+    </button>
+
+    <p class="modal-lead">Periksa gambar sebelum Anda percaya.</p>
+    <h1 class="modal-title" id="auth-modal-login-title">Masuk ke Akun</h1>
+    <p class="modal-desc">
+      Masuk dengan username dan password untuk membuka riwayat pemindaian Anda.
+    </p>
+
+    {% if error is defined and error and active_page == 'login' %}
+    <div class="alert alert-danger" role="alert">
+      {{ icon('triangle-alert', 20) }}
+      <div>{{ error }}</div>
+    </div>
+    {% endif %}
+
+    <form action="{{ url_for('login_post') }}" method="post">
+      <div class="form-group">
+        <label for="login-username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="login-username"
+          name="username"
+          class="form-control"
+          autocomplete="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="login-password" class="form-label">Password</label>
+        <div class="password-field">
+          <input
+            type="password"
+            id="login-password"
+            name="password"
+            class="form-control"
+            autocomplete="current-password"
+            required
+          />
+          <button
+            type="button"
+            class="password-toggle"
+            data-password-toggle="login-password"
+            aria-label="Tampilkan password"
+            aria-pressed="false"
+          >
+            <span class="password-toggle-icon is-visible">{{ icon('eye', 20) }}</span>
+            <span class="password-toggle-icon">{{ icon('eye-off', 20) }}</span>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary auth-submit">Masuk</button>
+    </form>
+
+    <p class="auth-pivot">
+      Belum punya akun?
+      <a href="{{ url_for('register') }}" data-auth-open="register">Daftar di sini</a>
+    </p>
+  </div>
+</div>
+
+<div
+  class="modal-overlay{% if active_page == 'register' %} is-open{% endif %}"
+  id="auth-modal-register"
+  data-auth-modal="register"
+>
+  <div
+    class="modal-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="auth-modal-register-title"
+  >
+    <button
+      type="button"
+      class="modal-close"
+      data-auth-close
+      aria-label="Tutup"
+    >
+      {{ icon('x', 18) }}
+    </button>
+
+    <p class="modal-lead">Satu akun untuk seluruh riwayat pemindaian.</p>
+    <h1 class="modal-title" id="auth-modal-register-title">Daftar Akun Baru</h1>
+    <p class="modal-desc">
+      Buat akun agar hasil pemindaian Anda tersimpan dan bisa ditinjau kembali.
+    </p>
+
+    {% if error is defined and error and active_page == 'register' %}
+    <div class="alert alert-danger" role="alert">
+      {{ icon('triangle-alert', 20) }}
+      <div>{{ error }}</div>
+    </div>
+    {% endif %}
+
+    <form action="{{ url_for('registers_post') }}" method="post">
+      <div class="form-group">
+        <label for="register-username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="register-username"
+          name="username"
+          class="form-control"
+          autocomplete="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="register-email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="register-email"
+          name="email"
+          class="form-control"
+          autocomplete="email"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="register-password" class="form-label">Password</label>
+        <div class="password-field">
+          <input
+            type="password"
+            id="register-password"
+            name="password"
+            class="form-control"
+            autocomplete="new-password"
+            required
+          />
+          <button
+            type="button"
+            class="password-toggle"
+            data-password-toggle="register-password"
+            aria-label="Tampilkan password"
+            aria-pressed="false"
+          >
+            <span class="password-toggle-icon is-visible">{{ icon('eye', 20) }}</span>
+            <span class="password-toggle-icon">{{ icon('eye-off', 20) }}</span>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary auth-submit">Daftar</button>
+    </form>
+
+    <p class="auth-pivot">
+      Sudah punya akun?
+      <a href="{{ url_for('login') }}" data-auth-open="login">Masuk di sini</a>
+    </p>
+  </div>
+</div>

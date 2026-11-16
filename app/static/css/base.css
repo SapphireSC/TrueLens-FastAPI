@@ -150,11 +150,6 @@ a:hover {
   gap: 1.5rem;
 }
 
-.site-nav form {
-  margin: 0;
-  display: contents;
-}
-
 .nav-link {
   display: inline-flex;
   align-items: center;
@@ -175,21 +170,6 @@ a:hover {
 .nav-link[aria-current="page"] {
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
-}
-
-.nav-logout-button {
-  background: none;
-  border: 0;
-  margin: 0;
-  cursor: pointer;
-  font-family: inherit;
-  border-bottom: solid transparent;
-}
-
-.nav-form {
-  margin: 0;
-  padding: 0;
-  display: inline-flex;
 }
 
 main {
