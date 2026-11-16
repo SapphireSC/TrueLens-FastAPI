@@ -4,99 +4,120 @@
 {% block title %}Hasil Pemindaian — TrueLens AI{% endblock %}
 
 {% block content %}
-<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:var(--space-3); margin-bottom:var(--space-5);">
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4 reveal-on-scroll">
   <div>
-    <a href="{{ url_for('scan') }}" style="display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:0.875rem; margin-bottom:var(--space-2);">
-      {{ icon('arrow-left', 16) }} Kembali ke pemindaian
+    <a href="{{ url_for('scan') }}" class="text-decoration-none fw-semibold d-inline-flex align-items-center gap-2 mb-1">
+      {{ icon('arrow-left', 16) }} Pindai gambar lain
     </a>
-    <h1 style="margin-bottom:0;">Hasil pemindaian</h1>
+    <h1 class="m-0" style="font-size:2rem;">Hasil Pemindaian Gambar</h1>
   </div>
   <div class="mono text-muted">{{ scan_timestamp }}</div>
 </div>
 
-{% if is_preview_demo %}
-<div class="alert alert-warning">
-  {{ icon('info', 20) }}
-  <div>
-    <span class="badge badge-preview" style="margin-right:6px;">Pratinjau</span>
-    Ini adalah halaman contoh untuk demonstrasi tata letak hasil pemindaian.
-  </div>
-</div>
-{% endif %}
+<!-- LAYOUT HASIL 2 KOLOM ALA WRITEHUMAN (PERSIS GAMBAR 5) -->
+<div class="wh-detector-workspace reveal-on-scroll">
+  <!-- Kolom Kiri: Bingkai Gambar yang Dipindai -->
+  <section class="wh-upload-card">
+    <div class="wh-dashed-box" style="cursor:default; padding:var(--space-5);">
+      {% if image_path %}
+        <img src="/{{ image_path }}" alt="Pratinjau gambar {{ filename }}" class="wh-result-img" />
+      {% else %}
+        <div class="wh-result-img d-flex align-items-center justify-content-center text-muted">
+          <span>Pratinjau Sampel ({{ filename }})</span>
+        </div>
+      {% endif %}
 
-<div class="result-layout">
-  <section class="result-image-box" aria-label="Pratinjau berkas yang dipindai">
-    {% if image_path %}
-      <img src="/{{ image_path }}" alt="Pratinjau gambar {{ filename }}" class="result-image-preview">
-    {% else %}
-      <div class="result-image-preview" style="display:flex; align-items:center; justify-content:center; color:var(--color-text-muted);">
-        <span>Pratinjau Sampel ({{ filename }})</span>
+      <div class="mt-3 text-center">
+        <div class="fw-bold text-dark text-break">{{ filename }}</div>
+        <div class="mono text-muted small">{{ analysis.file_size_display }} &middot; {{ analysis.resolution }} px</div>
       </div>
-    {% endif %}
+    </div>
 
-    <div class="spec-list" style="margin-top:var(--space-4);">
-      <div class="spec-row"><span class="spec-term">Nama berkas</span><span class="spec-val mono" style="word-break:break-all;">{{ filename }}</span></div>
-      <div class="spec-row"><span class="spec-term">Resolusi asli</span><span class="spec-val mono">{{ analysis.resolution }} px</span></div>
-      <div class="spec-row"><span class="spec-term">Ukuran berkas</span><span class="spec-val mono">{{ analysis.file_size_display }}</span></div>
-      <div class="spec-row"><span class="spec-term">Dimensi tensor model</span><span class="spec-val mono">224 × 224 × 3</span></div>
+    <div class="mt-3">
+      <a href="{{ url_for('scan') }}" class="fw-bold text-decoration-none d-inline-flex align-items-center gap-1">
+        &larr; Coba gambar lainnya
+      </a>
     </div>
   </section>
 
-  <section class="panel-elevated" aria-labelledby="verdict-heading">
-    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:var(--space-3); margin-bottom:var(--space-4);">
-      <div>
-        <span class="text-muted" style="display:block; font-weight:600;">Status Klasifikasi</span>
-        <h2 id="verdict-heading" style="font-size:1.375rem; margin-bottom:0;">{{ analysis.risk_tier }}</h2>
-      </div>
-      {{ status_badge(analysis.predicted_label) }}
+  <!-- Kolom Kanan: Kartu Skor Besar /100 ala WriteHuman -->
+  <section class="wh-score-report-card" aria-labelledby="verdict-heading">
+    <div class="wh-report-brand">
+      {{ icon('viewfinder', 20) }}
+      <span>TrueLens<span style="color:#0284C7;">AI</span></span>
     </div>
 
-    <p class="text-muted" style="margin-bottom:var(--space-5);">{{ analysis.tier_desc }}</p>
+    <!-- Angka Skor Besar dengan Animasi Count-Up -->
+    <div class="wh-big-score-wrap">
+      <div
+        class="wh-big-score-num {{ 'is-ai' if analysis.predicted_label == 'AI-Generated' else 'is-real' }}"
+        data-target-score="{{ analysis.confidence_score }}"
+      >
+        {{ analysis.confidence_display }}
+      </div>
+      <div class="wh-big-score-denom">/100</div>
+    </div>
 
-    {{ confidence_meter(analysis.confidence_score, analysis.confidence_display) }}
+    <!-- Badge Status -->
+    <div class="my-3">
+      <span class="wh-verdict-pill {{ 'pill-ai' if analysis.predicted_label == 'AI-Generated' else 'pill-real' }}" id="verdict-heading">
+        {{ analysis.risk_tier }}
+      </span>
+    </div>
 
-    {{ probability_scale(analysis.marker_percent, analysis.tier_code, analysis.raw_prob_display) }}
+    <!-- Bar Indikator Asli <-> AI-Generated -->
+    <div class="wh-Authenticity-bar-wrap my-3 text-start">
+      <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+        <span>Asli (Real)</span>
+        <span>AI-Generated</span>
+      </div>
+      <div class="wh-auth-track">
+        <div
+          class="wh-auth-fill {{ 'fill-ai' if analysis.predicted_label == 'AI-Generated' else 'fill-real' }}"
+          data-width="{{ analysis.confidence_score }}"
+        ></div>
+      </div>
+    </div>
 
-    <p class="text-muted" style="font-size:0.8125rem; margin-bottom:var(--space-5);">
-      <strong>Catatan rumus:</strong> Keyakinan = p × 100 untuk AI-Generated; (1 &minus; p) × 100 untuk Real.
+    <p class="wh-report-desc">
+      {{ analysis.tier_desc }}
     </p>
 
-    <form action="{{ url_for('history_save') }}" method="post" style="border-top:1px solid var(--color-border); padding-top:var(--space-4);">
-      <input type="hidden" name="filename" value="{{ filename }}">
-      <input type="hidden" name="image_path" value="{{ image_path }}">
-      <input type="hidden" name="file_size_kb" value="{{ analysis.file_size_kb }}">
-      <input type="hidden" name="resolution" value="{{ analysis.resolution }}">
-      <input type="hidden" name="predicted_label" value="{{ analysis.predicted_label }}">
-      <input type="hidden" name="risk_tier" value="{{ analysis.risk_tier }}">
-      <input type="hidden" name="confidence_score" value="{{ analysis.confidence_score }}">
-      <input type="hidden" name="raw_prob" value="{{ analysis.raw_prob }}">
+    <div class="wh-analyzed-by mono">
+      Dianalisis oleh: EfficientNet-B0 PyTorch (Skor Sigmoid p = {{ analysis.raw_prob_display }})
+    </div>
 
-      <div class="form-group">
-        <label for="notes-input" class="form-label">Catatan verifikasi (opsional)</label>
-        <input type="text" id="notes-input" name="notes" class="form-control" placeholder="Misal: Dokumentasi artikel hiburan / kiriman media sosial">
+    <!-- Form Simpan ke Riwayat Database (Operasi CREATE UAS) -->
+    <form action="{{ url_for('history_save') }}" method="post" class="mt-4 pt-3 border-top text-start">
+      <input type="hidden" name="filename" value="{{ filename }}" />
+      <input type="hidden" name="image_path" value="{{ image_path }}" />
+      <input type="hidden" name="file_size_kb" value="{{ analysis.file_size_kb }}" />
+      <input type="hidden" name="resolution" value="{{ analysis.resolution }}" />
+      <input type="hidden" name="predicted_label" value="{{ analysis.predicted_label }}" />
+      <input type="hidden" name="risk_tier" value="{{ analysis.risk_tier }}" />
+      <input type="hidden" name="confidence_score" value="{{ analysis.confidence_score }}" />
+      <input type="hidden" name="raw_prob" value="{{ analysis.raw_prob }}" />
+
+      <div class="mb-3">
+        <label for="notes-input" class="form-label small fw-bold">Catatan verifikasi (opsional)</label>
+        <input
+          type="text"
+          id="notes-input"
+          name="notes"
+          class="form-control form-control-sm"
+          placeholder="Contoh: Foto dokumentasi acara / gambar kiriman grup"
+        />
       </div>
 
-      <div style="display:flex; flex-wrap:wrap; gap:var(--space-3);">
-        <button type="submit" class="btn btn-primary">Simpan ke riwayat</button>
-        <a href="{{ url_for('scan') }}" class="btn btn-secondary">Pindai gambar lain</a>
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">
+          Simpan ke Riwayat
+        </button>
+        <a href="{{ url_for('scan') }}" class="btn btn-secondary">
+          Pindai Gambar Lain
+        </a>
       </div>
     </form>
   </section>
-</div>
-
-<div style="margin-top:var(--space-6);">
-  <details class="tech-details">
-    <summary class="tech-summary">Detail perhitungan &amp; mode inferensi</summary>
-    <div class="tech-body">
-      <div class="spec-list">
-        <div class="spec-row"><span class="spec-term">Mesin Inferensi</span><span class="spec-val">{{ analysis.inference_mode }}</span></div>
-        <div class="spec-row"><span class="spec-term">Skor Sigmoid Mentah (p)</span><span class="spec-val mono">{{ analysis.raw_prob_display }}</span></div>
-        <div class="spec-row"><span class="spec-term">Ambang Keputusan Biner</span><span class="spec-val mono">p &ge; 0,50 &rarr; AI-Generated | p &lt; 0,50 &rarr; Real</span></div>
-      </div>
-    </div>
-  </details>
-  <p class="text-muted" style="margin-top:var(--space-3);">
-    Hasil ini adalah keluaran model untuk satu gambar, bukan bukti forensik atau putusan hukum.
-  </p>
 </div>
 {% endblock %}
