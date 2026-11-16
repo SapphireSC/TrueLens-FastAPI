@@ -23,8 +23,10 @@ dataset/
 .DS_Store
 .vscode/
 
+# Superpowers brainstorming companion (mockup sementara)
+.superpowers/
+
 # AI
-docs/
 AGENTS.md
 DESIGN.md
 opencode.json
