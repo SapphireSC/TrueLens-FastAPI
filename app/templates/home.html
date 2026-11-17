@@ -1,122 +1,175 @@
 {% extends "base.html" %}
 {% from "partials/macros.html" import icon %}
 
-{% block title %}TrueLens AI — Beranda & Dokumentasi Model AI{% endblock %}
+{% block title %}TrueLens AI — Detektor Gambar AI Gratis & Akurat{% endblock %}
 
 {% block content %}
-<section class="hero-grid" aria-labelledby="hero-heading">
-  <div>
-    <h1 id="hero-heading">Lihat lebih dekat sebelum mempercayai sebuah gambar.</h1>
-    <p>
-      TrueLens AI memindai gambar JPG atau PNG dan menampilkan apakah citra tersebut
-      <strong>Real</strong> atau <strong>AI-Generated</strong>, beserta skor keyakinan model.
+<section class="wh-hero-section text-center reveal-on-scroll">
+  <h1 class="wh-hero-title">
+    Detektor Gambar AI 
+    <span style="background: linear-gradient(90deg, #8b5cf6 0%, #ef4444 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Cepat &amp; Akurat</span>
+  </h1>
+  <p class="wh-hero-subtitle mx-auto">
+    Unggah gambar apa pun untuk memeriksa secara instan apakah foto tersebut asli atau buatan AI.
+    Mendeteksi gambar dari Midjourney, Stable Diffusion, DALL-E, Flux, dan generator AI lainnya dengan mudah.
+  </p>
+
+  <div class="wh-detector-workspace mt-4 d-flex justify-content-center">
+    <div class="wh-upload-card col-12 col-md-10 col-lg-8" style="border: 1px solid #ddd6fe; box-shadow: 0 20px 44px -14px rgba(139, 92, 246, 0.14);">
+      <div class="wh-dashed-box" data-href="{{ url_for('scan') }}" role="button" tabindex="0" style="border: 2px dashed #a78bfa; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%);">
+        <div class="wh-upload-icon-wrap" style="background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); color: #8b5cf6; box-shadow: 0 6px 16px rgba(139, 92, 246, 0.15);">
+          {{ icon('upload', 36) }}
+        </div>
+        <h3 class="wh-drop-title">Seret dan lepas gambar di sini</h3>
+        <p class="wh-drop-sub">atau klik untuk memilih berkas</p>
+        <a href="{{ url_for('scan') }}" class="btn wh-btn-choose-file" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 6px 16px rgba(139, 92, 246, 0.28);">
+          Pilih Berkas Gambar
+        </a>
+        <p class="wh-drop-meta">JPG, JPEG, atau PNG (maksimal 10 MB, pemeriksaan instan)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wh-section reveal-on-scroll" aria-labelledby="pipeline-heading">
+  <div class="text-center mb-5">
+    <h2 id="pipeline-heading" class="wh-section-title">Alur Pemrosesan &amp; Deteksi</h2>
+    <p class="text-muted mx-auto">Tiga langkah praktis untuk memeriksa keaslian gambar digital Anda.</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">1</span>
+          <h3 class="m-0 fs-5 fw-bold">Unggah Gambar</h3>
+        </div>
+        <p class="text-muted mb-0">
+          Seret dan lepas atau pilih foto berformat JPG, JPEG, maupun PNG hingga ukuran 10 MB. Sistem otomatis memvalidasi berkas Anda agar siap dianalisis.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">2</span>
+          <h3 class="m-0 fs-5 fw-bold">Analisis AI</h3>
+        </div>
+        <p class="text-muted mb-0">
+          Mesin Deep Learning kami memindai pola visual, tekstur warna, serta jejak halus yang ditinggalkan oleh generator gambar AI secara instan.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">3</span>
+          <h3 class="m-0 fs-5 fw-bold">Tinjau &amp; Simpan Skor</h3>
+        </div>
+        <p class="text-muted mb-0">
+          Dapatkan skor keyakinan 0–100 yang jelas beserta label keasliannya, lalu simpan hasilnya ke dalam riwayat akun Anda kapan saja.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wh-section reveal-on-scroll" aria-labelledby="outcome-heading">
+  <div class="text-center mb-5">
+    <h2 id="outcome-heading" class="wh-section-title">Hasil yang Akan Anda Dapatkan</h2>
+    <p class="text-muted mx-auto">Ringkasan laporan yang mudah dibaca dan langsung ke intinya.</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">{{ icon('badge-check', 20) }}</span>
+          <h3 class="m-0 fs-5 fw-bold">Status Keaslian Jelas</h3>
+        </div>
+        <p class="text-muted mb-0">
+          Setiap pemindaian memberikan keputusan tegas apakah gambar tergolong <strong>Real</strong> (foto asli kamera) atau <strong>AI-Generated</strong> (buatan AI).
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">%</span>
+          <h3 class="m-0 fs-5 fw-bold">Persentase Keyakinan</h3>
+        </div>
+        <p class="text-muted mb-0">
+          Dilengkapi skor tingkat keyakinan 0–100 dan bar indikator visual sehingga Anda mengetahui seberapa kuat indikasi pada gambar tersebut.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">{{ icon('file', 20) }}</span>
+          <h3 class="m-0 fs-5 fw-bold">Arsip Riwayat Pribadi</h3>
+        </div>
+        <p class="text-muted mb-0">
+          Simpan hasil pengecekan penting beserta catatan Anda ke dalam daftar riwayat agar mudah dicari, difilter, atau dikelola kembali.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wh-section reveal-on-scroll" aria-labelledby="reliable-heading">
+  <div class="text-center mb-5">
+    <div class="wh-gradient-brand-heading" style="background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 50%, #c084fc 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">TrueLens AI</div>
+    <h2 id="reliable-heading" class="wh-reliable-subtitle">
+      Menghadirkan Verifikasi Citra yang Andal
+    </h2>
+    <p class="wh-reliable-desc mx-auto">
+      TrueLens AI memastikan pemeriksaan gambar berlangsung cepat dan akurat, memberikan rasa yakin pada setiap hasil analisis. Dirancang untuk mahasiswa, kreator konten, jurnalis, dan siapa saja yang ingin memastikan keaslian visual tanpa ragu.
     </p>
-    <div class="hero-actions">
-      <a href="{{ url_for('scan') }}" class="btn btn-primary">Pindai gambar</a>
-      <a href="{{ url_for('history') }}" class="btn btn-secondary">Lihat riwayat</a>
-    </div>
-    <p class="text-muted" style="margin-bottom:0;">
-      Alat bantu analisis visual, bukan pengganti putusan hukum atau forensik profesional.
-    </p>
   </div>
-
-  <div class="viewfinder-frame" aria-hidden="true">
-    <div class="vf-corners">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span class="mono" style="font-weight:700; color:var(--color-text-strong);">SCANNER FRAME · RGB</span>
-      </div>
-      <div class="vf-scanline"></div>
-      <div class="mono" style="font-size:0.8125rem; color:var(--color-text);">
-        Format: JPG, JPEG, PNG &middot; Maks: 10 MB
-      </div>
+  <div class="row g-4">
+    <div class="col-md-6">
+      <article class="wh-watermark-card h-100" style="border: 1px solid #ddd6fe; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); box-shadow: 0 10px 28px -12px rgba(139, 92, 246, 0.1);">
+        <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1; background: linear-gradient(180deg, rgba(139, 92, 246, 0.22) 0%, rgba(167, 139, 250, 0.06) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" aria-hidden="true">1</span>
+          <h3 class="m-0">Pemindaian Instan &amp; Presisi Tinggi</h3>
+        </div>
+        <p class="m-0">
+          TrueLens AI mengidentifikasi ciri visual buatan mesin dalam hitungan detik. Dengan memeriksa struktur piksel dan pola pencahayaan secara otomatis, Anda dapat menghemat banyak waktu dibandingkan menebak-nebak secara manual dengan mata telanjang.
+        </p>
+      </article>
+    </div>
+    <div class="col-md-6">
+      <article class="wh-watermark-card h-100" style="border: 1px solid #ddd6fe; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); box-shadow: 0 10px 28px -12px rgba(139, 92, 246, 0.1);">
+        <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1; background: linear-gradient(180deg, rgba(139, 92, 246, 0.22) 0%, rgba(167, 139, 250, 0.06) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" aria-hidden="true">2</span>
+          <h3 class="m-0">Hilangkan Keraguan Saat Menilai Foto</h3>
+        </div>
+        <p class="m-0">
+          Gambar yang beredar di internet tidak lagi membuat Anda bingung. Sistem menyajikan skor persentase keyakinan dan indikator skala yang transparan, membantu Anda mengambil keputusan tepat sebelum menggunakan atau membagikan ulang sebuah gambar.
+        </p>
+      </article>
+    </div>
+    <div class="col-md-6">
+      <article class="wh-watermark-card h-100" style="border: 1px solid #ddd6fe; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); box-shadow: 0 10px 28px -12px rgba(139, 92, 246, 0.1);">
+        <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1; background: linear-gradient(180deg, rgba(139, 92, 246, 0.22) 0%, rgba(167, 139, 250, 0.06) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" aria-hidden="true">3</span>
+          <h3 class="m-0">Jaga Kredibilitas Konten &amp; Karya</h3>
+        </div>
+        <p class="m-0">
+          Baik saat menyusun artikel media, tugas akademik, maupun materi publikasi kreatif, TrueLens AI membantu memastikan setiap aset visual yang Anda pakai telah terverifikasi. Langkah ini menekan risiko penyebaran ilustrasi palsu secara tidak sengaja.
+        </p>
+      </article>
+    </div>
+    <div class="col-md-6">
+      <article class="wh-watermark-card h-100" style="border: 1px solid #ddd6fe; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); box-shadow: 0 10px 28px -12px rgba(139, 92, 246, 0.1);">
+        <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1; background: linear-gradient(180deg, rgba(139, 92, 246, 0.22) 0%, rgba(167, 139, 250, 0.06) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" aria-hidden="true">4</span>
+          <h3 class="m-0">Praktis untuk Kebutuhan Sehari-hari</h3>
+        </div>
+        <p class="m-0">
+          Antarmuka TrueLens AI dirancang ringan dan langsung menyatu dengan alur kerja Anda di perangkat apa pun. Anda dapat memindai gambar kapan saja, mencatat temuan penting, dan menelusuri kembali daftar riwayat verifikasi dengan sangat mudah.
+        </p>
+      </article>
     </div>
   </div>
 </section>
-
-<section class="section-block panel" aria-labelledby="context-heading">
-  <h2 id="context-heading">Mengapa verifikasi gambar?</h2>
-  <p>
-    Gambar sintetis dari AI sulit dibedakan kasat mata. TrueLens AI memberi pemeriksaan awal
-    berbasis model untuk membantu Anda menilai keaslian gambar sebelum mempercayainya.
-  </p>
-  <p class="text-muted" style="margin-bottom:0;">
-    <strong>Target pengguna:</strong> Untuk jurnalis media, peneliti forensik digital, kreator konten, dan masyarakat umum
-    yang perlu meninjau satu gambar sebelum mempercayai atau mempublikasikannya.
-  </p>
-</section>
-
-<section class="section-block" aria-labelledby="pipeline-heading">
-  <h2 id="pipeline-heading">Alur Pemrosesan &amp; Deteksi</h2>
-  <ol class="pipeline-list">
-    <li class="pipeline-item">
-      <span class="pipeline-step-num">01 · Unggah dan validasi</span>
-      <h3>Pemeriksaan Berkas</h3>
-      <p class="text-muted" style="margin-bottom:0;">
-        Memeriksa ekstensi JPG/JPEG/PNG, batas ukuran maksimum 10 MB, dan kecocokan struktur header biner (magic bytes).
-      </p>
-    </li>
-    <li class="pipeline-item">
-      <span class="pipeline-step-num">02 · Preprocessing dan inferensi</span>
-      <h3>Ekstraksi Fitur CNN</h3>
-      <p class="text-muted" style="margin-bottom:0;">
-        Citra diproses oleh model AI EfficientNet-B0 untuk mendeteksi keasliannya.
-      </p>
-    </li>
-    <li class="pipeline-item">
-      <span class="pipeline-step-num">03 · Tinjau dan simpan</span>
-      <h3>Manajemen Riwayat Database</h3>
-      <p class="text-muted" style="margin-bottom:0;">
-        Menampilkan label status, meter keyakinan, serta menyediakan operasi Create, Read, dan Delete pada PostgreSQL.
-      </p>
-    </li>
-  </ol>
-</section>
-
-<section class="section-block" aria-labelledby="ranges-heading">
-  <h2 id="ranges-heading">Hasil yang Akan Anda Dapatkan</h2>
-  <p class="text-muted">
-    Setiap pemindaian menghasilkan satu keputusan: <strong>Real</strong> (citra asli dari kamera)
-    atau <strong>AI-Generated</strong> (ciptaan model AI), dengan persentase keyakinan model.
-  </p>
-  <p class="text-muted" style="margin-bottom:0;">
-    Hasil adalah bantuan analisis, bukan bukti forensik atau putusan hukum akhir.
-  </p>
-</section>
-
-<section class="section-block panel" aria-labelledby="specs-heading">
-  <h2 id="specs-heading">Tentang Model &amp; Data</h2>
-  <div class="spec-list" style="margin-bottom:var(--space-4);">
-    <div class="spec-row"><span class="spec-term">Model AI</span><span class="spec-val">EfficientNet-B0 (Transfer Learning PyTorch, Kandidat R2 Epoch 9, Ambang 0,55)</span></div>
-    <div class="spec-row"><span class="spec-term">Dataset</span><span class="spec-val">CIFAKE: Real and AI-Generated Synthetic Images (120.000 Citra: 60k Real CIFAR-10 &amp; 60k Fake Stable Diffusion v1.4)</span></div>
-    <div class="spec-row"><span class="spec-term">Metrik Evaluasi Uji</span>
-      <span class="spec-val mono">
-        {% if metrics and metrics.evaluated %}
-          Accuracy: {{ metrics.accuracy }}% &middot; Precision: {{ metrics.precision }}% &middot; Recall: {{ metrics.recall }}% &middot; F1: {{ metrics.f1_score }}% &middot; ROC-AUC: {{ metrics.roc_auc }}
-        {% else %}
-          Accuracy: 96,49% &middot; Precision: 96,41% &middot; Recall: 96,58% &middot; F1: 96,49% &middot; ROC-AUC: 0,9950
-        {% endif %}
-      </span>
-    </div>
-    <div class="spec-row"><span class="spec-term">Batasan</span><span class="spec-val">Hasil adalah estimasi model pada distribusi CIFAKE, bukan putusan hukum</span></div>
-  </div>
-
-  <details class="tech-details" style="margin-bottom:0;">
-    <summary class="tech-summary">Detail teknis dataset, preprocessing, &amp; arsitektur EfficientNet-B0</summary>
-    <div class="tech-body">
-      <div class="spec-list">
-        <div class="spec-row"><span class="spec-term">Partisi Dataset</span><span class="spec-val">78.961 Train &middot; 19.741 Validation &middot; 20.000 Testing (10 kelas objek berpasangan)</span></div>
-        <div class="spec-row"><span class="spec-term">Pipeline Preprocessing</span><span class="spec-val">EXIF Transpose, Alpha-White RGB Composite, Bicubic Resize 256 &rarr; Center Crop 224×224, Normalisasi ImageNet-1K</span></div>
-        <div class="spec-row"><span class="spec-term">Classification Head</span><span class="spec-val">Backbone EfficientNet-B0 (1280 fitur) &rarr; Dropout(0,2) &rarr; Linear(1280 &rarr; 1 Logit) &rarr; Sigmoid</span></div>
-      </div>
-    </div>
-  </details>
-</section>
-
-<div class="alert alert-warning">
-  {{ icon('triangle-alert', 20) }}
-  <div>
-    <strong>Batasan Model:</strong> Model dilatih pada distribusi dataset CIFAKE (Stable Diffusion v1.4 &amp; CIFAR-10);
-    generator generasi terbaru atau distribusi gambar yang sangat berbeda dapat memengaruhi tingkat keandalan prediksi.
-  </div>
-</div>
 {% endblock %}

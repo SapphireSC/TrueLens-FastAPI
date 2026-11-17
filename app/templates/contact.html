@@ -5,23 +5,33 @@
 {% block content %}
 <h1>Tim TrueLens AI</h1>
 <p>
-  Proyek UAS Pemrograman Web Framework pada bidang Hiburan / Media Digital.
-  Halaman ini menampilkan pembagian peran teknis dan tanggung jawab anggota kelompok (tanpa mencantumkan data kontak pribadi yang belum dikonfirmasi).
+  Proyek UAS Pemrograman Web Framework pada bidang Hiburan / Media Digital. Halaman ini menampilkan anggota kelompok yang membangun TrueLensAI bersama.
 </p>
 
-<section class="role-grid" aria-label="Pembagian peran anggota kelompok">
-  {% for member in team_roles %}
-  <article class="role-card">
-    <div class="role-initials">{{ member.code }}</div>
-    <h2 style="font-size:1.1875rem; margin-bottom:4px;">{{ member.role }}</h2>
-    <p class="text-muted" style="font-weight:600; margin-bottom:var(--space-3);">{{ member.focus }}</p>
-    <ul style="margin:0; padding-left:20px; color:var(--color-text); font-size:0.9375rem;">
-      {% for t in member.tasks %}
-      <li style="margin-bottom:6px;">{{ t }}</li>
-      {% endfor %}
-    </ul>
+<section class="role-grid" aria-label="Daftar anggota kelompok">
+  <!-- Anggota 1 -->
+  <article class="role-card" style="text-align: center;">
+    <img src="{{ url_for('static', path='img/foto-yudis.png.jpeg') }}" alt="Foto Yudistira" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px auto; display: block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h2 style="font-size:1.1875rem; margin-bottom:0;">32240031 - Yudistira Ariwicaksono</h2>
   </article>
-  {% endfor %}
+
+  <!-- Anggota 2 -->
+  <article class="role-card" style="text-align: center;">
+    <img src="{{ url_for('static', path='img/foto-winston.png.jpeg') }}" alt="Foto Winston" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px auto; display: block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h2 style="font-size:1.1875rem; margin-bottom:0;">32240004 - Winston Wesley Matthew D</h2>
+  </article>
+
+  <!-- Anggota 3 -->
+  <article class="role-card" style="text-align: center;">
+    <img src="{{ url_for('static', path='img/foto-jojo2.png.jpeg') }}" alt="Foto Jonathan" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px auto; display: block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h2 style="font-size:1.1875rem; margin-bottom:0;">32240018 - Jonathan Stoffel Maynard</h2>
+  </article>
+
+  <!-- Anggota 4 -->
+  <article class="role-card" style="text-align: center;">
+    <img src="{{ url_for('static', path='img/foto-frans.jpg.jpeg') }}" alt="Foto Fransiskus" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px auto; display: block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h2 style="font-size:1.1875rem; margin-bottom:0;">32240028 - Fransiskus Sutanto</h2>
+  </article>
 </section>
 
 <section class="panel" aria-labelledby="project-facts-heading">

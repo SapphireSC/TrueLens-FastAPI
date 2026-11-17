@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% from "partials/macros.html" import icon, status_badge %}
 
-{% block title %}Hapus Entri Riwayat — TrueLens AI{% endblock %}
+{% block title %}Hapus Hasil Scan — TrueLens AI{% endblock %}
 
 {% block content %}
 <div class="panel-elevated" style="max-width:640px; margin:0 auto;">
-  <h1 style="font-size:1.5rem;">Hapus entri riwayat?</h1>
+  <h1 style="font-size:1.5rem;">Hapus hasil scan ini?</h1>
 
   <div class="alert alert-danger">
     {{ icon('triangle-alert', 20) }}
     <div>
-      Entri database dan file gambar di server akan dihapus. Tindakan ini tidak dapat dibatalkan.
+      Data dan file gambar di server akan dihapus permanen dan tidak dapat dikembalikan.
     </div>
   </div>
 
@@ -37,7 +37,7 @@
   </div>
 
   <form action="{{ url_for('delete_history', record_id=record.id) }}" method="post" style="display:flex; flex-wrap:wrap; gap:var(--space-3);">
-    <button type="submit" class="btn btn-danger">{{ icon('trash', 18) }} Hapus entri</button>
+    <button type="submit" class="btn btn-danger">{{ icon('trash', 18) }} Hapus Hasil</button>
     <a href="{{ url_for('history') }}" class="btn btn-secondary">Batal</a>
   </form>
 </div>
