@@ -23,7 +23,6 @@
   <div id="client-error-text"></div>
 </div>
 
-<!-- WORKSPACE 2 KOLOM ALA WRITEHUMAN (GAMBAR 1 & GAMBAR 4) -->
 <div class="wh-detector-workspace reveal-on-scroll">
   <!-- Kolom Kiri: Area Upload + Overlay Animasi Analyzing -->
   <section class="wh-upload-card" aria-labelledby="upload-card-heading" style="border: 1px solid #ddd6fe; box-shadow: 0 20px 44px -14px rgba(139, 92, 246, 0.14);">
@@ -47,7 +46,6 @@
           required
         />
 
-        <!-- Tampilan Awal Sebelum Pilih File -->
         <div id="dropzone-empty-state">
           <div class="wh-upload-icon-wrap" style="background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); color: #8b5cf6; box-shadow: 0 6px 16px rgba(139, 92, 246, 0.15);">
             {{ icon('upload', 36) }}
@@ -71,7 +69,6 @@
           </div>
         </div>
 
-        <!-- OVERLAY ANIMASI "ANALYZING YOUR IMAGE..." -->
         <div id="analyzing-overlay" class="wh-analyzing-overlay" hidden>
           <div class="wh-sparkle-pulse" style="color: #8b5cf6;">
             {{ icon('sparkles', 38) }}
@@ -109,7 +106,6 @@
     </form>
   </section>
 
-  <!-- Kolom Kanan: Kartu Status / Spinner Saat Analisis -->
   <aside class="wh-report-placeholder-card" aria-label="Status Laporan Deteksi" style="border: 1px solid #ddd6fe; box-shadow: 0 20px 44px -14px rgba(139, 92, 246, 0.12);">
     <div id="right-idle-state" class="wh-placeholder-inner">
       <div class="wh-placeholder-icon" style="color: #a78bfa;">{{ icon('viewfinder', 40) }}</div>

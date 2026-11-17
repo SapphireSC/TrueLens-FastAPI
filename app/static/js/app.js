@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. Animasi Lebar Bar Hasil Prediksi (di halaman /result)
   document.querySelectorAll(".meter-fill[data-width], .wh-auth-fill[data-width]").forEach(function (el) {
     setTimeout(function () {
       el.style.width = el.getAttribute("data-width") + "%";
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 120);
   });
 
-  // 2. Efek Floating Pill Navbar Saat Scroll
   const siteHeader = document.getElementById("site-header");
   if (siteHeader) {
     window.addEventListener(
@@ -27,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-  // 3. Animasi Scroll-Reveal Saat Menggulir Halaman
   const revealItems = document.querySelectorAll(".reveal-on-scroll");
   if ("IntersectionObserver" in window && revealItems.length > 0) {
     const observer = new IntersectionObserver(
@@ -50,24 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // 4. Efek Gelombang Klik (Click Ripple) pada Semua Tombol
-  document.querySelectorAll(".btn, .wh-btn-signup-pill, .wh-btn-choose-file").forEach(function (btn) {
-    btn.addEventListener("click", function (e) {
-      const rect = btn.getBoundingClientRect();
-      const ripple = document.createElement("span");
-      const size = Math.max(rect.width, rect.height);
-      ripple.style.width = ripple.style.height = size + "px";
-      ripple.style.left = e.clientX - rect.left - size / 2 + "px";
-      ripple.style.top = e.clientY - rect.top - size / 2 + "px";
-      ripple.className = "click-ripple";
-      btn.appendChild(ripple);
-      setTimeout(function () {
-        ripple.remove();
-      }, 600);
-    });
-  });
-
-  // 5. Dropzone & Animasi "Menganalisis gambar Anda..." (Gaya WriteHuman Gambar 4)
   const scanForm = document.getElementById("scan-form");
   const fileInput = document.getElementById("image-file-input");
   const dropzone = document.getElementById("upload-dropzone");
@@ -200,7 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Tampilkan animasi overlay "Menganalisis gambar Anda..." seperti Gambar 4 WriteHuman
     e.preventDefault();
     if (analyzingOverlay) analyzingOverlay.hidden = false;
     if (rightIdle) rightIdle.hidden = true;

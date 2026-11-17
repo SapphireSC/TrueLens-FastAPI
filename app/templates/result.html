@@ -11,7 +11,6 @@
   <div class="mono text-muted">{{ scan_timestamp }}</div>
 </div>
 
-<!-- LAYOUT HASIL 2 KOLOM ALA WRITEHUMAN (PERSIS GAMBAR 5) -->
 <div class="wh-detector-workspace reveal-on-scroll">
   <!-- Kolom Kiri: Bingkai Gambar yang Dipindai -->
   <section class="wh-upload-card" style="border: 1px solid #ddd6fe; box-shadow: 0 20px 44px -14px rgba(139, 92, 246, 0.14);">
@@ -31,7 +30,6 @@
     </div>
   </section>
 
-  <!-- Kolom Kanan: Kartu Skor Besar /100 ala WriteHuman -->
   <section class="wh-score-report-card" aria-labelledby="verdict-heading" style="border: 1px solid #ddd6fe; box-shadow: 0 20px 44px -14px rgba(139, 92, 246, 0.14);">
     <div class="wh-report-brand">
       {{ icon('viewfinder', 20) }}
@@ -39,7 +37,6 @@
       <span>TrueLens<span style="color:#8b5cf6;">AI</span></span>
     </div>
 
-    <!-- Angka Skor Besar dengan Animasi Count-Up -->
     <div class="wh-big-score-wrap">
       <div
         class="wh-big-score-num {{ 'is-ai' if analysis.predicted_label == 'AI-Generated' else 'is-real' }}"
@@ -51,7 +48,6 @@
       <div class="wh-big-score-denom">/100</div>
     </div>
 
-    <!-- Badge Status -->
     <div class="my-3">
       <span class="wh-verdict-pill {{ 'pill-ai' if analysis.predicted_label == 'AI-Generated' else 'pill-real' }}" id="verdict-heading"
       {% if analysis.predicted_label != 'AI-Generated' %}style="background: #ede9fe; color: #8b5cf6; border: 1px solid #ddd6fe;"{% endif %}>
@@ -59,7 +55,6 @@
       </span>
     </div>
 
-    <!-- Bar Indikator Asli <-> AI-Generated -->
     <div class="wh-Authenticity-bar-wrap my-3 text-start">
       <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
         <span>Asli (Real)</span>
@@ -82,7 +77,6 @@
       Dianalisis oleh: EfficientNet-B0 PyTorch (Skor Sigmoid p = {{ analysis.raw_prob_display }})
     </div>
 
-    <!-- Form Simpan ke Riwayat Database -->
     <form action="{{ url_for('history_save') }}" method="post" class="mt-4 pt-3 border-top text-start">
       <input type="hidden" name="filename" value="{{ filename }}" />
       <input type="hidden" name="image_path" value="{{ image_path }}" />
