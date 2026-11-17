@@ -1,17 +1,21 @@
 :root {
-  /* Light Forensic-Clinical Color Tokens (UI_DESIGN_TrueLensAI.md §3.1) */
-  --color-bg: #F0F9FF;
+  /* Light Forensic-Clinical Color Tokens - UNGU LIGHT THEME */
+  --color-bg: #F5F3FF;
   --color-surface: #FFFFFF;
-  --color-surface-muted: #F8FAFC;
-  --color-text: #0C4A6E;
+  --color-surface-muted: #FAFAFA;
+  --color-text: #2e1065;
   --color-text-strong: #0F172A;
   --color-text-muted: #475569;
   --color-border: #E2E8F0;
   --color-border-strong: #64748B;
-  --color-primary: #0369A1;
-  --color-primary-hover: #075985;
-  --color-primary-soft: #E0F2FE;
-  --color-accent: #0EA5E9;
+  
+  /* WARNA UNGU UTAMA */
+  --color-primary: #8b5cf6;
+  --color-primary-hover: #7c3aed;
+  --color-primary-soft: #ede9fe;
+  --color-accent: #a855f7;
+  
+  /* Warna Notifikasi & Indikator */
   --color-real: #047857;
   --color-real-soft: #ECFDF5;
   --color-teal: #0F766E;
@@ -20,7 +24,7 @@
   --color-ai-soft: #FEF2F2;
   --color-warning: #92400E;
   --color-warning-soft: #FFFBEB;
-  --color-focus: #0369A1;
+  --color-focus: #8b5cf6;
   --color-disabled: #E2E8F0;
   --color-disabled-text: #64748B;
 
@@ -45,6 +49,6 @@
   --radius-card: 12px;
   --radius-alert: 10px;
   --radius-badge: 999px;
-  --shadow-focus-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 28px rgba(15, 23, 42, 0.06);
+  --shadow-focus-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 28px rgba(139, 92, 246, 0.08);
   --container-max: 1200px;
 }

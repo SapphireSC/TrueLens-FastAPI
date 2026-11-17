@@ -26,7 +26,7 @@
 <!-- WORKSPACE 2 KOLOM ALA WRITEHUMAN (GAMBAR 1 & GAMBAR 4) -->
 <div class="wh-detector-workspace reveal-on-scroll">
   <!-- Kolom Kiri: Area Upload + Overlay Animasi Analyzing -->
-  <section class="wh-upload-card" aria-labelledby="upload-card-heading">
+  <section class="wh-upload-card" aria-labelledby="upload-card-heading" style="border: 1px solid #ddd6fe; box-shadow: 0 20px 44px -14px rgba(139, 92, 246, 0.14);">
     <h2 id="upload-card-heading" class="visually-hidden">Area Unggah Berkas</h2>
 
     <form
@@ -36,7 +36,7 @@
       enctype="multipart/form-data"
       novalidate
     >
-      <div id="upload-dropzone" class="wh-dashed-box position-relative">
+      <div id="upload-dropzone" class="wh-dashed-box position-relative" style="border: 2px dashed #a78bfa; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%);">
         <input
           type="file"
           id="image-file-input"
@@ -49,12 +49,12 @@
 
         <!-- Tampilan Awal Sebelum Pilih File -->
         <div id="dropzone-empty-state">
-          <div class="wh-upload-icon-wrap">
+          <div class="wh-upload-icon-wrap" style="background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); color: #8b5cf6; box-shadow: 0 6px 16px rgba(139, 92, 246, 0.15);">
             {{ icon('upload', 36) }}
           </div>
           <h3 class="wh-drop-title">Seret dan lepas gambar di sini</h3>
           <p class="wh-drop-sub">atau klik untuk memilih dari perangkat Anda</p>
-          <span class="btn wh-btn-choose-file pe-none">Pilih Berkas</span>
+          <span class="btn wh-btn-choose-file pe-none" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 6px 16px rgba(139, 92, 246, 0.28);">Pilih Berkas</span>
           <p id="dropzone-helper" class="wh-drop-meta">
             JPG, JPEG, atau PNG (maksimal 10 MB)
           </p>
@@ -71,17 +71,17 @@
           </div>
         </div>
 
-        <!-- OVERLAY ANIMASI "ANALYZING YOUR IMAGE..." (PERSIS GAMBAR 4 WRITEHUMAN) -->
+        <!-- OVERLAY ANIMASI "ANALYZING YOUR IMAGE..." -->
         <div id="analyzing-overlay" class="wh-analyzing-overlay" hidden>
-          <div class="wh-sparkle-pulse">
+          <div class="wh-sparkle-pulse" style="color: #8b5cf6;">
             {{ icon('sparkles', 38) }}
           </div>
           <div class="wh-analyzing-title">Menganalisis gambar Anda...</div>
           <div class="wh-analyzing-bar-track">
-            <div class="wh-analyzing-bar-fill"></div>
+            <div class="wh-analyzing-bar-fill" style="background: linear-gradient(90deg, #8b5cf6, #a855f7);"></div>
           </div>
           <div class="wh-analyzing-dots">
-            <span class="dot active"></span>
+            <span class="dot active" style="background: #8b5cf6;"></span>
             <span class="dot"></span>
             <span class="dot"></span>
             <span class="dot"></span>
@@ -110,9 +110,9 @@
   </section>
 
   <!-- Kolom Kanan: Kartu Status / Spinner Saat Analisis -->
-  <aside class="wh-report-placeholder-card" aria-label="Status Laporan Deteksi">
+  <aside class="wh-report-placeholder-card" aria-label="Status Laporan Deteksi" style="border: 1px solid #ddd6fe; box-shadow: 0 20px 44px -14px rgba(139, 92, 246, 0.12);">
     <div id="right-idle-state" class="wh-placeholder-inner">
-      <div class="wh-placeholder-icon">{{ icon('viewfinder', 40) }}</div>
+      <div class="wh-placeholder-icon" style="color: #a78bfa;">{{ icon('viewfinder', 40) }}</div>
       <p class="mb-2 fw-semibold text-secondary">Laporan deteksi Anda akan muncul di sini</p>
       <p class="text-muted small mb-0">
         Pilih gambar di sebelah kiri lalu klik <strong>Mulai Analisis Gambar</strong>.
@@ -120,7 +120,7 @@
     </div>
 
     <div id="right-loading-state" class="wh-placeholder-inner" hidden>
-      <div class="wh-circle-spinner mb-3"></div>
+      <div class="wh-circle-spinner mb-3" style="border: 3px solid #ede9fe; border-top-color: #8b5cf6;"></div>
       <p class="mb-1 fw-bold text-primary">Memeriksa keaslian piksel...</p>
       <p class="text-muted small mb-0">Mohon tunggu sebentar</p>
     </div>

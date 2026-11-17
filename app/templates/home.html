@@ -6,7 +6,8 @@
 {% block content %}
 <section class="wh-hero-section text-center reveal-on-scroll">
   <h1 class="wh-hero-title">
-    Detektor Gambar AI <span class="wh-gradient-blue">Cepat &amp; Akurat</span>
+    Detektor Gambar AI 
+    <span style="background: linear-gradient(90deg, #8b5cf6 0%, #ef4444 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Cepat &amp; Akurat</span>
   </h1>
   <p class="wh-hero-subtitle mx-auto">
     Unggah gambar apa pun untuk memeriksa secara instan apakah foto tersebut asli atau buatan AI.
@@ -14,14 +15,14 @@
   </p>
 
   <div class="wh-detector-workspace mt-4 d-flex justify-content-center">
-    <div class="wh-upload-card col-12 col-md-10 col-lg-8">
-      <div class="wh-dashed-box" data-href="{{ url_for('scan') }}" role="button" tabindex="0">
-        <div class="wh-upload-icon-wrap">
+    <div class="wh-upload-card col-12 col-md-10 col-lg-8" style="border: 1px solid #ddd6fe; box-shadow: 0 20px 44px -14px rgba(139, 92, 246, 0.14);">
+      <div class="wh-dashed-box" data-href="{{ url_for('scan') }}" role="button" tabindex="0" style="border: 2px dashed #a78bfa; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%);">
+        <div class="wh-upload-icon-wrap" style="background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); color: #8b5cf6; box-shadow: 0 6px 16px rgba(139, 92, 246, 0.15);">
           {{ icon('upload', 36) }}
         </div>
         <h3 class="wh-drop-title">Seret dan lepas gambar di sini</h3>
         <p class="wh-drop-sub">atau klik untuk memilih berkas</p>
-        <a href="{{ url_for('scan') }}" class="btn wh-btn-choose-file">
+        <a href="{{ url_for('scan') }}" class="btn wh-btn-choose-file" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 6px 16px rgba(139, 92, 246, 0.28);">
           Pilih Berkas Gambar
         </a>
         <p class="wh-drop-meta">JPG, JPEG, atau PNG (maksimal 10 MB, pemeriksaan instan)</p>
@@ -37,9 +38,9 @@
   </div>
   <div class="row g-4">
     <div class="col-md-4">
-      <div class="wh-step-card h-100">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
         <div class="d-flex align-items-center gap-3 mb-3">
-          <span class="wh-step-circle">1</span>
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">1</span>
           <h3 class="m-0 fs-5 fw-bold">Unggah Gambar</h3>
         </div>
         <p class="text-muted mb-0">
@@ -48,9 +49,9 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="wh-step-card h-100">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
         <div class="d-flex align-items-center gap-3 mb-3">
-          <span class="wh-step-circle">2</span>
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">2</span>
           <h3 class="m-0 fs-5 fw-bold">Analisis AI</h3>
         </div>
         <p class="text-muted mb-0">
@@ -59,9 +60,9 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="wh-step-card h-100">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
         <div class="d-flex align-items-center gap-3 mb-3">
-          <span class="wh-step-circle">3</span>
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">3</span>
           <h3 class="m-0 fs-5 fw-bold">Tinjau &amp; Simpan Skor</h3>
         </div>
         <p class="text-muted mb-0">
@@ -79,9 +80,9 @@
   </div>
   <div class="row g-4">
     <div class="col-md-4">
-      <div class="wh-step-card h-100">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
         <div class="d-flex align-items-center gap-3 mb-3">
-          <span class="wh-step-circle">{{ icon('badge-check', 20) }}</span>
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">{{ icon('badge-check', 20) }}</span>
           <h3 class="m-0 fs-5 fw-bold">Status Keaslian Jelas</h3>
         </div>
         <p class="text-muted mb-0">
@@ -90,9 +91,9 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="wh-step-card h-100">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
         <div class="d-flex align-items-center gap-3 mb-3">
-          <span class="wh-step-circle">%</span>
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">%</span>
           <h3 class="m-0 fs-5 fw-bold">Persentase Keyakinan</h3>
         </div>
         <p class="text-muted mb-0">
@@ -101,9 +102,9 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="wh-step-card h-100">
+      <div class="wh-step-card h-100" style="border: 1px solid #ddd6fe; box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.1);">
         <div class="d-flex align-items-center gap-3 mb-3">
-          <span class="wh-step-circle">{{ icon('file', 20) }}</span>
+          <span class="wh-step-circle" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.32);">{{ icon('file', 20) }}</span>
           <h3 class="m-0 fs-5 fw-bold">Arsip Riwayat Pribadi</h3>
         </div>
         <p class="text-muted mb-0">
@@ -114,10 +115,9 @@
   </div>
 </section>
 
-<!-- BAGIAN YANG DIUBAH: Angka dan Judul disejajarkan ke samping (flex-row & align-items-center) -->
 <section class="wh-section reveal-on-scroll" aria-labelledby="reliable-heading">
   <div class="text-center mb-5">
-    <div class="wh-gradient-brand-heading">TrueLens AI</div>
+    <div class="wh-gradient-brand-heading" style="background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 50%, #c084fc 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">TrueLens AI</div>
     <h2 id="reliable-heading" class="wh-reliable-subtitle">
       Menghadirkan Verifikasi Citra yang Andal
     </h2>
@@ -127,9 +127,9 @@
   </div>
   <div class="row g-4">
     <div class="col-md-6">
-      <article class="wh-watermark-card h-100">
+      <article class="wh-watermark-card h-100" style="border: 1px solid #ddd6fe; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); box-shadow: 0 10px 28px -12px rgba(139, 92, 246, 0.1);">
         <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
-          <span class="wh-wm-number" style="position: relative !important; line-height: 1;" aria-hidden="true">1</span>
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1; background: linear-gradient(180deg, rgba(139, 92, 246, 0.22) 0%, rgba(167, 139, 250, 0.06) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" aria-hidden="true">1</span>
           <h3 class="m-0">Pemindaian Instan &amp; Presisi Tinggi</h3>
         </div>
         <p class="m-0">
@@ -138,9 +138,9 @@
       </article>
     </div>
     <div class="col-md-6">
-      <article class="wh-watermark-card h-100">
+      <article class="wh-watermark-card h-100" style="border: 1px solid #ddd6fe; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); box-shadow: 0 10px 28px -12px rgba(139, 92, 246, 0.1);">
         <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
-          <span class="wh-wm-number" style="position: relative !important; line-height: 1;" aria-hidden="true">2</span>
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1; background: linear-gradient(180deg, rgba(139, 92, 246, 0.22) 0%, rgba(167, 139, 250, 0.06) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" aria-hidden="true">2</span>
           <h3 class="m-0">Hilangkan Keraguan Saat Menilai Foto</h3>
         </div>
         <p class="m-0">
@@ -149,9 +149,9 @@
       </article>
     </div>
     <div class="col-md-6">
-      <article class="wh-watermark-card h-100">
+      <article class="wh-watermark-card h-100" style="border: 1px solid #ddd6fe; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); box-shadow: 0 10px 28px -12px rgba(139, 92, 246, 0.1);">
         <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
-          <span class="wh-wm-number" style="position: relative !important; line-height: 1;" aria-hidden="true">3</span>
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1; background: linear-gradient(180deg, rgba(139, 92, 246, 0.22) 0%, rgba(167, 139, 250, 0.06) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" aria-hidden="true">3</span>
           <h3 class="m-0">Jaga Kredibilitas Konten &amp; Karya</h3>
         </div>
         <p class="m-0">
@@ -160,9 +160,9 @@
       </article>
     </div>
     <div class="col-md-6">
-      <article class="wh-watermark-card h-100">
+      <article class="wh-watermark-card h-100" style="border: 1px solid #ddd6fe; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); box-shadow: 0 10px 28px -12px rgba(139, 92, 246, 0.1);">
         <div class="wh-wm-header d-flex align-items-center gap-3 mb-3">
-          <span class="wh-wm-number" style="position: relative !important; line-height: 1;" aria-hidden="true">4</span>
+          <span class="wh-wm-number" style="position: relative !important; line-height: 1; background: linear-gradient(180deg, rgba(139, 92, 246, 0.22) 0%, rgba(167, 139, 250, 0.06) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" aria-hidden="true">4</span>
           <h3 class="m-0">Praktis untuk Kebutuhan Sehari-hari</h3>
         </div>
         <p class="m-0">

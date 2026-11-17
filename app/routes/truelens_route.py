@@ -87,7 +87,8 @@ def login_submit(
         "username": user.username,
         "email": user.email,
     }
-    return RedirectResponse(url="/scan", status_code=303)
+    # BAGIAN INI YANG DIUBAH: redirect ke "/" (Beranda) bukan ke "/scan"
+    return RedirectResponse(url="/", status_code=303)
 
 
 @router.get("/register", name="register")
