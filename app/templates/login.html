@@ -1,52 +1,17 @@
 {% extends "base.html" %}
-{% from "partials/macros.html" import icon %}
+{% from "partials/auth_forms.html" import login_form, auth_close_button with context %}
 {% block title %}Masuk — TrueLens AI{% endblock %}
 {% block content %}
-<h1>Masuk ke Akun</h1>
-<p>
-  Masuk dengan username dan password untuk mengakses riwayat pemindaian Anda.
-</p>
-
-{% if error %}
-<div class="alert alert-danger" role="alert">
-  {{ icon('triangle-alert', 20) }}
-  <div>{{ error }}</div>
-</div>
-{% endif %}
-
-{% if success_message %}
-<div class="alert alert-info" role="status">
-  {{ icon('info', 20) }}
-  <div>{{ success_message }}</div>
-</div>
-{% endif %}
-
-<form action="{{ url_for('login_post') }}" method="post" class="panel">
-  <div class="form-group">
-    <label for="username-input" class="form-label">Username</label>
-    <input
-      type="text"
-      id="username-input"
-      name="username"
-      class="form-control"
-      value="{{ username_val if username_val else '' }}"
-      required
-    />
+<dialog
+  open
+  class="wh-auth-dialog"
+  id="login-page-dialog"
+  data-auth-page-dialog
+  aria-labelledby="login-title"
+>
+  <div class="wh-auth-dialog-inner">
+    {{ auth_close_button(url_for('home')) }}
+    {{ login_form('login', error=error|default(none), success_message=success_message|default(none), username_val=username_val|default('')) }}
   </div>
-  <div class="form-group">
-    <label for="password-input" class="form-label">Password</label>
-    <input
-      type="password"
-      id="password-input"
-      name="password"
-      class="form-control"
-      required
-    />
-  </div>
-  <button type="submit" class="btn btn-primary">Masuk</button>
-</form>
-
-<p class="text-muted" style="margin-top: var(--space-4)">
-  Belum punya akun? <a href="{{ url_for('register') }}">Daftar di sini</a>
-</p>
+</dialog>
 {% endblock %}

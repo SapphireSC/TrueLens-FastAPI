@@ -664,3 +664,119 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/* Auth dialog */
+.wh-auth-dialog {
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid rgba(196, 181, 253, 0.9);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 24px 64px -24px rgba(15, 23, 42, 0.4);
+}
+
+.wh-auth-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.55);
+}
+
+#account-dialog .spec-list {
+  margin-top: 0;
+}
+
+#account-dialog .spec-val {
+  overflow-wrap: anywhere;
+}
+
+#account-dialog .spec-row:last-child {
+  border-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  #account-dialog .spec-term {
+    flex: 0 0 110px;
+  }
+}
+
+.wh-auth-dialog-inner {
+  position: relative;
+  padding: 28px;
+}
+
+.wh-auth-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-control);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.wh-auth-close:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text-strong);
+}
+
+.wh-auth-title {
+  margin: 0 0 var(--space-2);
+  padding-right: 40px;
+  font-size: 1.5rem;
+}
+
+.wh-auth-lead {
+  margin-bottom: var(--space-5);
+  padding-right: 40px;
+  color: var(--color-text-muted);
+}
+
+.wh-auth-dialog .alert {
+  margin-bottom: var(--space-4);
+}
+
+.wh-auth-submit {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.wh-auth-switch {
+  margin: var(--space-4) 0 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.wh-auth-switch a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.wh-auth-switch a:hover {
+  color: var(--color-primary-hover);
+}
+
+.wh-auth-dialog [data-auth-view][hidden],
+.wh-auth-dialog [data-auth-error][hidden],
+.wh-auth-dialog [data-auth-success][hidden] {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .wh-auth-dialog-inner {
+    padding: 20px;
+  }
+
+  .wh-auth-title {
+    font-size: 1.25rem;
+  }
+}

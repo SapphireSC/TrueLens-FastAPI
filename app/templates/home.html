@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "partials/macros.html" import icon %}
+{% from "partials/auth_forms.html" import login_form, register_form, auth_close_button with context %}
 
 {% block title %}TrueLens AI — Detektor Gambar AI Gratis & Akurat{% endblock %}
 
@@ -172,4 +173,18 @@
     </div>
   </div>
 </section>
+{% endblock %}
+
+{% block modals %}
+<dialog id="auth-dialog" class="wh-auth-dialog" aria-labelledby="modal-login-title">
+  <div class="wh-auth-dialog-inner">
+    {{ auth_close_button() }}
+    <div data-auth-view="login">
+      {{ login_form('modal-login') }}
+    </div>
+    <div data-auth-view="register" hidden>
+      {{ register_form('modal-register') }}
+    </div>
+  </div>
+</dialog>
 {% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% from "partials/account_dialog.html" import account_dialog with context %}
+
+{% block title %}Akun — TrueLens AI{% endblock %}
+
+{% block content %}
+{{ account_dialog(page_mode=True) }}
+{% endblock %}

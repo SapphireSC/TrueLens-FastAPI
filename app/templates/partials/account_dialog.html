@@ -1,0 +1,48 @@
+{% from "partials/macros.html" import icon %}
+
+{% macro account_dialog(page_mode=False) -%}
+<dialog
+  id="account-dialog"
+  class="wh-auth-dialog"
+  {% if page_mode %}open{% endif %}
+  {% if page_mode %}data-account-page-dialog{% endif %}
+  aria-labelledby="account-title"
+>
+  <div class="wh-auth-dialog-inner">
+    {% if page_mode %}
+    <a class="wh-auth-close" href="{{ url_for('home') }}" aria-label="Tutup">
+      {{ icon('x', 20) }}
+    </a>
+    {% else %}
+    <button type="button" class="wh-auth-close" data-account-close aria-label="Tutup">
+      {{ icon('x', 20) }}
+    </button>
+    {% endif %}
+
+    <h2 class="wh-auth-title" id="account-title">Akun Anda</h2>
+    <p class="wh-auth-lead">Kelola akun dan akses riwayat pemindaian Anda.</p>
+
+    <div class="spec-list">
+      <div class="spec-row">
+        <span class="spec-term">Username</span>
+        <span class="spec-val">{{ current_user['username'] }}</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-term">Email</span>
+        <span class="spec-val">{{ current_user['email'] }}</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-term">Tanggal daftar</span>
+        <span class="spec-val">{{ current_user.get('created_at') or '—' }}</span>
+      </div>
+    </div>
+
+    <div class="d-grid gap-2 mt-4">
+      <a href="{{ url_for('history') }}" class="btn btn-primary">Lihat riwayat pemindaian</a>
+      <form action="{{ url_for('logout') }}" method="post" class="m-0">
+        <button type="submit" class="btn btn-secondary w-100">Keluar</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+{%- endmacro %}

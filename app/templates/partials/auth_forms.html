@@ -1,0 +1,131 @@
+{% from "partials/macros.html" import icon %}
+
+{% macro auth_alerts(error, success_message) -%}
+  {% if error %}
+  <div class="alert alert-danger" role="alert">
+    {{ icon('triangle-alert', 20) }}
+    <div>{{ error }}</div>
+  </div>
+  {% endif %}
+  {% if success_message %}
+  <div class="alert alert-info" role="status">
+    {{ icon('info', 20) }}
+    <div>{{ success_message }}</div>
+  </div>
+  {% endif %}
+{%- endmacro %}
+
+{% macro auth_dynamic_alerts() -%}
+  <div class="alert alert-danger" role="alert" data-auth-error hidden>
+    {{ icon('triangle-alert', 20) }}
+    <div data-auth-error-text></div>
+  </div>
+  <div class="alert alert-info" role="status" data-auth-success hidden>
+    {{ icon('info', 20) }}
+    <div data-auth-success-text></div>
+  </div>
+{%- endmacro %}
+
+{% macro auth_close_button(href=None) -%}
+  {% if href %}
+  <a class="wh-auth-close" href="{{ href }}" aria-label="Tutup">
+    {{ icon('x', 20) }}
+  </a>
+  {% else %}
+  <button type="button" class="wh-auth-close" data-auth-close aria-label="Tutup">
+    {{ icon('x', 20) }}
+  </button>
+  {% endif %}
+{%- endmacro %}
+
+{% macro login_form(prefix, error=None, success_message=None, username_val='') -%}
+  <h2 class="wh-auth-title" id="{{ prefix }}-title">Masuk ke Akun</h2>
+  <p class="wh-auth-lead">Masuk dengan username dan password untuk mengakses riwayat pemindaian Anda.</p>
+
+  {{ auth_alerts(error, success_message) }}
+  {{ auth_dynamic_alerts() }}
+
+  <form action="{{ url_for('login_post') }}" method="post" data-auth-form>
+    <div class="form-group">
+      <label for="{{ prefix }}-username" class="form-label">Username</label>
+      <input
+        type="text"
+        id="{{ prefix }}-username"
+        name="username"
+        class="form-control"
+        value="{{ username_val }}"
+        autocomplete="username"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="{{ prefix }}-password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="{{ prefix }}-password"
+        name="password"
+        class="form-control"
+        autocomplete="current-password"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary wh-auth-submit" data-auth-submit>Masuk</button>
+  </form>
+
+  <p class="wh-auth-switch">
+    Belum punya akun?
+    <a href="{{ url_for('register') }}" data-auth-switch="register">Daftar di sini</a>
+  </p>
+{%- endmacro %}
+
+{% macro register_form(prefix, error=None, username_val='', email_val='') -%}
+  <h2 class="wh-auth-title" id="{{ prefix }}-title">Daftar Akun Baru</h2>
+  <p class="wh-auth-lead">Buat akun untuk menyimpan riwayat pemindaian gambar Anda.</p>
+
+  {{ auth_alerts(error, None) }}
+  {{ auth_dynamic_alerts() }}
+
+  <form action="{{ url_for('registers_post') }}" method="post" data-auth-form>
+    <div class="form-group">
+      <label for="{{ prefix }}-username" class="form-label">Username</label>
+      <input
+        type="text"
+        id="{{ prefix }}-username"
+        name="username"
+        class="form-control"
+        value="{{ username_val }}"
+        autocomplete="username"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="{{ prefix }}-email" class="form-label">Email</label>
+      <input
+        type="email"
+        id="{{ prefix }}-email"
+        name="email"
+        class="form-control"
+        value="{{ email_val }}"
+        autocomplete="email"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="{{ prefix }}-password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="{{ prefix }}-password"
+        name="password"
+        class="form-control"
+        autocomplete="new-password"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary wh-auth-submit" data-auth-submit>Daftar</button>
+  </form>
+
+  <p class="wh-auth-switch">
+    Sudah punya akun?
+    <a href="{{ url_for('login') }}" data-auth-switch="login">Masuk di sini</a>
+  </p>
+{%- endmacro %}

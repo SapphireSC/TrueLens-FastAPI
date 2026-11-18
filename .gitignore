@@ -24,8 +24,9 @@ dataset/
 .vscode/
 
 # AI
-docs/
+docs
 AGENTS.md
 DESIGN.md
 opencode.json
 PRODUCT.md
+.superpowers

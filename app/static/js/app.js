@@ -194,3 +194,176 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 850);
   });
 });
+document.addEventListener("DOMContentLoaded", function () {
+  const authDialog = document.getElementById("auth-dialog");
+
+  function firstInput(container) {
+    return container ? container.querySelector("input:not([type='hidden'])") : null;
+  }
+
+  function clearAlerts(view) {
+    if (!view) return;
+    view.querySelectorAll("[data-auth-error], [data-auth-success]").forEach(function (el) {
+      el.hidden = true;
+      const text = el.querySelector("[data-auth-error-text], [data-auth-success-text]");
+      if (text) text.textContent = "";
+    });
+  }
+
+  function showAlert(view, kind, message) {
+    if (!view) return;
+    const el = view.querySelector(kind === "error" ? "[data-auth-error]" : "[data-auth-success]");
+    const text = el ? el.querySelector(kind === "error" ? "[data-auth-error-text]" : "[data-auth-success-text]") : null;
+    if (!el || !text) return;
+    clearAlerts(view);
+    text.textContent = message;
+    el.hidden = false;
+  }
+
+  function setView(dialog, name) {
+    let active = null;
+    dialog.querySelectorAll("[data-auth-view]").forEach(function (view) {
+      const isActive = view.getAttribute("data-auth-view") === name;
+      view.hidden = !isActive;
+      if (isActive) active = view;
+    });
+    if (!active) return null;
+    clearAlerts(active);
+    const title = active.querySelector(".wh-auth-title");
+    if (title && title.id) {
+      dialog.setAttribute("aria-labelledby", title.id);
+    }
+    const input = firstInput(active);
+    if (input) input.focus();
+    return active;
+  }
+
+  if (authDialog) {
+    document.querySelectorAll("[data-auth-open]").forEach(function (trigger) {
+      trigger.addEventListener("click", function (event) {
+        event.preventDefault();
+        setView(authDialog, "login");
+        if (!authDialog.open) authDialog.showModal();
+        const active = authDialog.querySelector("[data-auth-view]:not([hidden])");
+        const input = firstInput(active);
+        if (input) input.focus();
+      });
+    });
+
+    authDialog.querySelectorAll("[data-auth-close]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        authDialog.close();
+      });
+    });
+
+    authDialog.addEventListener("click", function (event) {
+      if (event.target === authDialog) authDialog.close();
+    });
+
+    authDialog.querySelectorAll("[data-auth-switch]").forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        setView(authDialog, link.getAttribute("data-auth-switch"));
+      });
+    });
+
+    authDialog.querySelectorAll("form[data-auth-form]").forEach(function (form) {
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        if (form.dataset.submitting === "1") return;
+
+        const view = form.closest("[data-auth-view]");
+        const submitButton = form.querySelector("[data-auth-submit]");
+        if (!view || !submitButton) return;
+
+        form.dataset.submitting = "1";
+        clearAlerts(view);
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+
+        try {
+          const response = await fetch(form.action, {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            body: new FormData(form),
+          });
+          let data = {};
+          try {
+            data = await response.json();
+          } catch (err) {
+            data = {};
+          }
+
+          if (response.ok && data.ok) {
+            if (data.redirect) {
+              window.location.assign(data.redirect);
+              return;
+            }
+            if (data.mode === "login") {
+              const loginView = setView(authDialog, "login");
+              showAlert(loginView, "success", data.message || "Registrasi berhasil.");
+            }
+          } else {
+            showAlert(view, "error", data.error || "Terjadi kesalahan. Silakan coba lagi.");
+          }
+        } catch (err) {
+          showAlert(view, "error", "Tidak dapat terhubung ke server. Periksa koneksi Anda.");
+        } finally {
+          delete form.dataset.submitting;
+          submitButton.disabled = false;
+          submitButton.removeAttribute("aria-busy");
+        }
+      });
+    });
+  }
+
+  document.querySelectorAll("[data-auth-page-dialog]").forEach(function (dialog) {
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener("close", function () {
+      window.location.assign("/");
+    });
+
+    if (dialog.hasAttribute("open")) dialog.removeAttribute("open");
+    dialog.showModal();
+
+    const input = firstInput(dialog);
+    if (input) input.focus();
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const accountDialog = document.getElementById("account-dialog");
+
+  if (!accountDialog) return;
+
+  document.querySelectorAll("[data-account-open]").forEach(function (trigger) {
+    trigger.addEventListener("click", function (event) {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+        return;
+      }
+      event.preventDefault();
+      if (!accountDialog.open) accountDialog.showModal();
+    });
+  });
+
+  accountDialog.querySelectorAll("[data-account-close]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      accountDialog.close();
+    });
+  });
+
+  accountDialog.addEventListener("click", function (event) {
+    if (event.target === accountDialog) accountDialog.close();
+  });
+
+  if (accountDialog.hasAttribute("data-account-page-dialog")) {
+    accountDialog.addEventListener("close", function () {
+      window.location.assign("/");
+    });
+    accountDialog.removeAttribute("open");
+    accountDialog.showModal();
+  }
+});
