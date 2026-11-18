@@ -56,15 +56,15 @@
     </div>
 
     <div class="wh-Authenticity-bar-wrap my-3 text-start">
-      <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
-        <span>Asli (Real)</span>
-        <span>AI-Generated</span>
+      <div class="d-flex justify-content-between small mb-1">
+        <span class="{{ 'fw-normal text-muted' if analysis.predicted_label == 'AI-Generated' else 'fw-bold text-dark' }}">Asli (Real)</span>
+        <span class="{{ 'fw-bold text-dark' if analysis.predicted_label == 'AI-Generated' else 'fw-normal text-muted' }}">AI-Generated</span>
       </div>
       <div class="wh-auth-track" style="background: #F5F3FF;">
         <div
           class="wh-auth-fill {{ 'fill-ai' if analysis.predicted_label == 'AI-Generated' else 'fill-real' }}"
           data-width="{{ analysis.confidence_score }}"
-          {% if analysis.predicted_label != 'AI-Generated' %}style="background: linear-gradient(90deg, #8b5cf6, #10B981);"{% endif %}
+          style="{% if analysis.predicted_label == 'AI-Generated' %}margin-left: auto;{% else %}background: linear-gradient(90deg, #8b5cf6, #10B981);{% endif %}"
         ></div>
       </div>
     </div>
@@ -72,10 +72,6 @@
     <p class="wh-report-desc">
       {{ analysis.tier_desc }}
     </p>
-
-    <div class="wh-analyzed-by mono">
-      Dianalisis oleh: EfficientNet-B0 PyTorch (Skor Sigmoid p = {{ analysis.raw_prob_display }})
-    </div>
 
     <form action="{{ url_for('history_save') }}" method="post" class="mt-4 pt-3 border-top text-start">
       <input type="hidden" name="filename" value="{{ filename }}" />
