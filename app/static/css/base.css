@@ -307,10 +307,11 @@ main {
 }
 
 .wh-minimal-footer {
-  background: linear-gradient(180deg, #0f172a 0%, #090e1a 100%);
+  background: var(--color-surface);
   padding: 34px 0;
   margin-top: auto;
   border-top: 1px solid rgba(139, 92, 246, 0.16);
+  box-shadow: 10px 4px 12px rgba(139, 92, 246, 0.32);
 }
 
 .wh-footer-logo-only {
@@ -319,7 +320,7 @@ main {
   gap: 12px;
   font-size: 1.4rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--color-text-strong);
   text-decoration: none;
   letter-spacing: -0.03em;
   padding: 8px 20px;
@@ -331,12 +332,12 @@ main {
 
 .wh-footer-logo-only:hover {
   transform: translateY(-3px) scale(1.03);
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  background: rgba(139, 92, 246, 0.08);
+  color: var(--color-text-strong);
 }
 
 .wh-brand-gradient-text {
-  background: linear-gradient(90deg, #a855f7 0%, #c084fc 100%);
+  background: linear-gradient(90deg, #7c3aed 0%, #a855f7 100%);
   -webkit-background-clip: text;
   background-clip: text; /* Baris ini yang ditambahkan */
   -webkit-text-fill-color: transparent;
