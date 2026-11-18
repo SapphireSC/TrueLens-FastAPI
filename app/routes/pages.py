@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request
 
 from routes.common import get_current_user, templates
-from services.truelens_service import get_metadata
+from services.prediction_service import get_metadata
 
 router = APIRouter()
 

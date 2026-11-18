@@ -5,7 +5,7 @@ from sqlmodel import Session
 from config import get_session
 from routes.common import get_current_user, templates, wants_json
 from schemas.truelens_schema import UserRegister
-from services.truelens_service import authenticate_user, register_user
+from services.user_service import authenticate_user, register_user
 
 router = APIRouter()
 

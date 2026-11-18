@@ -7,7 +7,8 @@ from fastapi.responses import RedirectResponse
 
 from config import UPLOAD_DIR
 from routes.common import get_current_user, templates
-from services.truelens_service import analyze_uploaded_image, verify_image_magic_bytes
+from services.common import verify_image_magic_bytes
+from services.prediction_service import analyze_uploaded_image
 
 router = APIRouter()
 

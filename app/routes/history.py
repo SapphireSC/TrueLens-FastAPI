@@ -6,12 +6,8 @@ from config import get_session
 from models.truelens_model import Prediction_history
 from routes.common import get_current_user, templates
 from schemas.truelens_schema import TrueLensData
-from services.truelens_service import (
-    delete_prediction,
-    format_id_number,
-    get_history,
-    save_prediction,
-)
+from services.common import format_id_number
+from services.history_service import delete_prediction, get_history, save_prediction
 
 router = APIRouter()
 
