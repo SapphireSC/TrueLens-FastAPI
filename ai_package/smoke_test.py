@@ -1,4 +1,3 @@
-"""Uji CPU mandiri: bobot nyata,20fixture validation dan kasus input perangkat lunak."""
 import argparse
 import hashlib
 import io

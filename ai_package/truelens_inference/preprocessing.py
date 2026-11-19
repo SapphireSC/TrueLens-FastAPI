@@ -1,4 +1,3 @@
-"""Decoder tunggal untuk audit, loader, dan predictor; tidak pernah menulis input."""
 from __future__ import annotations
 
 import io

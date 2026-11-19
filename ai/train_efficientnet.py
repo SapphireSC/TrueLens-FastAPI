@@ -1,8 +1,3 @@
-"""
-TrueLens AI - Pipeline Pelatihan Model Transfer Learning EfficientNet-B0
-Dataset: CIFAKE: Real and AI-Generated Synthetic Images (Kaggle)
-URL Dataset: https://www.kaggle.com/datasets/birdy654/cifake-real-and-ai-generated-synthetic-images
-"""
 import os
 import json
 import argparse
@@ -17,17 +12,6 @@ SEED = 42
 
 
 def build_datasets(dataset_dir: str):
-    """
-    Memuat dataset CIFAKE dari struktur direktori:
-    dataset_dir/
-      train/
-        REAL/
-        FAKE/
-      test/
-        REAL/
-        FAKE/
-    Kelas dikodekan secara eksplisit: REAL = 0, FAKE (AI-Generated) = 1.
-    """
     train_dir = os.path.join(dataset_dir, "train")
     test_dir = os.path.join(dataset_dir, "test")
 
@@ -64,8 +48,6 @@ def build_datasets(dataset_dir: str):
         shuffle=False,
     )
 
-    # PENTING: EfficientNetB0 di Keras sudah memiliki layer Rescaling internal.
-    # Jangan membagi piksel dengan 255.0 secara manual! Gunakan preprocess_input (skala float32 [0, 255]).
     def preprocess_batch(images, labels):
         images = tf.cast(images, tf.float32)
         images = preprocess_input(images)
@@ -80,12 +62,8 @@ def build_datasets(dataset_dir: str):
 
 
 def build_truelens_model() -> tuple[tf.keras.Model, tf.keras.Model]:
-    """
-    Membangun arsitektur Transfer Learning EfficientNet-B0 dengan Custom Classification Head.
-    """
     inputs = layers.Input(shape=(224, 224, 3), name="input_image")
 
-    # Data Augmentation (Hanya aktif saat training=True)
     augmentation = models.Sequential(
         [
             layers.RandomFlip("horizontal"),
@@ -96,15 +74,13 @@ def build_truelens_model() -> tuple[tf.keras.Model, tf.keras.Model]:
     )
     x = augmentation(inputs)
 
-    # Backbone Pre-trained ImageNet
     base_model = EfficientNetB0(
         include_top=False,
         weights="imagenet",
         input_tensor=x,
     )
-    base_model.trainable = False  # Dibekukan pada Tahap 1 (Warm-up Head)
+    base_model.trainable = False 
 
-    # Custom Classification Head
     x = layers.GlobalAveragePooling2D(name="global_avg_pool")(base_model.output)
     x = layers.BatchNormalization(name="head_batch_norm")(x)
     x = layers.Dropout(0.40, name="head_dropout_1")(x)
@@ -121,9 +97,6 @@ def train_two_stage(dataset_dir: str, output_model_path: str, epochs_warmup: int
     train_ds, val_ds, _ = build_datasets(dataset_dir)
     model, base_model = build_truelens_model()
 
-    # ------------------------------------------------------------------
-    # TAHAP 1: WARM-UP CLASSIFICATION HEAD (Backbone Dibekukan)
-    # ------------------------------------------------------------------
     print("=== [Tahap 1] Melatih Custom Classification Head (Warm-up) ===")
     model.compile(
         optimizer=optimizers.AdamW(learning_rate=1e-3, weight_decay=1e-4),
@@ -142,16 +115,13 @@ def train_two_stage(dataset_dir: str, output_model_path: str, epochs_warmup: int
         epochs=epochs_warmup,
     )
 
-    # ------------------------------------------------------------------
-    # TAHAP 2: FINE-TUNING 30 LAYER TERATAS BACKBONE
-    # ------------------------------------------------------------------
     print("=== [Tahap 2] Fine-Tuning 30 Layer Teratas EfficientNet-B0 ===")
     base_model.trainable = True
     for layer in base_model.layers[:-30]:
         layer.trainable = False
     for layer in base_model.layers:
         if isinstance(layer, layers.BatchNormalization):
-            layer.trainable = False  # Jaga statistik mean/var BatchNorm tetap stabil
+            layer.trainable = False  
 
     model.compile(
         optimizer=optimizers.AdamW(learning_rate=1e-4, weight_decay=1e-5),

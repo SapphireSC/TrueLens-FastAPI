@@ -1,4 +1,3 @@
-"""build_model disalin persis dari penelitian; adapter selalu pretrained=False."""
 from torch import nn
 from torchvision.models import EfficientNet_B0_Weights, efficientnet_b0
 
