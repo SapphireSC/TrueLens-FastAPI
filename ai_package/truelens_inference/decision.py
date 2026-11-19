@@ -1,3 +1,4 @@
+"""Satu aturan keputusan untuk predictor dan seleksi threshold; FAKE positif."""
 import math
 from numbers import Real
 

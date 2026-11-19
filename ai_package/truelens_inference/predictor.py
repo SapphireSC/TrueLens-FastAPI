@@ -1,3 +1,4 @@
+"""Adapter paket: pemeriksaan integritas/input di sekitar pipeline penelitian asli."""
 from __future__ import annotations
 
 import io
