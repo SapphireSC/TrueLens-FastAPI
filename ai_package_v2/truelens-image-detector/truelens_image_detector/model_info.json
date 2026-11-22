@@ -1,0 +1,78 @@
+{
+  "display_name": "TrueLens Image Detector v1",
+  "model_id": "truelens-image-detector",
+  "model_version": "1.0.0",
+  "threshold": 0.5,
+  "architecture": "torchvision EfficientNet-B0",
+  "output_logits": 1,
+  "positive_class": "FAKE",
+  "labels": {
+    "REAL": 0,
+    "FAKE": 1
+  },
+  "decision_rule": "FAKE if sigmoid(float32(logit)) >= 0.5",
+  "weights": {
+    "filename": "truelens-image-detector-v1.pt",
+    "sha256": "08abf6a3c559479bf384173c486cfa408357da1e087afff0c283f2e8bbfad0ac",
+    "bytes": 16335897,
+    "format": "PyTorch model state_dict",
+    "tensor_and_buffer_count": 360
+  },
+  "preprocessing": {
+    "exif_transpose": true,
+    "color": "RGB",
+    "resize_short_side": 256,
+    "interpolation": "BICUBIC",
+    "center_crop": 224,
+    "input_scale": [
+      0,
+      1
+    ],
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "precision": {
+    "cpu": "FP32",
+    "cuda": "FP16 autocast, FP32 sigmoid"
+  },
+  "input_limits": {
+    "formats": [
+      "JPEG",
+      "PNG",
+      "WEBP"
+    ],
+    "max_bytes": 10485760,
+    "max_pixels": 20000000,
+    "max_side": 8192,
+    "max_frames": 1
+  },
+  "provenance": {
+    "source_stage": "Stage2BG",
+    "source_optimizer_updates": 225,
+    "source_checkpoint_sha256": "315bb22b6f701b34551805ee035916fdde35893b492ef663d99daa2d8e041844",
+    "source_protocol_sha256": "2f6ede5eca329e33b760225c64b489eed2ea0cad7309a94e1134e85ea31113b9",
+    "source_controller_sha256": "2a920f102dc6d31a5e5651656dd96b55eba466cfbbfded5ce862327fd3fcc6ad",
+    "model_tensors_exported_with_exact_values": true,
+    "runtime": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "pillow": "12.3.0",
+      "numpy": "2.5.4",
+      "cuda": "12.8"
+    }
+  },
+  "research_status": {
+    "integration_candidate": true,
+    "hypothesis_screen_pass": false,
+    "absolute_research_gate_pass": false,
+    "independent_generalization_verified": false
+  }
+}

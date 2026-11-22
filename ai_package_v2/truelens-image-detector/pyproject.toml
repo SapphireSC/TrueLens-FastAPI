@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "truelens-image-detector"
+version = "1.0.0"
+description = "TrueLens Image Detector v1 inference package"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "torch==2.11.0",
+    "torchvision==0.26.0",
+    "Pillow==12.3.0",
+    "numpy==2.5.4",
+]
+
+[tool.setuptools.packages.find]
+include = ["truelens_image_detector"]
+
+[tool.setuptools.package-data]
+truelens_image_detector = ["model_info.json", "weights/*.pt"]
+
