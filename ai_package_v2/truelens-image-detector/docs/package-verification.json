@@ -1,0 +1,87 @@
+{
+  "status": "COMPLETE",
+  "model_id": "truelens-image-detector",
+  "version": "1.0.0",
+  "environment": {
+    "platform": "Windows",
+    "python": "3.13.5",
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "Pillow": "12.3.0",
+    "numpy": "2.5.4",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU"
+  },
+  "build": {
+    "passed": true,
+    "wheel": "truelens_image_detector-1.0.0-py3-none-any.whl",
+    "bytes": 15087998,
+    "sha256": "0935a11c701d46eb859a396f0efdf5c6b2ea5756a81b5ae9e4dd761b11c87a4b",
+    "offline_no_index": true,
+    "build_isolation": false
+  },
+  "installation": {
+    "passed": true,
+    "new_test_venv": true,
+    "local_wheel": true,
+    "package_imported_from_installed_wheel": true,
+    "isolated_python_and_working_directory": true,
+    "metadata_and_weights_present": true,
+    "dependencies": "shared with the existing Stage2BG CUDA runtime via test-only .pth"
+  },
+  "export": {
+    "passed": true,
+    "source_sha256": "315bb22b6f701b34551805ee035916fdde35893b492ef663d99daa2d8e041844",
+    "weights_sha256": "08abf6a3c559479bf384173c486cfa408357da1e087afff0c283f2e8bbfad0ac",
+    "exact_tensor_and_buffer_count": 360
+  },
+  "devices": {
+    "cpu": {
+      "smoke_passed": true,
+      "smoke_checks": 12,
+      "cli_passed": true,
+      "parity_passed": true,
+      "parity_fixtures": 4,
+      "precision": "FP32",
+      "parity_max_absolute_score_delta": 0.0,
+      "parity_tolerance": 1e-06,
+      "parity_delta_by_fixture": {
+        "oriented_jpeg": 0.0,
+        "alpha_png": 0.0,
+        "webp": 0.0,
+        "tiny_png": 0.0
+      }
+    },
+    "cuda": {
+      "smoke_passed": true,
+      "smoke_checks": 12,
+      "cli_passed": true,
+      "parity_passed": true,
+      "parity_fixtures": 4,
+      "precision": "FP16 autocast, FP32 sigmoid",
+      "parity_max_absolute_score_delta": 0.0,
+      "parity_tolerance": 1e-06,
+      "parity_delta_by_fixture": {
+        "oriented_jpeg": 0.0,
+        "alpha_png": 0.0,
+        "webp": 0.0,
+        "tiny_png": 0.0
+      }
+    }
+  },
+  "limits": [
+    "CPU used CUDA-enabled wheels",
+    "clean dependency installation was not tested",
+    "parity uses four generated fixtures and batch size one",
+    "production application integration and dataset evaluation were not run"
+  ],
+  "tampered_weight_rejected": true,
+  "cli_error_case_passed": true,
+  "release_review": {
+    "allowlisted_files_excluding_sha_manifest": 11,
+    "readme_relative_links_resolved": true,
+    "no_personal_paths_found_in_release_text": true,
+    "backend_lfs_filter_for_weight": "unspecified",
+    "weight_bytes": 16335897
+  }
+}
