@@ -1,8 +1,3 @@
-"""
-TrueLens AI - Skrip Evaluasi Model pada 20.000 Citra Testing Set CIFAKE
-Menghitung Accuracy, Precision, Recall, F1-Score, ROC-AUC, & Confusion Matrix
-dan menyimpannya ke ai/saved_model/evaluation_metrics.json.
-"""
 import os
 import json
 import argparse

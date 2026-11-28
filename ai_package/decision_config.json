@@ -1,5 +1,0 @@
-{
-  "positive_class": "FAKE",
-  "rule": "score >= threshold",
-  "threshold": 0.55
-}

@@ -1,5 +1,4 @@
 :root {
-  /* Light Forensic-Clinical Color Tokens - UNGU LIGHT THEME */
   --color-bg: #F5F3FF;
   --color-surface: #FFFFFF;
   --color-surface-muted: #FAFAFA;
@@ -9,13 +8,11 @@
   --color-border: #E2E8F0;
   --color-border-strong: #64748B;
   
-  /* WARNA UNGU UTAMA */
   --color-primary: #8b5cf6;
   --color-primary-hover: #7c3aed;
   --color-primary-soft: #ede9fe;
   --color-accent: #a855f7;
   
-  /* Warna Notifikasi & Indikator */
   --color-real: #047857;
   --color-real-soft: #ECFDF5;
   --color-teal: #0F766E;
@@ -28,11 +25,9 @@
   --color-disabled: #E2E8F0;
   --color-disabled-text: #64748B;
 
-  /* Typography */
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  /* Spacing Scale */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -44,7 +39,6 @@
   --space-12: 48px;
   --space-16: 64px;
 
-  /* Radii & Shadows */
   --radius-control: 8px;
   --radius-card: 12px;
   --radius-alert: 10px;

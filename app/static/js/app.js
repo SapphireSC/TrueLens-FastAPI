@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!scanForm || !fileInput) return;
 
   const MAX_BYTES = 10 * 1024 * 1024;
-  const VALID_EXT = [".jpg", ".jpeg", ".png"];
+  const VALID_EXT = [".jpg", ".jpeg", ".png", ".webp"];
   let isSubmittingAfterAnimation = false;
 
   function showError(msg) {
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return lowerName.endsWith(ext);
     });
     if (!hasValidExt) {
-      showError("Format berkas harus JPG, JPEG, atau PNG.");
+      showError("Format berkas harus JPG, JPEG, PNG, atau WebP.");
       return false;
     }
 

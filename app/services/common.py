@@ -7,4 +7,6 @@ def verify_image_magic_bytes(data: bytes) -> str | None:
         return ".png"
     if data.startswith(b"\xff\xd8\xff"):
         return ".jpg"
+    if len(data) >= 12 and data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return ".webp"
     return None

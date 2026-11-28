@@ -4,16 +4,21 @@ from pathlib import Path
 
 from fastapi import APIRouter, File, Request, UploadFile
 from fastapi.responses import RedirectResponse
+from starlette.concurrency import run_in_threadpool
 
 from config import UPLOAD_DIR
 from routes.common import get_current_user, templates
 from services.common import verify_image_magic_bytes
-from services.prediction_service import analyze_uploaded_image
+from services.prediction_service import (
+    ImageInputError,
+    ModelError,
+    analyze_uploaded_image,
+)
 
 router = APIRouter()
 
 MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024
-ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png"}
+ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
 
 @router.get("/scan", name="scan")
@@ -57,7 +62,7 @@ async def create_prediction(
         return templates.TemplateResponse(
             request,
             name="scan.html",
-            context={"active_page": "scan", "current_user": current_user, "error_message": "Format harus JPG, JPEG, atau PNG."},
+            context={"active_page": "scan", "current_user": current_user, "error_message": "Format harus JPG, JPEG, PNG, atau WebP."},
             status_code=400,
         )
 
@@ -84,7 +89,29 @@ async def create_prediction(
     saved_path.write_bytes(content)
     relative_image_path = f"static/uploads/{safe_name}"
 
-    analysis = analyze_uploaded_image(saved_path)
+    try:
+        analysis = await run_in_threadpool(analyze_uploaded_image, saved_path)
+    except ImageInputError as exc:
+        saved_path.unlink(missing_ok=True)
+        return templates.TemplateResponse(
+            request,
+            name="scan.html",
+            context={"active_page": "scan", "current_user": current_user, "error_message": str(exc)},
+            status_code=422,
+        )
+    except ModelError:
+        saved_path.unlink(missing_ok=True)
+        return templates.TemplateResponse(
+            request,
+            name="scan.html",
+            context={
+                "active_page": "scan",
+                "current_user": current_user,
+                "error_message": "Layanan deteksi AI sedang tidak tersedia. Periksa log server.",
+            },
+            status_code=503,
+        )
+
     scan_timestamp = datetime.now().strftime("%d %b %Y, %H:%M WIB")
 
     return templates.TemplateResponse(
